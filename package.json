@@ -10,11 +10,11 @@
     "test:sites": "node --test tests/sites-worker.test.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.8",
     "@vitejs/plugin-react": "6.0.1",
     "lucide-react": "1.16.0",
-    "vite": "8.0.5",
     "react": "19.2.7",
-    "react-dom": "19.2.7"
-  },
-  "devDependencies": {}
+    "react-dom": "19.2.7",
+    "vite": "8.0.5"
+  }
 }

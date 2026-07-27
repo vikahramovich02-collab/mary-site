@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "Manrope";
-  src: local("Manrope");
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-}
-
 .custom-site {
   --custom-black: #050505;
   --custom-ink: #151518;
