@@ -734,6 +734,32 @@ function AutomationsScreen({ openBuilder, setOpenBuilder }) {
         </button>
       </div>
 
+      <section className="automation-department-overview" aria-labelledby="departments-title">
+        <div className="automation-overview-heading">
+          <h2 id="departments-title">Отделы</h2>
+          <span>Краткий обзор процессов</span>
+        </div>
+        <div className="automation-department-strip">
+          {[
+            { title: "Клиентский сервис", description: "Ответы, возвраты и передача сотруднику", meta: "2 процесса", icon: ChatCircle },
+            { title: "Продажи", description: "Заявки, CRM и следующее действие", meta: "1 процесс", icon: TrendUp },
+            { title: "Операции", description: "Оплата, заказы и внутренние задачи", meta: "2 процесса", icon: Package },
+          ].map((department) => {
+            const DepartmentIcon = department.icon;
+            return (
+              <article key={department.title}>
+                <span className="automation-department-icon"><DepartmentIcon size={19} /></span>
+                <span className="automation-department-copy">
+                  <strong>{department.title}</strong>
+                  <small>{department.description}</small>
+                </span>
+                <span className="automation-department-meta">{department.meta}</span>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
       <div className="automation-library-toolbar">
         <div className="automation-tabs" role="tablist" aria-label="Фильтр автоматизаций">
           {[["all", "Все"], ["connected", "Подключённые"], ["recommended", "Рекомендуемые"]].map(([value, label]) => (
