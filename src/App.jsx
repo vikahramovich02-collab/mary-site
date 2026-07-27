@@ -710,31 +710,111 @@ function Metric({ label, value, detail }) {
 
 function AutomationsScreen({ openBuilder, setOpenBuilder }) {
   const [items, setItems] = useState(automationsSeed);
+  const [tab, setTab] = useState("all");
+  const [query, setQuery] = useState("");
   const toggle = (id) => setItems((entries) => entries.map((entry) => entry.id === id ? { ...entry, status: entry.status === "active" ? "paused" : "active" } : entry));
+  const connected = items.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+  const recommendations = [
+    { id: "return", name: "Возврат клиентов", description: "Mary замечает клиентов без повторной покупки и предлагает уместный повод вернуться", cases: "Повторяется регулярно", icon: ClockCounterClockwise },
+    { id: "support", name: "Поддержка клиентов", description: "Mary готовит ответы на частые вопросы и передаёт сложные случаи сотруднику", cases: "12 похожих обращений", icon: ChatCircle },
+    { id: "payment", name: "Контроль оплаты", description: "Mary проверяет статус заказа, напоминает об оплате и фиксирует результат", cases: "8 ручных проверок", icon: CheckCircle },
+  ].filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+  const showConnected = tab === "all" || tab === "connected";
+  const showRecommended = tab === "all" || tab === "recommended";
+
   return (
-    <div className="page-scroll">
-      <SectionHeader
-        icon={Lightning}
-        title="Автоматизации"
-        description="Mary выполняет повторяющиеся процессы, а вы подтверждаете важные действия"
-        actions={<button className="button primary" type="button" onClick={() => setOpenBuilder(true)}><Plus size={18} />Новая автоматизация</button>}
-      />
-      <div className="automation-summary">
-        <div><Robot size={26} /><span><strong>259</strong><small>запусков за 30 дней</small></span></div>
-        <div><Timer size={26} /><span><strong>18 ч</strong><small>сэкономлено команде</small></span></div>
-        <div><CheckCircle size={26} /><span><strong>97%</strong><small>успешных запусков</small></span></div>
+    <div className="page-scroll automation-library-page">
+      <div className="automation-library-header">
+        <div>
+          <h1>Автоматизации</h1>
+          <p>Здесь собраны процессы, которые Mary уже может вести сама.</p>
+        </div>
+        <button className="button primary automation-create-button" type="button" onClick={() => setOpenBuilder(true)}>
+          <Sparkle size={17} />Собрать с Mary
+        </button>
       </div>
-      <div className="list-surface">
-        <div className="data-row data-head automation-grid"><span>Автоматизация</span><span>Статус</span><span>Запуски</span><span>Последний запуск</span><span /></div>
-        {items.map((item) => (
-          <div className="data-row automation-grid" key={item.id}>
-            <div className="automation-name"><span className="automation-icon"><Lightning size={19} /></span><span><strong>{item.name}</strong><small>{item.description}</small></span></div>
-            <span><Badge tone={item.status === "active" ? "success" : "neutral"}><StatusDot status={item.status} />{item.status === "active" ? "Активна" : "Пауза"}</Badge></span>
-            <strong>{item.runs}</strong>
-            <span className="muted">{item.lastRun}</span>
-            <span className="row-actions"><IconButton label={item.status === "active" ? "Поставить на паузу" : "Запустить"} onClick={() => toggle(item.id)}>{item.status === "active" ? <Pause size={18} /> : <Play size={18} />}</IconButton><IconButton label="Редактировать"><PencilSimple size={18} /></IconButton></span>
+
+      <div className="automation-library-toolbar">
+        <div className="automation-tabs" role="tablist" aria-label="Фильтр автоматизаций">
+          {[["all", "Все"], ["connected", "Подключённые"], ["recommended", "Рекомендуемые"]].map(([value, label]) => (
+            <button type="button" role="tab" aria-selected={tab === value} className={tab === value ? "is-active" : ""} onClick={() => setTab(value)} key={value}>{label}</button>
+          ))}
+        </div>
+        <label className="automation-search">
+          <MagnifyingGlass size={17} />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Искать процесс" aria-label="Искать процесс" />
+          {query && <button type="button" onClick={() => setQuery("")} aria-label="Очистить поиск"><X size={16} /></button>}
+        </label>
+      </div>
+
+      <div className="automation-library-content">
+        {showConnected && connected.length > 0 && (
+          <section className="automation-group" aria-labelledby="connected-title">
+            <div className="automation-group-heading">
+              <h2 id="connected-title">Подключённые</h2>
+              <span>{connected.length}</span>
+            </div>
+            <div className="automation-rows">
+              {connected.map((item) => (
+                <article className="automation-library-row" key={item.id}>
+                  <button className="automation-row-main" type="button" onClick={() => setOpenBuilder(true)}>
+                    <span className="automation-row-icon"><Lightning size={20} /></span>
+                    <span className="automation-row-copy">
+                      <strong>{item.name}</strong>
+                      <small>{item.description}</small>
+                    </span>
+                  </button>
+                  <span className={`automation-status ${item.status === "active" ? "is-active" : ""}`}>
+                    <StatusDot status={item.status} />{item.status === "active" ? "Активна" : "На паузе"}
+                  </span>
+                  <span className="automation-row-meta"><strong>{item.runs}</strong><small>обработано</small></span>
+                  <span className="automation-row-meta"><strong>{item.lastRun}</strong><small>последнее событие</small></span>
+                  <span className="automation-row-actions">
+                    <IconButton label={item.status === "active" ? "Поставить на паузу" : "Возобновить"} onClick={() => toggle(item.id)}>
+                      {item.status === "active" ? <Pause size={18} /> : <Play size={18} />}
+                    </IconButton>
+                    <IconButton label="Другие действия"><DotsThree size={19} /></IconButton>
+                  </span>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {showRecommended && recommendations.length > 0 && (
+          <section className="automation-group automation-recommended" aria-labelledby="recommended-title">
+            <div className="automation-group-heading">
+              <div>
+                <h2 id="recommended-title">Рекомендуемые</h2>
+                <p>Mary заметила повторяющуюся работу, которую можно упростить.</p>
+              </div>
+              <span>{recommendations.length}</span>
+            </div>
+            <div className="automation-recommendation-grid">
+              {recommendations.map((item) => {
+                const RecommendationIcon = item.icon;
+                return (
+                  <article className="automation-recommendation" key={item.id}>
+                    <span className="automation-row-icon"><RecommendationIcon size={20} /></span>
+                    <span className="automation-recommendation-label">{item.cases}</span>
+                    <h3>{item.name}</h3>
+                    <p>{item.description}</p>
+                    <button className="button secondary" type="button" onClick={() => setOpenBuilder(true)}>Обсудить с Mary <ArrowRight size={16} /></button>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {(showConnected ? connected.length : 0) + (showRecommended ? recommendations.length : 0) === 0 && (
+          <div className="automation-empty">
+            <MagnifyingGlass size={24} />
+            <h2>Ничего не найдено</h2>
+            <p>Попробуйте изменить запрос или расскажите Mary, какой процесс хотите собрать.</p>
+            <button className="button secondary" type="button" onClick={() => setQuery("")}>Сбросить поиск</button>
           </div>
-        ))}
+        )}
       </div>
       {openBuilder && <AutomationBuilder onClose={() => setOpenBuilder(false)} />}
     </div>
