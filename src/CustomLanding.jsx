@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -141,6 +141,12 @@ function SectionIntro({ eyebrow, title, text }) {
 export function CustomLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hash === "#team") {
+      document.getElementById("team")?.scrollIntoView();
+    }
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
