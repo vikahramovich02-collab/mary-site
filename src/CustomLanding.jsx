@@ -221,6 +221,33 @@ export function CustomLanding() {
         </div>
       </section>
 
+      <section className="custom-partnership" aria-labelledby="custom-partnership-title">
+        <div className="custom-partnership-logos" aria-label="Компании, с которыми работала команда">
+          <span>МТБанк</span>
+          <span>НТР Беларусь</span>
+          <span>PicPac</span>
+          <span>Mary</span>
+        </div>
+        <div className="custom-partnership-content">
+          <h2 id="custom-partnership-title">
+            Погружаемся в работу компании,
+            <span>проектируем решение и сопровождаем запуск</span>
+          </h2>
+          <article className="custom-founder-card">
+            <img src="/media/mary-hero-poster.jpg" alt="" />
+            <div>
+              <p>Погружаемся в задачу и отвечаем за результат</p>
+              <small>CEO Mary</small>
+              <strong>Александр Лукашевич</strong>
+              <a href="#contact">
+                Связаться
+                <ArrowRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section className="custom-section custom-problems" id="problems">
         <SectionIntro
           eyebrow="Узнаваемые ситуации"
