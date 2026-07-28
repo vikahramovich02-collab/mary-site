@@ -1008,9 +1008,10 @@ function PlatformApp() {
 }
 
 export function App() {
-  const isCustomLanding =
-    window.location.pathname === "/custom" ||
-    window.location.pathname === "/custom/" ||
-    new URLSearchParams(window.location.search).get("page") === "custom";
-  return isCustomLanding ? <CustomLanding /> : <PlatformApp />;
+  const requestedPage = new URLSearchParams(window.location.search).get("page");
+  const isPlatform =
+    window.location.pathname === "/platform" ||
+    window.location.pathname === "/platform/" ||
+    requestedPage === "platform";
+  return isPlatform ? <PlatformApp /> : <CustomLanding />;
 }

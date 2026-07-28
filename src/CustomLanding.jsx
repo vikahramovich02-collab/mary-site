@@ -458,7 +458,7 @@ export function CustomLanding() {
           <a href="#formats">Форматы</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <div><a href="/">Mary SaaS</a><span>© 2026 Mary Custom</span></div>
+        <div><a href="/?page=platform">Mary SaaS</a><span>© 2026 Mary Custom</span></div>
       </footer>
     </main>
   );
