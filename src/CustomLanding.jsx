@@ -208,41 +208,32 @@ export function CustomLanding() {
 
         <div className="custom-hero-content">
           <h1 id="custom-hero-title">
-            Разрабатываем продукты.
-            <span>Автоматизируем бизнес.</span>
+            Автоматизируем бизнес-
+            <span>процессы под ключ</span>
           </h1>
-          <p className="custom-hero-copy">
-            Создаём веб-сервисы, приложения и внутренние системы. Подключаем ИИ
-            там, где он действительно упрощает работу.
-          </p>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="#contact">Обсудить задачу</a>
-            <a className="custom-button custom-button-ghost" href="#services">Что мы делаем</a>
+            <a className="custom-button custom-button-light" href="#contact">Заказать</a>
+            <a className="custom-button custom-button-ghost" href="#services">Заказать</a>
           </div>
         </div>
 
-        <div className="custom-hero-footer">
-          <p>От идеи и прототипа до запуска и развития</p>
-          <a href="#problems">Смотреть ниже <ChevronDown size={16} /></a>
+        <div className="custom-hero-logos" aria-label="Компании, с которыми работала команда">
+          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
+          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
+          <img src="/media/ntr-logo-mask.png" alt="НТР Беларусь" />
+          <img src="/media/ntr-logo-mask.png" alt="" aria-hidden="true" />
         </div>
-      </section>
 
-      <section className="custom-partnership" id="team" aria-labelledby="custom-partnership-title">
-        <div className="custom-partnership-logos" aria-label="Компании, с которыми работала команда">
-          <span>МТБанк</span>
-          <span>НТР Беларусь</span>
-          <span>PicPac</span>
-          <span>Mary</span>
-        </div>
-        <div className="custom-partnership-content">
-          <h2 id="custom-partnership-title">
+        <div className="custom-hero-bottom" id="team">
+          <h2>
             Погружаемся в работу компании,
             <span>проектируем решение и сопровождаем запуск</span>
           </h2>
           <article className="custom-founder-card">
-            <img src="/media/mary-hero-poster.jpg" alt="" />
+            <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
             <div>
-              <p>Погружаемся в задачу и отвечаем за результат</p>
+              <p>Погружаемся в работу компании, проектируем решение</p>
               <small>CEO Mary</small>
               <strong>Александр Лукашевич</strong>
               <a href="#contact">
