@@ -172,7 +172,7 @@ export function CustomLanding() {
             <a href="#services">Что делаем</a>
             <a href="#process">Как работаем</a>
             <a href="#experience">Проекты</a>
-            <a href="#formats">Команда</a>
+            <a href="#team">Команда</a>
           </nav>
           <div className="custom-header-actions">
             <a className="custom-language" href="#top" aria-label="Текущий язык: русский">RU</a>
@@ -193,7 +193,7 @@ export function CustomLanding() {
               <a href="#services" onClick={closeMenu}>Что делаем</a>
               <a href="#process" onClick={closeMenu}>Как работаем</a>
               <a href="#experience" onClick={closeMenu}>Проекты</a>
-              <a href="#formats" onClick={closeMenu}>Команда</a>
+              <a href="#team" onClick={closeMenu}>Команда</a>
               <a href="#faq" onClick={closeMenu}>FAQ</a>
             </nav>
             <a className="custom-button custom-button-dark" href="#contact" onClick={closeMenu}>Обсудить задачу</a>
@@ -221,7 +221,7 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-partnership" aria-labelledby="custom-partnership-title">
+      <section className="custom-partnership" id="team" aria-labelledby="custom-partnership-title">
         <div className="custom-partnership-logos" aria-label="Компании, с которыми работала команда">
           <span>МТБанк</span>
           <span>НТР Беларусь</span>
