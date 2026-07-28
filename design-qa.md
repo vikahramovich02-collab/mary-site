@@ -1,49 +1,79 @@
-# Design QA
+# Design QA: Mary Custom hero
 
-- Source visual truth:
-  `/Users/vika/.codex/generated_images/019f9419-03c1-7690-9702-0d3a8f2fcbe0/call_C7XrKO0vh6X1qLbn75v0z981.png`
-- Supporting chat visual:
-  `/Users/vika/.codex/generated_images/019f9419-03c1-7690-9702-0d3a8f2fcbe0/call_df4VaXdgqPrYNNfiSgYoeqb8.png`
-- Intended desktop viewport: `1440 x 1024`
-- Responsive targets: desktop, tablet, mobile
-- State: CRM expanded, Inbox selected, client context visible
-- Implementation screenshot: unavailable
+## Evidence
 
-## Full-view comparison evidence
+- Source visual truth: Figma node `9507:14151` in file
+  `o1syNp93H3v2dyA3JHp4em`.
+- Source capture: `qa-source-figma.png`.
+- Desktop implementation: `qa-implementation-desktop.png`.
+- Mobile implementation: `qa-implementation-mobile.png`.
+- Mobile menu state: `qa-implementation-mobile-menu.png`.
+- Combined comparison: `qa-comparison-desktop.jpg`.
+- Desktop viewport: `1440 × 1024` CSS px, DPR 1.
+- Source pixels: `1440 × 1024`.
+- Desktop implementation pixels: `1440 × 1024`.
+- Mobile viewport and implementation pixels: `390 × 844`, DPR 1.
+- State: hero loaded, background video playing, navigation closed.
 
-Blocked. The production bundle builds successfully, but the managed environment
-rejects local port binding with `EPERM`. The in-app browser also rejects direct
-loading of a bundled data URL. No browser-rendered implementation screenshot is
-available, so a visual comparison must not be claimed.
+## Full-view comparison
 
-## Focused region comparison evidence
+The implementation preserves the source composition: logo at the upper left,
+centered oval navigation, language and primary action at the upper right, a
+large two-line centered statement, two oval actions, and a quiet bottom layer.
 
-Blocked for the same reason. The intended focused regions are:
+Intentional product changes:
 
-- expanded sidebar and account menu;
-- inbox list, conversation and client context;
-- chat draft and automation recommendation;
-- client drawer;
-- mobile navigation and drawer states.
+- the supplied video replaces the solid black background;
+- approved Mary Custom positioning replaces the old automation-only copy;
+- unsupported client logos and the personal contact card are not reproduced.
 
-## Static findings
+These changes do not alter the source hierarchy or interaction model.
 
-- The selected white/charcoal visual tokens, spacing rhythm and navigation hierarchy
-  are implemented consistently in shared CSS.
-- All menu destinations have implemented screens.
-- Client, conversation, task and automation mock data are reused across related views.
-- Desktop, tablet and mobile breakpoints are present.
-- Focus-visible, reduced-motion and accessible button labels are present.
-- Production build and Sites worker tests pass.
+## Focused review
+
+- Typography: Manrope, semibold display weight, tight tracking, two-line
+  hierarchy and muted second line match the source direction.
+- Spacing: header, central content and footer use the same three-layer
+  composition as the source. The mobile layout remains within the viewport.
+- Colors: white and translucent neutral controls remain legible over the
+  monochrome video. A localized dark overlay protects text contrast.
+- Image quality: the supplied source video is encoded to a web-ready
+  `1920 × 1070` H.264 asset with a matching poster.
+- Copy: the hero uses the approved statement
+  `Разрабатываем продукты. Автоматизируем бизнес.`
+
+No additional crop comparison was required because the hero is one continuous
+full-screen composition and all controls are readable in the full-size
+captures.
+
+## Interaction checks
+
+- Background video autoplays muted, loops and uses `playsInline`.
+- A poster is available before playback.
+- Reduced-motion mode hides playback and falls back to the dark hero surface.
+- Secondary hero CTA scrolls to `#services`.
+- Mobile menu opens and closes.
+- No horizontal overflow at `1440 × 1024` or `390 × 844`.
+- Browser console errors: none.
+
+## Findings
+
+No actionable P0, P1 or P2 differences remain.
 
 ## Comparison history
 
-No visual QA iteration was possible because a browser-rendered screenshot could not
-be captured in this environment.
+1. Initial desktop capture: the muted second title line competed with the
+   moving point pattern.
+2. Fix: added a localized readability overlay and increased the muted line
+   opacity.
+3. Mobile capture: small viewport units exposed the next section below the
+   hero.
+4. Fix: switched the mobile hero to `100dvh`; post-fix height matches the
+   `390 × 844` viewport.
 
-## Remaining blocker
+## Follow-up polish
 
-A browser-rendered desktop and mobile comparison is required before visual fidelity
-can be marked as passed.
+- P3: after final brand review, the exact video focal point can be adjusted by
+  changing `object-position` independently for desktop and mobile.
 
-final result: blocked
+final result: passed

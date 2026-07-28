@@ -107,3 +107,17 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Do not simplify the canvas into a vertical stepper, table, list, or generic monochrome flowchart.
 - The canvas explains the automation visually. Configuration happens conversationally through Mary, not through technical property forms, rule builders, schemas, or workflow jargon.
 - Selecting a node highlights it and opens a Mary conversation scoped to that step. Mary asks plain business questions and summarizes the proposed change before applying it.
+
+## Mary Custom landing direction
+
+- Mary Custom is the external product team: `Разрабатываем продукты. Автоматизируем бизнес.`
+- Present AI as a practical part of the solution, not as a separate complicated service or an abstract promise.
+- Keep the landing simple: one clear statement, two understandable directions
+  (product development and business automation), plain-language examples and one
+  primary CTA.
+- Match the selected Figma hero composition: compact oval navigation, large
+  centered two-line statement, oval actions and a quiet bottom information
+  layer.
+- The supplied monochrome point-cloud video is the hero background. Preserve
+  readability with a restrained dark overlay, a poster and a reduced-motion
+  fallback.

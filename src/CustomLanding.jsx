@@ -115,7 +115,6 @@ function Brand({ dark = false }) {
     <a className={`custom-brand ${dark ? "is-dark" : ""}`} href="#top" aria-label="Mary Custom, к началу страницы">
       <img src={maryMark} alt="" />
       <span>mary</span>
-      <i>custom</i>
     </a>
   );
 }
@@ -153,13 +152,27 @@ export function CustomLanding() {
   return (
     <main className="custom-site" id="top">
       <section className="custom-hero" aria-labelledby="custom-hero-title">
+        <video
+          className="custom-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/media/mary-hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="/media/mary-hero.mp4" type="video/mp4" />
+        </video>
+        <div className="custom-hero-shade" aria-hidden="true" />
+
         <header className="custom-header">
           <Brand dark />
           <nav className="custom-nav" aria-label="Навигация по странице">
-            <a href="#services">Что автоматизируем</a>
-            <a href="#experience">Опыт</a>
+            <a href="#services">Что делаем</a>
             <a href="#process">Как работаем</a>
-            <a href="#formats">Форматы</a>
+            <a href="#experience">Проекты</a>
+            <a href="#formats">Команда</a>
           </nav>
           <div className="custom-header-actions">
             <a className="custom-language" href="#top" aria-label="Текущий язык: русский">RU</a>
@@ -177,10 +190,10 @@ export function CustomLanding() {
               <button type="button" onClick={closeMenu} aria-label="Закрыть меню"><X size={22} /></button>
             </div>
             <nav>
-              <a href="#services" onClick={closeMenu}>Что автоматизируем</a>
-              <a href="#experience" onClick={closeMenu}>Опыт</a>
+              <a href="#services" onClick={closeMenu}>Что делаем</a>
               <a href="#process" onClick={closeMenu}>Как работаем</a>
-              <a href="#formats" onClick={closeMenu}>Форматы</a>
+              <a href="#experience" onClick={closeMenu}>Проекты</a>
+              <a href="#formats" onClick={closeMenu}>Команда</a>
               <a href="#faq" onClick={closeMenu}>FAQ</a>
             </nav>
             <a className="custom-button custom-button-dark" href="#contact" onClick={closeMenu}>Обсудить задачу</a>
@@ -188,29 +201,22 @@ export function CustomLanding() {
         )}
 
         <div className="custom-hero-content">
-          <div className="custom-hero-orbit" aria-hidden="true">
-            <span />
-            <span />
-            <i />
-          </div>
-          <p className="custom-kicker">Внешняя команда автоматизации</p>
           <h1 id="custom-hero-title">
-            Автоматизируем бизнес-
-            <span>процессы под ключ</span>
+            Разрабатываем продукты.
+            <span>Автоматизируем бизнес.</span>
           </h1>
           <p className="custom-hero-copy">
-            Разбираем ручную работу, проектируем решение и сопровождаем запуск
-            без найма собственной команды автоматизации.
+            Создаём веб-сервисы, приложения и внутренние системы. Подключаем ИИ
+            там, где он действительно упрощает работу.
           </p>
           <div className="custom-hero-cta">
             <a className="custom-button custom-button-light" href="#contact">Обсудить задачу</a>
-            <a className="custom-button custom-button-ghost" href="#process">Как мы работаем</a>
+            <a className="custom-button custom-button-ghost" href="#services">Что мы делаем</a>
           </div>
-          <p className="custom-hero-note">Можно начать без технического задания</p>
         </div>
 
         <div className="custom-hero-footer">
-          <p><span>Аналитика</span><span>Интеграции</span><span>Разработка</span><span>Запуск</span><span>Сопровождение</span></p>
+          <p>От идеи и прототипа до запуска и развития</p>
           <a href="#problems">Смотреть ниже <ChevronDown size={16} /></a>
         </div>
       </section>
