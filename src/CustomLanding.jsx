@@ -46,27 +46,6 @@ const services = [
   },
 ];
 
-const entryPaths = [
-  {
-    number: "01",
-    title: "Запустить цифровой продукт",
-    text: "Исследуем идею, проектируем и выпускаем веб-сервис, личный кабинет или мобильное приложение.",
-    href: "#services",
-  },
-  {
-    number: "02",
-    title: "Автоматизировать процесс",
-    text: "Разбираем ручные операции, связываем системы и внедряем управляемый рабочий сценарий.",
-    href: "#services",
-  },
-  {
-    number: "03",
-    title: "Подключить внешнюю команду",
-    text: "Берём на себя discovery, дизайн, разработку, QA, запуск и дальнейшее развитие.",
-    href: "#formats",
-  },
-];
-
 const outcomes = [
   ["Продукт выходит в работу", "Команда получает не презентацию и не набор макетов, а проверенное решение, готовое к реальному использованию."],
   ["Бизнес управляет процессом", "Понятны статусы, точки ответственности, исключения и данные для принятия решений."],
@@ -271,26 +250,6 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-entry" id="start">
-        <SectionIntro
-          eyebrow="С чего начать"
-          title="Выберите ближайшую задачу"
-          text="Не нужно заранее выбирать технологию или готовить техническое задание. Достаточно определить, какой результат нужен бизнесу."
-        />
-        <div className="custom-entry-grid">
-          {entryPaths.map((path) => (
-            <a href={path.href} key={path.number}>
-              <span>{path.number}</span>
-              <div>
-                <h3>{path.title}</h3>
-                <p>{path.text}</p>
-              </div>
-              <ArrowRight size={22} aria-hidden="true" />
-            </a>
-          ))}
-        </div>
-      </section>
-
       <section className="custom-section custom-scroll-story" id="services" aria-label="Услуги Mary Custom">
         <div className="custom-scroll-cards">
           {services.map((service, index) => (
@@ -480,7 +439,7 @@ export function CustomLanding() {
             <nav aria-label="Связаться с Mary Custom">
               <a href="#team">Команда</a>
               <a href="#contact">Обсудить задачу</a>
-              <a href="#start">Выбрать направление</a>
+              <a href="#services">Посмотреть услуги</a>
               <a href="#top">Наверх</a>
             </nav>
           </div>
