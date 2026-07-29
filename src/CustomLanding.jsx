@@ -14,15 +14,6 @@ import {
 import maryMark from "./assets/mary-mark.svg";
 import "./custom-landing.css";
 
-const problems = [
-  "Есть идея продукта, но нет команды, которая доведёт её до запуска",
-  "Клиенты работают через письма и таблицы вместо удобного сервиса",
-  "Менеджеры вручную переносят данные между CRM и учётными системами",
-  "Заказы, документы и согласования зависят от ручной координации",
-  "Внутренние инструменты не поддерживают реальный процесс команды",
-  "Существующий продукт сложно развивать без постоянного тушения пожаров",
-];
-
 const services = [
   {
     number: "01",
@@ -141,11 +132,33 @@ function SectionIntro({ eyebrow, title, text }) {
 export function CustomLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [activeService, setActiveService] = useState(0);
 
   useEffect(() => {
     if (window.location.hash === "#team") {
       document.getElementById("team")?.scrollIntoView();
     }
+  }, []);
+
+  useEffect(() => {
+    const cards = document.querySelectorAll("[data-scroll-service]");
+    if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]) {
+          setActiveService(Number(visible[0].target.dataset.scrollService));
+        }
+      },
+      { rootMargin: "-38% 0px -38% 0px", threshold: [0, 0.25, 0.5] },
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -245,36 +258,41 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-problems" id="problems">
-        <SectionIntro
-          eyebrow="Когда мы полезны"
-          title="Задачи, для которых нужна сильная внешняя команда"
-          text="Подключаемся, когда важно быстро превратить идею в продукт, связать разрозненные системы или перестроить ручной процесс без расширения собственного штата."
-        />
-        <div className="custom-problem-list">
-          {problems.map((problem, index) => (
-            <div key={problem}><span>{String(index + 1).padStart(2, "0")}</span><p>{problem}</p></div>
-          ))}
-        </div>
-        <ArrowLink>Показать свою задачу</ArrowLink>
-      </section>
-
-      <section className="custom-section custom-services" id="services">
-        <SectionIntro
-          eyebrow="Услуги"
-          title="Одна команда — от исследования до работающего продукта"
-          text="Подключаем нужные компетенции под этап проекта. Сохраняем единый контекст и отвечаем не за часы, а за согласованный результат."
-        />
-        <div className="custom-service-list">
-          {services.map((service) => (
-            <article key={service.number}>
-              <span>{service.number}</span>
-              <h3>{service.title}</h3>
-              <p>{service.text}</p>
-              <ArrowRight size={20} aria-hidden="true" />
+      <section className="custom-section custom-scroll-story" id="services" aria-label="Услуги Mary Custom">
+        <div className="custom-scroll-cards">
+          {services.map((service, index) => (
+            <article
+              className={`custom-scroll-card ${activeService === index ? "is-active" : ""}`}
+              data-scroll-service={index}
+              key={service.number}
+              onMouseEnter={() => setActiveService(index)}
+            >
+              <div className="custom-scroll-art" aria-hidden="true">
+                <span>{service.number}</span>
+                <div>
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+              <div className="custom-scroll-mobile-copy">
+                <small>Услуги · {service.number}</small>
+                <h2>{service.title}</h2>
+                <p>{service.text}</p>
+                <ArrowLink>Обсудить задачу</ArrowLink>
+              </div>
             </article>
           ))}
         </div>
+
+        <aside className="custom-scroll-copy">
+          <div key={services[activeService].number}>
+            <span>Услуги · {services[activeService].number} / {String(services.length).padStart(2, "0")}</span>
+            <h2>{services[activeService].title}</h2>
+            <p>{services[activeService].text}</p>
+            <a className="custom-button custom-button-dark" href="#contact">Обсудить задачу</a>
+          </div>
+        </aside>
       </section>
 
       <section className="custom-section custom-outcomes">
