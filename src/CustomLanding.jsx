@@ -208,33 +208,32 @@ export function CustomLanding() {
 
         <div className="custom-hero-content">
           <h1 id="custom-hero-title">
-            Разрабатываем продукты
-            <span>и автоматизируем бизнес</span>
+            Автоматизируем бизнес-
+            <span>процессы под ключ</span>
           </h1>
-          <p className="custom-hero-copy">Внешняя продуктовая команда: исследование, дизайн, разработка, интеграции и поддержка — от задачи до работающего решения.</p>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="#contact">Обсудить задачу</a>
-            <a className="custom-button custom-button-ghost" href="#services">Посмотреть услуги</a>
+            <a className="custom-button custom-button-light" href="#contact">Заказать</a>
+            <a className="custom-button custom-button-ghost" href="#services">Заказать</a>
           </div>
         </div>
 
-        <div className="custom-hero-logos" aria-label="Компетенции команды">
-          <span>Product discovery</span>
-          <span>UX/UI</span>
-          <span>Web & mobile</span>
-          <span>AI и автоматизация</span>
-          <span>Интеграции</span>
+        <div className="custom-hero-logos" aria-label="Компании, с которыми работала команда">
+          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
+          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
+          <img src="/media/ntr-logo-mask.png" alt="НТР Беларусь" />
+          <img src="/media/ntr-logo-mask.png" alt="" aria-hidden="true" />
         </div>
 
         <div className="custom-hero-bottom" id="team">
           <h2>
-            Собираем команду под задачу,
-            <span>отвечаем за запуск и дальнейшее развитие</span>
+            Погружаемся в работу компании,
+            <span>проектируем решение и сопровождаем запуск</span>
           </h2>
           <article className="custom-founder-card">
             <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
             <div>
-              <p>У проекта есть владелец, а не цепочка исполнителей</p>
+              <p>Погружаемся в работу компании, проектируем решение</p>
               <small>CEO Mary</small>
               <strong>Александр Лукашевич</strong>
               <a href="#contact">

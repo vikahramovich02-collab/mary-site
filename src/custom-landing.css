@@ -798,3 +798,88 @@
   }
   .custom-footer-bottom > div { gap: 24px; }
 }
+
+/* The first viewport stays faithful to the approved Mary Figma composition. */
+.custom-site { padding-top: 0; }
+
+.custom-hero {
+  width: 100%;
+  min-height: max(760px, 100svh);
+  margin: 0;
+  padding: 30px clamp(24px, 4vw, 72px) 34px;
+  border-radius: 0;
+}
+
+.custom-hero-shade {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(0,0,0,.5) 0%, rgba(0,0,0,.28) 28%, transparent 58%),
+    linear-gradient(180deg, rgba(0,0,0,.58) 0%, rgba(0,0,0,.18) 34%, rgba(0,0,0,.27) 68%, rgba(0,0,0,.72) 100%),
+    rgba(0,0,0,.18);
+}
+
+.custom-header {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.custom-header .custom-brand.is-dark { color: #fff; }
+.custom-header .custom-brand.is-dark img { filter: invert(0); }
+.custom-header .custom-brand i { opacity: .55; }
+
+.custom-header .custom-nav {
+  padding: 5px;
+  border: 1px solid rgba(255,255,255,.05);
+  color: #fff;
+  background: rgba(22,22,22,.64);
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  backdrop-filter: blur(18px);
+}
+.custom-header .custom-nav a { color: rgba(255,255,255,.8); }
+.custom-header .custom-nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
+
+.custom-header-actions .custom-button-light {
+  min-height: 44px;
+  padding-inline: 18px;
+  color: #080808 !important;
+  background: #fff;
+}
+.custom-header-actions .custom-button-light:hover { color: #080808 !important; background: #ededeb; }
+
+.custom-hero-content { top: 27%; }
+.custom-hero h1 { font-size: clamp(56px, 5.56vw, 80px); }
+.custom-hero-cta { margin-top: 56px; }
+.custom-hero-cta .custom-button { min-width: 108px; }
+.custom-hero-logos { top: 65%; bottom: auto; }
+.custom-hero-bottom { display: grid; }
+
+@media (max-width: 1080px) {
+  .custom-header { grid-template-columns: 1fr auto; }
+  .custom-header .custom-menu-button {
+    color: #fff;
+    border-color: rgba(255,255,255,.15);
+  }
+}
+
+@media (max-width: 760px) {
+  .custom-hero {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 22px 20px;
+    border-radius: 0;
+  }
+  .custom-header { min-height: 0; padding: 0; }
+  .custom-hero-content { top: 24%; }
+  .custom-hero h1 { font-size: clamp(42px, 12.5vw, 60px); }
+  .custom-hero-cta { margin-top: 32px; }
+  .custom-hero-logos { top: 55%; bottom: auto; }
+  .custom-hero-bottom { display: grid; }
+}
