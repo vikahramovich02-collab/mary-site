@@ -6,7 +6,6 @@ import {
   FileCheck2,
   Menu,
   Paperclip,
-  Route,
   ShieldCheck,
   Sparkles,
   X,
@@ -52,13 +51,6 @@ const outcomes = [
   ["Бизнес управляет процессом", "Понятны статусы, точки ответственности, исключения и данные для принятия решений."],
   ["Не нужно собирать штат", "Все ключевые компетенции подключаются под этап проекта и работают как одна команда."],
   ["Есть основа для развития", "Архитектура, интерфейсы и процессы задокументированы, поэтому решение можно безопасно масштабировать."],
-];
-
-const examples = [
-  ["Идея", "Прототип", "MVP"],
-  ["Клиент", "Личный кабинет", "Сервис"],
-  ["Заявка", "Системы", "Результат"],
-  ["Процесс", "Автоматизация", "Контроль"],
 ];
 
 const steps = [
@@ -190,7 +182,7 @@ export function CustomLanding() {
           <nav className="custom-nav" aria-label="Навигация по странице">
             <a href="#services">Услуги</a>
             <a href="#process">Как работаем</a>
-            <a href="#experience">Проекты</a>
+            <a href="#formats">Форматы</a>
             <a href="#team">Команда</a>
           </nav>
           <div className="custom-header-actions">
@@ -211,7 +203,7 @@ export function CustomLanding() {
             <nav>
               <a href="#services" onClick={closeMenu}>Услуги</a>
               <a href="#process" onClick={closeMenu}>Как работаем</a>
-              <a href="#experience" onClick={closeMenu}>Проекты</a>
+              <a href="#formats" onClick={closeMenu}>Форматы</a>
               <a href="#team" onClick={closeMenu}>Команда</a>
               <a href="#faq" onClick={closeMenu}>FAQ</a>
             </nav>
@@ -305,33 +297,6 @@ export function CustomLanding() {
               <p>{text}</p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="custom-section custom-experience" id="experience">
-        <SectionIntro
-          eyebrow="Типовые проекты"
-          title="Запускаем новое и приводим в порядок существующее"
-          text="Каждый сценарий проектируется под контекст компании. Показываем типы задач, с которыми особенно полезна кросс-функциональная продуктовая команда."
-        />
-        <div className="custom-example-list">
-          {examples.map((example, index) => (
-            <article key={example.join("-")}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <div>
-                {example.map((item, itemIndex) => (
-                  <span key={item}>
-                    {item}
-                    {itemIndex < example.length - 1 && <ArrowRight size={20} aria-hidden="true" />}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
-        <div className="custom-experience-note">
-          <Route size={22} />
-          <p>Перед разработкой фиксируем пользовательский сценарий, бизнес-правила, интеграции и точки ответственности. Поэтому решение поддерживает реальную работу, а не только идеальный макет.</p>
         </div>
       </section>
 
@@ -467,7 +432,6 @@ export function CustomLanding() {
           <div className="custom-footer-links">
             <nav aria-label="Услуги и проекты">
               <a href="#services">Услуги</a>
-              <a href="#experience">Проекты</a>
               <a href="#process">Как работаем</a>
               <a href="#formats">Форматы</a>
               <a href="#faq">Вопросы</a>
