@@ -4,6 +4,7 @@
   --custom-muted: #73747b;
   --custom-line: #dededc;
   --custom-soft: #f4f4f2;
+  --custom-accent: #d7ff42;
   --custom-ease: cubic-bezier(.23, 1, .32, 1);
   min-height: 100%;
   color: var(--custom-ink);
@@ -139,7 +140,7 @@
 .custom-button:active { transform: scale(.97); }
 .custom-button-small { min-height: 44px; padding-inline: 18px; }
 .custom-button-light { color: #080808 !important; background: #fff; }
-.custom-button-light:hover { background: #ededeb; }
+.custom-button-light:hover { background: var(--custom-accent); }
 .custom-button-dark { color: #fff !important; background: var(--custom-ink); }
 .custom-button-ghost { color: #fff !important; border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.1); }
 .custom-button-ghost:hover { background: rgba(255,255,255,.16); }
@@ -230,6 +231,17 @@
 .custom-hero-logos img:nth-last-child(-n + 2) {
   width: 62px;
   height: 38px;
+}
+.custom-hero-logos span {
+  padding: 7px 11px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  color: rgba(255,255,255,.62);
+  background: rgba(0,0,0,.16);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
 }
 
 .custom-hero-bottom {
@@ -468,6 +480,8 @@
   .custom-hero-logos { top: 55%; width: calc(100% - 40px); gap: 8px; }
   .custom-hero-logos img { width: 50px; height: 26px; }
   .custom-hero-logos img:nth-last-child(-n + 2) { width: 38px; height: 24px; }
+  .custom-hero-logos span { padding: 6px 9px; font-size: 9px; }
+  .custom-hero-logos span:nth-child(n + 4) { display: none; }
   .custom-hero-bottom { right: 20px; bottom: 20px; left: 20px; grid-template-columns: 1fr; gap: 14px; }
   .custom-hero-bottom > h2 { max-width: 360px; font-size: 16px; }
   .custom-founder-card { grid-template-columns: 92px 1fr; width: min(100%, 340px); height: 116px; justify-self: end; }
