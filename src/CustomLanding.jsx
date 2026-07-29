@@ -442,15 +442,34 @@ export function CustomLanding() {
       </section>
 
       <footer className="custom-footer">
-        <Brand dark />
-        <p>Продуктовая разработка и автоматизация бизнеса</p>
-        <nav aria-label="Навигация в подвале">
-          <a href="#services">Услуги</a>
-          <a href="#process">Как работаем</a>
-          <a href="#formats">Форматы</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <div><span>© 2026 Mary Custom</span></div>
+        <div className="custom-footer-main">
+          <div className="custom-footer-brand">
+            <Brand dark />
+            <p>Проектируем цифровые продукты и автоматизируем бизнес вместе с вашей командой.</p>
+          </div>
+          <div className="custom-footer-links">
+            <nav aria-label="Услуги и проекты">
+              <a href="#services">Услуги</a>
+              <a href="#experience">Проекты</a>
+              <a href="#process">Как работаем</a>
+              <a href="#formats">Форматы</a>
+              <a href="#faq">Вопросы</a>
+            </nav>
+            <nav aria-label="Связаться с Mary Custom">
+              <a href="#team">Команда</a>
+              <a href="#contact">Обсудить задачу</a>
+              <a href="#contact">Стать клиентом</a>
+              <a href="#top">Наверх</a>
+            </nav>
+          </div>
+        </div>
+        <div className="custom-footer-bottom">
+          <span>© Mary Custom 2026</span>
+          <div>
+            <span>Политика конфиденциальности</span>
+            <span>Условия использования</span>
+          </div>
+        </div>
       </footer>
     </main>
   );
