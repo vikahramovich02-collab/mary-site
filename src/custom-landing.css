@@ -1048,3 +1048,110 @@
   }
   .custom-scroll-copy > div { animation: none; }
 }
+
+/* Clear commercial entry points between the approved hero and the service story. */
+.custom-entry {
+  background: #fff;
+}
+
+.custom-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--custom-line);
+  border-bottom: 1px solid var(--custom-line);
+}
+
+.custom-entry-grid > a {
+  display: grid;
+  min-height: 250px;
+  grid-template-columns: 34px 1fr auto;
+  align-content: space-between;
+  gap: 20px;
+  padding: 28px;
+  border-right: 1px solid var(--custom-line);
+  transition: background-color 160ms ease;
+}
+
+.custom-entry-grid > a:last-child {
+  border-right: 0;
+}
+
+.custom-entry-grid > a:hover {
+  background: #f6f6f4;
+}
+
+.custom-entry-grid > a:focus-visible {
+  outline: 2px solid var(--custom-ink);
+  outline-offset: -4px;
+}
+
+.custom-entry-grid > a > span {
+  color: var(--custom-muted);
+  font-size: 11px;
+}
+
+.custom-entry-grid > a > div {
+  grid-column: 1 / -1;
+  align-self: end;
+}
+
+.custom-entry-grid h3 {
+  margin: 0 0 14px;
+  font-size: clamp(25px, 2.2vw, 34px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -.045em;
+}
+
+.custom-entry-grid p {
+  max-width: 40ch;
+  margin: 0;
+  color: var(--custom-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.custom-entry-grid svg {
+  transition: transform 160ms var(--custom-ease);
+}
+
+.custom-entry-grid > a:hover svg {
+  transform: translateX(4px);
+}
+
+.custom-hero-cta .custom-button {
+  min-width: 164px;
+}
+
+@media (max-width: 900px) {
+  .custom-entry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-entry-grid > a {
+    min-height: 210px;
+    border-right: 0;
+    border-bottom: 1px solid var(--custom-line);
+  }
+
+  .custom-entry-grid > a:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .custom-hero-cta {
+    width: min(100%, 360px);
+  }
+
+  .custom-hero-cta .custom-button {
+    min-width: 0;
+    flex: 1 1 0;
+    padding-inline: 14px;
+  }
+
+  .custom-entry-grid > a {
+    min-height: 190px;
+    padding: 24px 4px;
+  }
+}

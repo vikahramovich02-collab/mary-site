@@ -46,6 +46,27 @@ const services = [
   },
 ];
 
+const entryPaths = [
+  {
+    number: "01",
+    title: "Запустить цифровой продукт",
+    text: "Исследуем идею, проектируем и выпускаем веб-сервис, личный кабинет или мобильное приложение.",
+    href: "#services",
+  },
+  {
+    number: "02",
+    title: "Автоматизировать процесс",
+    text: "Разбираем ручные операции, связываем системы и внедряем управляемый рабочий сценарий.",
+    href: "#services",
+  },
+  {
+    number: "03",
+    title: "Подключить внешнюю команду",
+    text: "Берём на себя discovery, дизайн, разработку, QA, запуск и дальнейшее развитие.",
+    href: "#formats",
+  },
+];
+
 const outcomes = [
   ["Продукт выходит в работу", "Команда получает не презентацию и не набор макетов, а проверенное решение, готовое к реальному использованию."],
   ["Бизнес управляет процессом", "Понятны статусы, точки ответственности, исключения и данные для принятия решений."],
@@ -213,32 +234,32 @@ export function CustomLanding() {
 
         <div className="custom-hero-content">
           <h1 id="custom-hero-title">
-            Автоматизируем бизнес-
-            <span>процессы под ключ</span>
+            Разрабатываем продукты.
+            <span>Автоматизируем бизнес.</span>
           </h1>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="#contact">Заказать</a>
-            <a className="custom-button custom-button-ghost" href="#services">Заказать</a>
+            <a className="custom-button custom-button-light" href="#contact">Обсудить задачу</a>
+            <a className="custom-button custom-button-ghost" href="#services">Посмотреть услуги</a>
           </div>
         </div>
 
-        <div className="custom-hero-logos" aria-label="Компании, с которыми работала команда">
-          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
-          <img src="/media/mtbank-logo-mask.png" alt="" aria-hidden="true" />
-          <img src="/media/ntr-logo-mask.png" alt="НТР Беларусь" />
-          <img src="/media/ntr-logo-mask.png" alt="" aria-hidden="true" />
+        <div className="custom-hero-logos" aria-label="Компетенции команды">
+          <span>Исследование</span>
+          <span>Дизайн</span>
+          <span>Разработка</span>
+          <span>Интеграции</span>
+          <span>Сопровождение</span>
         </div>
 
         <div className="custom-hero-bottom" id="team">
           <h2>
-            Погружаемся в работу компании,
-            <span>проектируем решение и сопровождаем запуск</span>
+            Погружаемся в ваш контекст,
+            <span>проектируем решение и отвечаем за запуск</span>
           </h2>
           <article className="custom-founder-card">
             <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
             <div>
-              <p>Погружаемся в работу компании, проектируем решение</p>
+              <p>Обсудим идею или процесс без готового технического задания</p>
               <small>CEO Mary</small>
               <strong>Александр Лукашевич</strong>
               <a href="#contact">
@@ -247,6 +268,26 @@ export function CustomLanding() {
               </a>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section className="custom-section custom-entry" id="start">
+        <SectionIntro
+          eyebrow="С чего начать"
+          title="Выберите ближайшую задачу"
+          text="Не нужно заранее выбирать технологию или готовить техническое задание. Достаточно определить, какой результат нужен бизнесу."
+        />
+        <div className="custom-entry-grid">
+          {entryPaths.map((path) => (
+            <a href={path.href} key={path.number}>
+              <span>{path.number}</span>
+              <div>
+                <h3>{path.title}</h3>
+                <p>{path.text}</p>
+              </div>
+              <ArrowRight size={22} aria-hidden="true" />
+            </a>
+          ))}
         </div>
       </section>
 
@@ -394,9 +435,9 @@ export function CustomLanding() {
       <section className="custom-contact" id="contact">
         <div className="custom-contact-copy">
           <span>Первый шаг</span>
-          <h2>Расскажите, что хотите запустить или изменить</h2>
-          <p>Разберём контекст, предложим реалистичный формат старта и определим следующий шаг. Можно начать без технического задания.</p>
-          <div><Sparkles size={20} /><span>Вводная встреча не обязывает начинать большой проект</span></div>
+          <h2>Расскажите о продукте или процессе, который хотите изменить</h2>
+          <p>На вводной встрече уточним контекст, определим первый проверяемый результат и предложим подходящий формат работы. Техническое задание не требуется.</p>
+          <div><Sparkles size={20} /><span>После встречи у вас будет понятный следующий шаг без обязательства начинать большой проект</span></div>
         </div>
         <div className="custom-contact-panel">
           {submitted ? (
@@ -410,7 +451,7 @@ export function CustomLanding() {
             <form onSubmit={submitForm}>
               <label>Как к вам обращаться<input name="name" required autoComplete="name" placeholder="Имя" /></label>
               <label>Рабочий контакт<input name="contact" required placeholder="Телефон, email или Telegram" /></label>
-              <label>Что хотите создать или улучшить<textarea name="task" required rows="4" placeholder="Опишите задачу обычными словами" /></label>
+              <label>Что хотите запустить или автоматизировать<textarea name="task" required rows="4" placeholder="Опишите задачу обычными словами" /></label>
               <label className="custom-file">
                 <Paperclip size={17} />
                 <span>Приложить материалы</span>
@@ -439,7 +480,7 @@ export function CustomLanding() {
             <nav aria-label="Связаться с Mary Custom">
               <a href="#team">Команда</a>
               <a href="#contact">Обсудить задачу</a>
-              <a href="#contact">Стать клиентом</a>
+              <a href="#start">Выбрать направление</a>
               <a href="#top">Наверх</a>
             </nav>
           </div>
