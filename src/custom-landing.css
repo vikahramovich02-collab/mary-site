@@ -1064,3 +1064,215 @@
     padding-inline: 14px;
   }
 }
+
+/* Conversational FAQ and estimate flow for the Mary Custom prototype. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.custom-faq-chat {
+  width: min(100%, 860px);
+  margin-left: auto;
+  padding: clamp(20px, 3vw, 34px);
+  border-radius: 24px;
+  background: #f3f3f1;
+}
+
+.custom-chat-message {
+  width: fit-content;
+  max-width: min(100%, 680px);
+  padding: 16px 18px;
+  border-radius: 18px;
+}
+
+.custom-chat-message small {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--custom-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.custom-chat-message p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.custom-chat-message.is-mary {
+  border-bottom-left-radius: 6px;
+  background: #fff;
+}
+
+.custom-chat-message.is-user {
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+  color: #fff;
+  background: #111212;
+}
+
+.custom-chat-message.is-dark {
+  border: 1px solid rgba(255,255,255,.13);
+  color: #fff;
+  background: rgba(255,255,255,.08);
+}
+
+.custom-chat-message.is-dark small {
+  color: rgba(255,255,255,.5);
+}
+
+.custom-faq-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.custom-faq-options button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d6;
+  border-radius: 999px;
+  color: #232323;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.custom-faq-options button:hover {
+  border-color: #a8a8a4;
+  background: #fafafa;
+}
+
+.custom-faq-options button:focus-visible,
+.custom-chat-input button:focus-visible {
+  outline: 2px solid #111212;
+  outline-offset: 2px;
+}
+
+.custom-chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.custom-chat-input {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.custom-chat-input input {
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid #d9d9d6;
+  border-radius: 14px;
+  color: #111212;
+  background: #fff;
+  font: inherit;
+}
+
+.custom-chat-input button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  align-self: center;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: #111212;
+  cursor: pointer;
+}
+
+.custom-contact-panel {
+  min-height: 600px;
+}
+
+.custom-estimator-start,
+.custom-estimator-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.custom-estimator-start textarea {
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 16px;
+  background: rgba(0,0,0,.12);
+}
+
+.custom-estimator-chat dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 20px 0 16px;
+}
+
+.custom-estimator-chat dl div {
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.08);
+}
+
+.custom-estimator-chat dt {
+  color: rgba(255,255,255,.48);
+  font-size: 10px;
+}
+
+.custom-estimator-chat dd {
+  margin: 5px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.custom-estimator-chat em {
+  display: block;
+  color: rgba(255,255,255,.48);
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.custom-contact-step {
+  margin-top: 8px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+@media (max-width: 760px) {
+  .custom-faq-chat {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .custom-faq-options {
+    flex-wrap: nowrap;
+    margin-right: -16px;
+    padding-right: 16px;
+    overflow-x: auto;
+  }
+
+  .custom-faq-options button {
+    flex: 0 0 auto;
+  }
+
+  .custom-estimator-chat dl {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Check,
-  ChevronDown,
-  FileCheck2,
   Menu,
-  Paperclip,
-  ShieldCheck,
   Sparkles,
   X,
 } from "lucide-react";
@@ -41,24 +37,23 @@ const services = [
   },
   {
     number: "06",
-    title: "Команда на аутсорсе",
-    text: "Подключаем аналитика, дизайнера, разработчиков и QA под задачу и отвечаем за выпуск и поддержку.",
+    title: "Поддержка и развитие",
+    text: "После запуска следим за стабильностью, собираем обратную связь и развиваем продукт или автоматизацию вместе с бизнесом.",
   },
 ];
 
 const outcomes = [
-  ["Продукт выходит в работу", "Команда получает не презентацию и не набор макетов, а проверенное решение, готовое к реальному использованию."],
-  ["Бизнес управляет процессом", "Понятны статусы, точки ответственности, исключения и данные для принятия решений."],
-  ["Не нужно собирать штат", "Все ключевые компетенции подключаются под этап проекта и работают как одна команда."],
-  ["Есть основа для развития", "Архитектура, интерфейсы и процессы задокументированы, поэтому решение можно безопасно масштабировать."],
+  ["Рабочее решение", "Продукт или автоматизация запущены, проверены на реальных сценариях и готовы к использованию."],
+  ["Понятные правила", "Зафиксированы роли, статусы, исключения, критерии готовности и порядок поддержки."],
+  ["Данные для управления", "Бизнес видит состояние процесса, проблемные точки и факты для следующих решений."],
+  ["План развития", "Передаём документацию, приоритеты и понятный план следующих улучшений."],
 ];
 
 const steps = [
-  ["01", "Погружаемся", "Разбираем задачу, пользователей, процессы, ограничения и текущие системы.", "Карта контекста"],
-  ["02", "Проектируем", "Определяем решение, границы первой версии, архитектуру и критерии результата.", "Прототип и план"],
-  ["03", "Разрабатываем", "Собираем продукт короткими итерациями и регулярно показываем рабочую версию.", "Готовый релиз"],
-  ["04", "Внедряем", "Подключаем системы, переносим данные, обучаем команду и запускаем поэтапно.", "Работающее решение"],
-  ["05", "Развиваем", "Следим за качеством, исправляем узкие места и планируем следующие улучшения.", "Предсказуемое развитие"],
+  ["01", "Разбираем задачу", "Изучаем пользователей, процесс, ограничения и действующие системы.", "Контекст и приоритет"],
+  ["02", "Проектируем решение", "Показываем будущий сценарий, границы первой версии и критерии результата.", "Прототип и план"],
+  ["03", "Собираем и запускаем", "Разрабатываем короткими итерациями, подключаем системы и проверяем рабочую версию.", "Запущенное решение"],
+  ["04", "Поддерживаем и развиваем", "Следим за качеством, исправляем узкие места и планируем следующие изменения.", "План развития"],
 ];
 
 const formats = [
@@ -125,6 +120,11 @@ export function CustomLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [activeService, setActiveService] = useState(0);
+  const [activeFaq, setActiveFaq] = useState(null);
+  const [faqQuery, setFaqQuery] = useState("");
+  const [estimateText, setEstimateText] = useState("");
+  const [estimate, setEstimate] = useState(null);
+  const [contactValue, setContactValue] = useState("");
 
   useEffect(() => {
     if (window.location.hash === "#team") {
@@ -155,9 +155,46 @@ export function CustomLanding() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const submitForm = (event) => {
+  const buildEstimate = (value) => {
+    const task = value.toLowerCase();
+
+    if (task.includes("прототип") || task.includes("исслед") || task.includes("discovery")) {
+      return { type: "Исследование и прототип", budget: "$4–10k", time: "2–4 недели" };
+    }
+
+    if (task.includes("прилож") || task.includes("mobile") || task.includes("ios") || task.includes("android")) {
+      return { type: "Мобильный продукт", budget: "$20–45k", time: "8–14 недель" };
+    }
+
+    if (task.includes("автомат") || task.includes("интеграц") || task.includes("crm") || task.includes("erp") || task.includes("бот")) {
+      return { type: "Автоматизация или интеграция", budget: "$8–25k", time: "4–8 недель" };
+    }
+
+    return { type: "Веб-продукт или MVP", budget: "$15–35k", time: "6–12 недель" };
+  };
+
+  const submitEstimate = (event) => {
+    event.preventDefault();
+    setEstimate(buildEstimate(estimateText));
+  };
+
+  const submitContact = (event) => {
     event.preventDefault();
     setSubmitted(true);
+  };
+
+  const submitFaq = (event) => {
+    event.preventDefault();
+    const query = faqQuery.trim().toLowerCase();
+    if (!query) return;
+
+    const match = faqs.findIndex(([question, answer]) => {
+      const source = `${question} ${answer}`.toLowerCase();
+      return query.split(/\s+/).some((word) => word.length > 3 && source.includes(word));
+    });
+
+    setActiveFaq(match >= 0 ? match : 4);
+    setFaqQuery("");
   };
 
   return (
@@ -288,7 +325,11 @@ export function CustomLanding() {
       </section>
 
       <section className="custom-section custom-outcomes">
-        <SectionIntro eyebrow="Результат" title="Что получает бизнес после запуска" />
+        <SectionIntro
+          eyebrow="Результат"
+          title="Что остаётся у бизнеса после запуска"
+          text="Не набор отдельных работ, а решение, правила управления и основа для следующих изменений."
+        />
         <div className="custom-outcome-grid">
           {outcomes.map(([title, text], index) => (
             <article key={title}>
@@ -303,8 +344,8 @@ export function CustomLanding() {
       <section className="custom-section custom-process" id="process">
         <SectionIntro
           eyebrow="Как работаем"
-          title="Прозрачный путь от задачи до устойчивого результата"
-          text="Делим проект на проверяемые этапы. Вы видите прогресс и принимаете ключевые решения на рабочих версиях, а не только в финале."
+          title="Как задача превращается в работающий результат"
+          text="Четыре понятных этапа. На каждом показываем рабочий результат и согласуем следующий шаг."
         />
         <div className="custom-process-list">
           {steps.map(([number, title, text, result]) => (
@@ -318,35 +359,11 @@ export function CustomLanding() {
         <ArrowLink>Начать с вводной встречи</ArrowLink>
       </section>
 
-      <section className="custom-section custom-deliverables">
-        <SectionIntro
-          eyebrow="На выходе"
-          title="Не набор специалистов, а управляемый результат"
-          text="Состав и критерии готовности фиксируются до начала этапа. Вы понимаете, что именно получите и как примете работу."
-        />
-        <div className="custom-document-stack">
-          {[
-            ["Карта контекста", "Пользователи, процессы, данные и ограничения"],
-            ["Прототип", "Проверенный пользовательский и бизнес-сценарий"],
-            ["План релиза", "Этапы, зависимости и критерии готовности"],
-            ["Рабочий продукт", "Интерфейсы, логика и интеграции"],
-            ["Документация", "Архитектура, запуск, поддержка и развитие"],
-          ].map(([title, text], index) => (
-            <article key={title} style={{ "--document-index": index }}>
-              <FileCheck2 size={22} />
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="custom-section custom-formats" id="formats">
         <SectionIntro
           eyebrow="Форматы работы"
-          title="Можно начать с небольшой проверяемой задачи"
-          text="Выбираем формат после вводного разговора — без искусственных тарифов, раздутого состава команды и лишнего объёма."
+          title="Выбираем формат под задачу"
+          text="После вводного разговора предлагаем состав работ, который соответствует цели, уровню определённости и масштабу запуска."
         />
         <div className="custom-format-grid">
           {formats.map((format, index) => (
@@ -362,62 +379,114 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-safety">
-        <div className="custom-safety-heading">
-          <ShieldCheck size={30} />
-          <SectionIntro eyebrow="Безопасность" title="Сначала проверяем. Потом запускаем." />
-        </div>
-        <div className="custom-safety-list">
-          {[
-            "Фиксируем границы первой версии и критерии готовности",
-            "Показываем рабочий результат короткими итерациями",
-            "Запрашиваем только необходимые доступы",
-            "Проверяем интеграции на безопасных данных",
-            "Запускаем изменения поэтапно",
-            "Документируем решение и порядок поддержки",
-          ].map((item) => <p key={item}><Check size={16} />{item}</p>)}
-        </div>
-      </section>
-
       <section className="custom-section custom-faq" id="faq">
-        <SectionIntro eyebrow="Вопросы" title="Что важно знать до старта" />
-        <div className="custom-faq-list">
-          {faqs.map(([question, answer], index) => (
-            <details key={question} open={index === 0}>
-              <summary><span>{question}</span><ChevronDown size={20} /></summary>
-              <p>{answer}</p>
-            </details>
-          ))}
+        <SectionIntro
+          eyebrow="Вопросы"
+          title="Спросите Mary о работе команды"
+          text="Выберите готовый вопрос или напишите свой. В прототипе ответы берутся из локальной базы Mary Custom."
+        />
+        <div className="custom-faq-chat">
+          <div className="custom-chat-message is-mary">
+            <small>Mary Custom</small>
+            <p>Расскажу, как мы оцениваем, запускаем и сопровождаем проекты.</p>
+          </div>
+          <div className="custom-faq-options" aria-label="Готовые вопросы">
+            {faqs.map(([question], index) => (
+              <button type="button" key={question} onClick={() => setActiveFaq(index)}>
+                {question}
+              </button>
+            ))}
+          </div>
+          {activeFaq !== null && (
+            <div className="custom-chat-thread" aria-live="polite">
+              <div className="custom-chat-message is-user"><p>{faqs[activeFaq][0]}</p></div>
+              <div className="custom-chat-message is-mary">
+                <small>Mary Custom</small>
+                <p>{faqs[activeFaq][1]}</p>
+              </div>
+            </div>
+          )}
+          <form className="custom-chat-input" onSubmit={submitFaq}>
+            <label className="sr-only" htmlFor="faq-question">Свой вопрос</label>
+            <input
+              id="faq-question"
+              value={faqQuery}
+              onChange={(event) => setFaqQuery(event.target.value)}
+              placeholder="Напишите свой вопрос"
+            />
+            <button type="submit" aria-label="Задать вопрос"><ArrowRight size={18} /></button>
+          </form>
         </div>
       </section>
 
       <section className="custom-contact" id="contact">
         <div className="custom-contact-copy">
-          <span>Первый шаг</span>
-          <h2>Расскажите о продукте или процессе, который хотите изменить</h2>
-          <p>На вводной встрече уточним контекст, определим первый проверяемый результат и предложим подходящий формат работы. Техническое задание не требуется.</p>
-          <div><Sparkles size={20} /><span>После встречи у вас будет понятный следующий шаг без обязательства начинать большой проект</span></div>
+          <span>Предварительная оценка</span>
+          <h2>Опишите задачу — Mary покажет ориентир</h2>
+          <p>Получите примерный диапазон бюджета и сроков. Точная оценка появится после короткого разбора контекста и интеграций.</p>
+          <div><Sparkles size={20} /><span>Ориентир в долларах не является офертой и помогает понять порядок проекта</span></div>
         </div>
         <div className="custom-contact-panel">
           {submitted ? (
             <div className="custom-success" role="status">
               <span><Check size={28} /></span>
-              <h3>Спасибо, задача принята</h3>
-              <p>Свяжемся с вами, чтобы уточнить контекст и договориться о вводной встрече.</p>
-              <button className="custom-button custom-button-light" type="button" onClick={() => setSubmitted(false)}>Отправить ещё одну</button>
+              <h3>Контакт сохранён</h3>
+              <p>В рабочей версии менеджер получит задачу, предварительную оценку и ваш контакт.</p>
+              <button className="custom-button custom-button-light" type="button" onClick={() => {
+                setSubmitted(false);
+                setEstimate(null);
+                setEstimateText("");
+                setContactValue("");
+              }}>Рассчитать ещё одну задачу</button>
+            </div>
+          ) : estimate ? (
+            <div className="custom-estimator-chat" aria-live="polite">
+              <div className="custom-chat-message is-user"><p>{estimateText}</p></div>
+              <div className="custom-chat-message is-mary is-dark">
+                <small>Mary Custom</small>
+                <p>Предварительно это похоже на формат «{estimate.type}».</p>
+                <dl>
+                  <div><dt>Бюджет</dt><dd>{estimate.budget}</dd></div>
+                  <div><dt>Срок</dt><dd>{estimate.time}</dd></div>
+                </dl>
+                <em>Ориентир уточняется после разбора функций, интеграций и требований к запуску.</em>
+              </div>
+              <form className="custom-contact-step" onSubmit={submitContact}>
+                <label>Куда отправить подробный разбор?
+                  <input
+                    required
+                    value={contactValue}
+                    onChange={(event) => setContactValue(event.target.value)}
+                    placeholder="@telegram или телефон"
+                  />
+                </label>
+                <label className="custom-consent">
+                  <input type="checkbox" required />
+                  <span>Согласен на обработку данных и принимаю политику конфиденциальности</span>
+                </label>
+                <button className="custom-button custom-button-light custom-submit" type="submit">
+                  Оставить контакт <ArrowRight size={18} />
+                </button>
+              </form>
             </div>
           ) : (
-            <form onSubmit={submitForm}>
-              <label>Как к вам обращаться<input name="name" required autoComplete="name" placeholder="Имя" /></label>
-              <label>Рабочий контакт<input name="contact" required placeholder="Телефон, email или Telegram" /></label>
-              <label>Что хотите запустить или автоматизировать<textarea name="task" required rows="4" placeholder="Опишите задачу обычными словами" /></label>
-              <label className="custom-file">
-                <Paperclip size={17} />
-                <span>Приложить материалы</span>
-                <input type="file" />
-              </label>
-              <label className="custom-consent"><input type="checkbox" required /><span>Согласен на обработку данных и принимаю политику конфиденциальности</span></label>
-              <button className="custom-button custom-button-light custom-submit" type="submit">Обсудить задачу <ArrowRight size={18} /></button>
+            <form className="custom-estimator-start" onSubmit={submitEstimate}>
+              <div className="custom-chat-message is-mary is-dark">
+                <small>Mary Custom</small>
+                <p>Что хотите запустить, улучшить или автоматизировать?</p>
+              </div>
+              <label className="sr-only" htmlFor="estimate-task">Описание задачи</label>
+              <textarea
+                id="estimate-task"
+                required
+                rows="7"
+                value={estimateText}
+                onChange={(event) => setEstimateText(event.target.value)}
+                placeholder="Например: хотим связать заявки из Telegram с CRM и автоматически назначать менеджера"
+              />
+              <button className="custom-button custom-button-light custom-submit" type="submit">
+                Получить ориентир <ArrowRight size={18} />
+              </button>
             </form>
           )}
         </div>
