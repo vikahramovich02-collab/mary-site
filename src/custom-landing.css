@@ -1543,3 +1543,356 @@
   .custom-founder-card strong { margin-top: 7px; }
   .custom-founder-card a { margin-top: 10px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Тёмная тема всей главной — продолжение первого экрана из макета Figma.
+   Один чёрный холст, секции разделены тонкой линией, контент живёт
+   на полупрозрачных плитках rgba(255,255,255,.045) с радиусом 24.
+   ───────────────────────────────────────────────────────────────────────────── */
+.custom-site {
+  --custom-black: #050505;
+  --custom-ink: #ffffff;
+  --custom-muted: rgba(255,255,255,.55);
+  --custom-line: rgba(255,255,255,.09);
+  --custom-soft: rgba(255,255,255,.045);
+  --custom-tile: rgba(255,255,255,.045);
+  --custom-tile-hover: rgba(255,255,255,.075);
+  padding: 0;
+  color: #fff;
+  background: #050505;
+}
+
+.custom-section,
+.custom-services,
+.custom-deliverables,
+.custom-formats,
+.custom-services-block {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(88px, 8.4vw, 136px) max(24px, calc((100vw - 1272px) / 2));
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+.custom-section + .custom-section { border-top: 1px solid var(--custom-line) !important; }
+.custom-section > * { max-width: 1272px; margin-right: auto; margin-left: auto; }
+
+.custom-section-intro {
+  grid-template-columns: minmax(96px, .3fr) minmax(420px, 1.2fr) minmax(240px, .7fr);
+  margin-bottom: 56px;
+}
+.custom-section-intro > span { color: rgba(255,255,255,.42); font-size: 12px; font-weight: 600; }
+.custom-section-intro h2 {
+  font-size: clamp(36px, 4.3vw, 62px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -.04em;
+}
+.custom-section-intro p { color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
+
+.custom-section-cta { margin-top: 44px; }
+.custom-button-dark { color: #050505 !important; background: #fff; }
+.custom-button-dark:hover { background: #ededeb; }
+.custom-arrow-link { color: #fff; }
+.custom-arrow-link svg { color: rgba(255,255,255,.6); }
+
+/* Услуги — шесть плиток вместо скролл-истории с заглушками */
+.custom-service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.custom-service-cards article {
+  display: flex;
+  min-height: 292px;
+  flex-direction: column;
+  padding: 26px 26px 24px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+  background: var(--custom-tile);
+  transition: background-color 200ms ease, transform 220ms var(--custom-ease), border-color 200ms ease;
+}
+.custom-service-cards article:hover {
+  border-color: rgba(255,255,255,.14);
+  background: var(--custom-tile-hover);
+  transform: translateY(-3px);
+}
+.custom-service-number { color: rgba(255,255,255,.38); font-size: 12px; font-weight: 600; }
+.custom-service-cards h3 {
+  margin: 54px 0 11px;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+}
+.custom-service-cards p {
+  margin: 0 0 22px;
+  color: var(--custom-muted);
+  font-size: 14px;
+  line-height: 1.58;
+}
+.custom-service-tags { display: flex; margin-top: auto; flex-wrap: wrap; gap: 6px; }
+.custom-service-tags span {
+  padding: 6px 11px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 999px;
+  color: rgba(255,255,255,.7);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Результат */
+.custom-outcomes { background: transparent; }
+.custom-outcome-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  border: 0;
+}
+.custom-outcome-grid article {
+  min-height: 272px;
+  padding: 26px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+  background: var(--custom-tile);
+}
+.custom-outcome-grid article > span { color: rgba(255,255,255,.35); font-size: 12px; font-weight: 600; }
+.custom-outcome-grid h3 {
+  margin: 66px 0 11px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.custom-outcome-grid p { color: var(--custom-muted); font-size: 14px; line-height: 1.58; }
+
+/* Процесс — лента из четырёх шагов */
+.custom-process-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  border: 0;
+}
+.custom-process-list article {
+  display: flex;
+  grid-template-columns: none;
+  flex-direction: column;
+  gap: 0;
+  padding: 26px 24px 22px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+  background: var(--custom-tile);
+}
+.custom-process-list article > span {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  color: #050505;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.custom-process-list h3 {
+  margin: 22px 0 9px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.custom-process-list p { color: var(--custom-muted); font-size: 14px; line-height: 1.58; }
+.custom-process-list small {
+  margin-top: auto;
+  padding-top: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+.custom-process-list small svg { color: rgba(255,255,255,.55); }
+
+/* Форматы */
+.custom-format-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  border: 0;
+}
+.custom-format-grid article {
+  min-height: 318px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 24px;
+  background: var(--custom-tile);
+  box-shadow: none;
+}
+.custom-format-grid article > span { color: rgba(255,255,255,.35); font-size: 12px; font-weight: 600; }
+.custom-format-grid h3 {
+  margin: 52px 0 12px;
+  font-size: clamp(23px, 2.1vw, 29px);
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+.custom-format-grid p { margin-bottom: 26px; color: var(--custom-muted); font-size: 14px; line-height: 1.58; }
+.custom-format-grid small { color: rgba(255,255,255,.38); font-size: 11px; }
+.custom-format-grid strong { margin-top: 5px; font-size: 14px; font-weight: 600; }
+
+/* FAQ-чат: варианты — нумерованным списком, как в интерфейсе Mary */
+.custom-faq-chat {
+  width: 100%;
+  margin: 0;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 28px;
+  background: var(--custom-tile);
+}
+.custom-chat-message.is-mary {
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  background: rgba(255,255,255,.06);
+}
+.custom-chat-message.is-mary small { color: rgba(255,255,255,.45); }
+.custom-chat-message.is-user { color: #050505; background: #fff; }
+
+.custom-faq-options {
+  display: grid;
+  margin: 22px 0;
+  padding: 0;
+  gap: 2px;
+  list-style: none;
+}
+.custom-faq-options li { display: block; }
+.custom-faq-options button {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 0;
+  border-radius: 12px;
+  color: rgba(255,255,255,.86);
+  background: transparent;
+  font-size: 14px;
+  text-align: left;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+.custom-faq-options button:hover { color: #fff; background: rgba(255,255,255,.07); }
+.custom-faq-options button > span {
+  flex: 0 0 auto;
+  min-width: 17px;
+  color: rgba(255,255,255,.4);
+  font-size: 13px;
+  font-weight: 600;
+}
+.custom-faq-options button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.custom-chat-input input {
+  border: 1px solid rgba(255,255,255,.14);
+  color: #fff;
+  background: rgba(255,255,255,.04);
+}
+.custom-chat-input input::placeholder { color: rgba(255,255,255,.38); }
+.custom-chat-input input:focus { border-color: rgba(255,255,255,.4); outline: 0; }
+.custom-chat-input button { color: #050505; background: #fff; }
+
+/* Предварительная оценка */
+.custom-contact {
+  width: 100%;
+  margin: 0;
+  border-top: 1px solid var(--custom-line);
+  border-radius: 0;
+  background: transparent;
+}
+.custom-contact-panel {
+  min-height: 0;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 28px;
+  background: var(--custom-tile);
+}
+.custom-contact-copy > span { color: rgba(255,255,255,.42); }
+.custom-contact-copy h2 { letter-spacing: -.045em; }
+.custom-estimator-start textarea {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.custom-estimator-start textarea:focus { border-color: rgba(255,255,255,.4); }
+.custom-contact-step { border-top-color: rgba(255,255,255,.1); }
+
+/* Футер */
+.custom-footer {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--custom-line);
+  border-radius: 0;
+  background: transparent;
+}
+.custom-footer-brand p { color: rgba(255,255,255,.5); }
+.custom-footer-links a { color: #fff; }
+.custom-footer-links a:hover { color: rgba(255,255,255,.55); }
+.custom-footer-bottom { color: rgba(255,255,255,.42); }
+
+@media (max-width: 1180px) {
+  .custom-service-cards { grid-template-columns: repeat(2, 1fr); }
+  .custom-outcome-grid,
+  .custom-process-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1080px) {
+  .custom-section-intro { grid-template-columns: 110px 1fr; }
+}
+
+@media (max-width: 760px) {
+  .custom-section,
+  .custom-contact {
+    width: 100%;
+    margin: 0;
+    padding: 76px 20px;
+    border-radius: 0;
+  }
+  .custom-section-intro h2 { font-size: clamp(30px, 8.6vw, 44px); }
+  .custom-service-cards,
+  .custom-outcome-grid,
+  .custom-process-list,
+  .custom-format-grid { grid-template-columns: 1fr; gap: 10px; }
+  .custom-service-cards article { min-height: 0; padding: 22px; }
+  .custom-service-cards h3 { margin-top: 34px; }
+  .custom-outcome-grid article { min-height: 0; padding: 22px; }
+  .custom-outcome-grid h3 { margin-top: 40px; }
+  .custom-format-grid article { min-height: 0; padding: 24px; }
+  .custom-format-grid h3 { margin-top: 34px; }
+  .custom-process-list article { padding: 22px; }
+  .custom-faq-chat { padding: 18px; border-radius: 22px; }
+  .custom-faq-options {
+    margin: 16px 0;
+    margin-right: 0;
+    padding-right: 0;
+    overflow: visible;
+  }
+  .custom-faq-options button { padding: 10px 12px; font-size: 13px; }
+  .custom-footer { width: 100%; margin: 0; padding: 64px 20px 30px; border-radius: 0; }
+}
+
+/* Живость плиток: одинаковая реакция на наведение во всех секциях */
+.custom-outcome-grid article,
+.custom-process-list article,
+.custom-format-grid article {
+  transition: background-color 200ms ease, border-color 200ms ease, transform 220ms var(--custom-ease);
+}
+.custom-outcome-grid article:hover,
+.custom-process-list article:hover,
+.custom-format-grid article:hover {
+  border-color: rgba(255,255,255,.14);
+  background: var(--custom-tile-hover);
+  transform: translateY(-3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .custom-service-cards article:hover,
+  .custom-outcome-grid article:hover,
+  .custom-process-list article:hover,
+  .custom-format-grid article:hover { transform: none; }
+}
+
+.custom-contact-copy > div { color: rgba(255,255,255,.5); font-size: 12px; }
+.custom-contact-copy > div svg { color: rgba(255,255,255,.7); }

@@ -14,31 +14,37 @@ const services = [
     number: "01",
     title: "Исследование и продуктовый дизайн",
     text: "Проверяем идею, изучаем пользователей и процессы, проектируем сценарии и создаём прототип до начала разработки.",
+    tags: ["Интервью", "Сценарии", "Прототип"],
   },
   {
     number: "02",
     title: "Веб-сервисы и личные кабинеты",
     text: "Разрабатываем клиентские продукты, порталы, кабинеты и внутренние системы — от первой версии до развития.",
+    tags: ["Порталы", "Кабинеты", "Внутренние системы"],
   },
   {
     number: "03",
     title: "Мобильные приложения",
     text: "Создаём мобильный опыт вокруг ключевого сценария бизнеса и связываем приложение с действующими системами.",
+    tags: ["iOS", "Android", "Связка с системами"],
   },
   {
     number: "04",
     title: "Автоматизация и AI",
     text: "Убираем ручные операции, внедряем AI-сценарии, маршруты согласований и контроль исключений.",
+    tags: ["AI-сценарии", "Согласования", "Контроль исключений"],
   },
   {
     number: "05",
     title: "Интеграции и данные",
     text: "Связываем CRM, ERP, банки, телефонию, мессенджеры и внутренние сервисы в единый процесс.",
+    tags: ["CRM и ERP", "Банки", "Телефония", "Мессенджеры"],
   },
   {
     number: "06",
     title: "Поддержка и развитие",
     text: "После запуска следим за стабильностью, собираем обратную связь и развиваем продукт или автоматизацию вместе с бизнесом.",
+    tags: ["Стабильность", "Обратная связь", "Развитие"],
   },
 ];
 
@@ -119,7 +125,6 @@ function SectionIntro({ eyebrow, title, text }) {
 export function CustomLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [activeService, setActiveService] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
   const [faqQuery, setFaqQuery] = useState("");
   const [estimateText, setEstimateText] = useState("");
@@ -130,27 +135,6 @@ export function CustomLanding() {
     if (window.location.hash === "#team") {
       document.getElementById("team")?.scrollIntoView();
     }
-  }, []);
-
-  useEffect(() => {
-    const cards = document.querySelectorAll("[data-scroll-service]");
-    if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible[0]) {
-          setActiveService(Number(visible[0].target.dataset.scrollService));
-        }
-      },
-      { rootMargin: "-38% 0px -38% 0px", threshold: [0, 0.25, 0.5] },
-    );
-
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -288,41 +272,27 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-scroll-story" id="services" aria-label="Услуги Mary Custom">
-        <div className="custom-scroll-cards">
-          {services.map((service, index) => (
-            <article
-              className={`custom-scroll-card ${activeService === index ? "is-active" : ""}`}
-              data-scroll-service={index}
-              key={service.number}
-              onMouseEnter={() => setActiveService(index)}
-            >
-              <div className="custom-scroll-art" aria-hidden="true">
-                <span>{service.number}</span>
-                <div>
-                  <i />
-                  <i />
-                  <i />
-                </div>
-              </div>
-              <div className="custom-scroll-mobile-copy">
-                <small>Услуги · {service.number}</small>
-                <h2>{service.title}</h2>
-                <p>{service.text}</p>
-                <ArrowLink>Обсудить задачу</ArrowLink>
+      <section className="custom-section custom-services-block" id="services" aria-label="Услуги Mary Custom">
+        <SectionIntro
+          eyebrow="Услуги"
+          title="Закрываем весь путь продукта"
+          text="От первого разговора о задаче до работающего решения, интеграций и поддержки после запуска."
+        />
+        <div className="custom-service-cards">
+          {services.map((service) => (
+            <article key={service.number}>
+              <span className="custom-service-number">{service.number}</span>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+              <div className="custom-service-tags">
+                {service.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
               </div>
             </article>
           ))}
         </div>
-
-        <aside className="custom-scroll-copy">
-          <div key={services[activeService].number}>
-            <span>Услуги · {services[activeService].number} / {String(services.length).padStart(2, "0")}</span>
-            <h2>{services[activeService].title}</h2>
-            <p>{services[activeService].text}</p>
-            <a className="custom-button custom-button-dark" href="#contact">Обсудить задачу</a>
-          </div>
-        </aside>
+        <a className="custom-button custom-button-light custom-section-cta" href="#contact">Обсудить задачу</a>
       </section>
 
       <section className="custom-section custom-outcomes">
@@ -391,13 +361,16 @@ export function CustomLanding() {
             <small>Mary Custom</small>
             <p>Расскажу, как мы оцениваем, запускаем и сопровождаем проекты.</p>
           </div>
-          <div className="custom-faq-options" aria-label="Готовые вопросы">
+          <ol className="custom-faq-options" aria-label="Готовые вопросы">
             {faqs.map(([question], index) => (
-              <button type="button" key={question} onClick={() => setActiveFaq(index)}>
-                {question}
-              </button>
+              <li key={question}>
+                <button type="button" onClick={() => setActiveFaq(index)}>
+                  <span>{index + 1}</span>
+                  {question}
+                </button>
+              </li>
             ))}
-          </div>
+          </ol>
           {activeFaq !== null && (
             <div className="custom-chat-thread" aria-live="polite">
               <div className="custom-chat-message is-user"><p>{faqs[activeFaq][0]}</p></div>
