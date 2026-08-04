@@ -250,37 +250,38 @@ export function CustomLanding() {
 
         <div className="custom-hero-content">
           <h1 id="custom-hero-title">
-            Разрабатываем продукты.
-            <span>Автоматизируем бизнес.</span>
+            Автоматизируем бизнес-<span>процессы под ключ</span>
           </h1>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="#contact">Обсудить задачу</a>
-            <a className="custom-button custom-button-ghost" href="#services">Посмотреть услуги</a>
+            <a className="custom-button custom-button-light" href="#contact">Заказать</a>
+            <a className="custom-button custom-button-ghost" href="#services">Обсудить задачу</a>
           </div>
         </div>
 
-        <div className="custom-hero-logos" aria-label="Компетенции команды">
-          <span>Исследование</span>
-          <span>Дизайн</span>
-          <span>Разработка</span>
-          <span>Интеграции</span>
-          <span>Сопровождение</span>
+        <div className="custom-hero-logos" aria-label="С нами работают">
+          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
+          <img src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
         </div>
 
         <div className="custom-hero-bottom" id="team">
           <h2>
-            Погружаемся в ваш контекст,
-            <span>проектируем решение и отвечаем за запуск</span>
+            Погружаемся в работу компании,
+            <span>проектируем решение и сопровождаем запуск</span>
           </h2>
           <article className="custom-founder-card">
-            <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
+            <span className="custom-founder-photo">
+              <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
+            </span>
             <div>
-              <p>Обсудим идею или процесс без готового технического задания</p>
+              <p>Погружаемся в работу компании, проектируем решение</p>
               <small>CEO Mary</small>
               <strong>Александр Лукашевич</strong>
               <a href="#contact">
                 Связаться
-                <ArrowRight size={15} aria-hidden="true" />
+                <i aria-hidden="true" />
               </a>
             </div>
           </article>

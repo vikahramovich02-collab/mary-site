@@ -1276,3 +1276,270 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Первый экран собран один-в-один по финальному макету Figma: Desktop - 9 (node 9507-14151). */
+.custom-hero {
+  width: 100%;
+  min-height: max(760px, 100svh);
+  margin: 0;
+  padding: 42px clamp(20px, 4.58vw, 66px) 47px;
+  border-radius: 0;
+  background: #000;
+}
+
+.custom-hero-video { opacity: .59; }
+.custom-hero-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.5) 0%,
+    rgba(0,0,0,0) 20%,
+    rgba(0,0,0,0) 60%,
+    rgba(0,0,0,.5) 100%
+  );
+}
+
+.custom-header {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 38px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.custom-brand {
+  gap: 6px;
+  font-family: -apple-system, "SF Pro Display", "Manrope Variable", sans-serif;
+  font-size: 31px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.custom-brand img { width: 25px; height: 32px; }
+.custom-header .custom-brand.is-dark { color: #fff; }
+.custom-header .custom-brand.is-dark img { filter: invert(0); }
+
+.custom-header .custom-nav {
+  gap: 49px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.custom-header .custom-nav a {
+  padding: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.custom-header .custom-nav a:hover { color: rgba(255,255,255,.6); background: transparent; }
+
+.custom-header-actions { gap: 12px; }
+.custom-language {
+  min-width: 67px;
+  min-height: 38px;
+  border-radius: 120px;
+  color: #fff;
+  background: rgba(255,255,255,.14);
+  backdrop-filter: none;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.custom-header-actions .custom-button-light {
+  min-width: 108px;
+  min-height: 38px;
+  padding-inline: 16px;
+  color: #080808 !important;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.custom-header-actions .custom-button-light:hover { color: #080808 !important; background: #ededeb; }
+
+.custom-hero-content {
+  top: 26.7%;
+  width: min(1108px, calc(100% - 40px));
+}
+.custom-hero h1 {
+  max-width: 1108px;
+  font-size: clamp(40px, 5.56vw, 80px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+.custom-hero h1 span { display: block; color: rgba(255,255,255,.5); }
+
+.custom-hero-cta { margin-top: clamp(34px, 9.1vh, 93px); gap: 19px; }
+.custom-hero-cta .custom-button {
+  min-width: 108px;
+  min-height: 44px;
+  padding-inline: 22px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.custom-hero-cta .custom-button-ghost {
+  border-color: rgba(255,255,255,.14);
+  background: rgba(255,255,255,.14);
+}
+.custom-hero-cta .custom-button-ghost:hover { background: rgba(255,255,255,.22); }
+
+.custom-hero-logos {
+  top: 69.4%;
+  bottom: auto;
+  gap: clamp(22px, 3.7vw, 53px);
+  transform: translate(-50%, -50%);
+}
+/* В исходных PNG вокруг знака есть поля, поэтому высота бокса больше видимой высоты лого:
+   МТбанк — 23px видимой части при боксе 96px, НТП — 27.7px при боксе 29px. */
+.custom-hero-logos img {
+  width: auto;
+  height: 96px;
+  filter: brightness(0) invert(1);
+  opacity: .7;
+}
+.custom-hero-logos img:nth-last-child(-n + 2) { width: auto; height: 29px; }
+
+.custom-hero-bottom {
+  right: clamp(20px, 4.17vw, 60px);
+  bottom: 47px;
+  left: clamp(20px, 4.58vw, 66px);
+  display: grid;
+  align-items: end;
+  gap: 40px;
+}
+.custom-hero-bottom > h2 {
+  max-width: 478px;
+  padding-bottom: 16px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -.02em;
+}
+.custom-hero-bottom > h2 span { display: block; font-weight: 600; }
+
+.custom-founder-card {
+  grid-template-columns: 109px 227px;
+  gap: 0;
+  width: 336px;
+  height: 137px;
+}
+.custom-founder-photo {
+  display: block;
+  width: 109px;
+  height: 137px;
+  padding: 6px 8px;
+  border-radius: 17px;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(12px);
+}
+.custom-founder-photo img {
+  width: 93px;
+  height: 125px;
+  border-radius: 10px;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+.custom-founder-card > div {
+  padding: 15px 13px 14px;
+  border: 0;
+  border-radius: 17px;
+  background: rgba(255,255,255,.1);
+}
+.custom-founder-card p {
+  max-width: 201px;
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.custom-founder-card small {
+  color: rgba(255,255,255,.5);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.custom-founder-card strong {
+  margin-top: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.custom-founder-card a {
+  width: 108px;
+  min-height: 29px;
+  margin-top: 12px;
+  padding: 0 8px 0 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.custom-founder-card a i {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #111212;
+}
+
+@media (max-width: 1080px) {
+  .custom-header .custom-menu-button { color: #fff; border-color: rgba(255,255,255,.15); }
+  .custom-hero-bottom { grid-template-columns: 1fr auto; }
+}
+
+@media (max-width: 760px) {
+  .custom-hero {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 22px 20px 24px;
+    border-radius: 0;
+  }
+  .custom-header { min-height: 0; padding: 0; }
+  .custom-brand { font-size: 24px; }
+  .custom-brand img { width: 19px; height: 25px; }
+  .custom-hero-content { top: 21%; width: 100%; }
+  .custom-hero h1 { font-size: clamp(27px, 8.4vw, 42px); }
+  .custom-hero-cta { margin-top: 28px; gap: 8px; }
+  .custom-hero-cta .custom-button {
+    min-width: 92px;
+    min-height: 40px;
+    padding-inline: 16px;
+    font-size: 13px;
+  }
+  .custom-hero-logos { top: 56%; gap: 8px; }
+  .custom-hero-logos img { height: 58px; }
+  .custom-hero-logos img:nth-last-child(-n + 2) { height: 18px; }
+  .custom-hero-bottom {
+    right: 16px;
+    bottom: 18px;
+    left: 16px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .custom-hero-bottom > h2 { max-width: 300px; padding-bottom: 0; font-size: 15px; }
+  .custom-founder-card {
+    width: 300px;
+    height: 122px;
+    grid-template-columns: 97px 203px;
+    justify-self: end;
+  }
+  .custom-founder-photo { width: 97px; height: 122px; padding: 5px 7px; border-radius: 15px; }
+  .custom-founder-photo img { width: 83px; height: 112px; }
+  .custom-founder-card > div { padding: 12px 12px 12px; border-radius: 15px; }
+  .custom-founder-card p { margin-bottom: 6px; }
+  .custom-founder-card strong { margin-top: 7px; }
+  .custom-founder-card a { margin-top: 10px; }
+}
