@@ -125,6 +125,7 @@ function SectionIntro({ eyebrow, title, text }) {
 export function CustomLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [activeService, setActiveService] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
   const [faqQuery, setFaqQuery] = useState("");
   const [estimateText, setEstimateText] = useState("");
@@ -135,6 +136,57 @@ export function CustomLanding() {
     if (window.location.hash === "#team") {
       document.getElementById("team")?.scrollIntoView();
     }
+  }, []);
+
+  // Прогресс прокрутки сцены: 0 — первый экран, 1 — низ второго.
+  // Им управляются параллакс и затемнение сферы.
+  useEffect(() => {
+    const stage = document.querySelector(".custom-stage");
+    if (!stage || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const travel = Math.max(stage.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / travel, 0), 1);
+      stage.style.setProperty("--stage-progress", progress.toFixed(4));
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const cards = document.querySelectorAll("[data-scroll-service]");
+    if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]) {
+          setActiveService(Number(visible[0].target.dataset.scrollService));
+        }
+      },
+      { rootMargin: "-38% 0px -38% 0px", threshold: [0, 0.25, 0.5] },
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
@@ -183,21 +235,25 @@ export function CustomLanding() {
 
   return (
     <main className="custom-site" id="top">
-      <section className="custom-hero" aria-labelledby="custom-hero-title">
-        <video
-          className="custom-hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/media/mary-hero-poster.jpg"
-          aria-hidden="true"
-        >
-          <source src="/media/mary-hero.mp4" type="video/mp4" />
-        </video>
+      <div className="custom-stage">
+        <div className="custom-stage-media" aria-hidden="true">
+          <div className="custom-stage-sticky">
+            <video
+              className="custom-hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/media/mary-hero-poster.jpg"
+            >
+              <source src="/media/mary-hero.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
         <div className="custom-hero-shade" aria-hidden="true" />
 
+      <section className="custom-hero" aria-labelledby="custom-hero-title">
         <header className="custom-header">
           <Brand dark />
           <nav className="custom-nav" aria-label="Навигация по странице">
@@ -272,28 +328,53 @@ export function CustomLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-services-block" id="services" aria-label="Услуги Mary Custom">
-        <SectionIntro
-          eyebrow="Услуги"
-          title="Закрываем весь путь продукта"
-          text="От первого разговора о задаче до работающего решения, интеграций и поддержки после запуска."
-        />
-        <div className="custom-service-cards">
-          {services.map((service) => (
-            <article key={service.number}>
-              <span className="custom-service-number">{service.number}</span>
-              <h3>{service.title}</h3>
-              <p>{service.text}</p>
-              <div className="custom-service-tags">
-                {service.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
+      <section className="custom-section custom-scroll-story" id="services" aria-label="Услуги Mary Custom">
+        <div className="custom-scroll-cards">
+          {services.map((service, index) => (
+            <article
+              className={`custom-scroll-card ${activeService === index ? "is-active" : ""}`}
+              data-scroll-service={index}
+              key={service.number}
+              onMouseEnter={() => setActiveService(index)}
+            >
+              <div className="custom-scroll-art" aria-hidden="true">
+                <span>{service.number}</span>
+                <div>
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+              <div className="custom-scroll-mobile-copy">
+                <small>Услуги · {service.number}</small>
+                <h2>{service.title}</h2>
+                <p>{service.text}</p>
+                <div className="custom-service-tags">
+                  {service.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+                <ArrowLink>Обсудить задачу</ArrowLink>
               </div>
             </article>
           ))}
         </div>
-        <a className="custom-button custom-button-light custom-section-cta" href="#contact">Обсудить задачу</a>
+
+        <aside className="custom-scroll-copy">
+          <div key={services[activeService].number}>
+            <span>Услуги · {services[activeService].number} / {String(services.length).padStart(2, "0")}</span>
+            <h2>{services[activeService].title}</h2>
+            <p>{services[activeService].text}</p>
+            <div className="custom-service-tags">
+              {services[activeService].tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+            <a className="custom-button custom-button-dark" href="#contact">Обсудить задачу</a>
+          </div>
+        </aside>
       </section>
+      </div>
 
       <section className="custom-section custom-outcomes">
         <SectionIntro

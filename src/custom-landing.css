@@ -1896,3 +1896,244 @@
 
 .custom-contact-copy > div { color: rgba(255,255,255,.5); font-size: 12px; }
 .custom-contact-copy > div svg { color: rgba(255,255,255,.7); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Вторая секция: скролл-история со стеклянными плашками.
+   Под карточками лежат мягкие световые пятна — иначе backdrop-filter
+   на сплошном чёрном фоне размывать нечего и стекло не читается.
+   ───────────────────────────────────────────────────────────────────────────── */
+.custom-scroll-story {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, .9fr);
+  align-items: start;
+  gap: clamp(56px, 8vw, 132px);
+  overflow: visible;
+}
+.custom-scroll-story::before {
+  position: absolute;
+  z-index: 0;
+  top: 4%;
+  left: -6%;
+  width: 62%;
+  height: 92%;
+  content: "";
+  border-radius: 50%;
+  background:
+    radial-gradient(46% 32% at 30% 18%, rgba(255,255,255,.12), transparent 70%),
+    radial-gradient(40% 30% at 62% 52%, rgba(255,255,255,.09), transparent 72%),
+    radial-gradient(38% 26% at 34% 86%, rgba(255,255,255,.07), transparent 74%);
+  filter: blur(28px);
+  pointer-events: none;
+}
+
+.custom-scroll-cards { position: relative; z-index: 1; gap: 18px; }
+
+.custom-scroll-card {
+  position: relative;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 26px;
+  background: rgba(255,255,255,.055);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    0 18px 50px rgba(0,0,0,.45);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  opacity: .55;
+  overflow: hidden;
+  transition:
+    transform 320ms var(--custom-ease),
+    opacity 320ms var(--custom-ease),
+    background-color 320ms ease,
+    border-color 320ms ease;
+}
+/* Верхний блик стекла */
+.custom-scroll-card::after {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 46%;
+  content: "";
+  background: linear-gradient(180deg, rgba(255,255,255,.09), transparent);
+  pointer-events: none;
+}
+.custom-scroll-card.is-active {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.1);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.custom-scroll-art {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 22px;
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.custom-scroll-art > span {
+  color: #050505;
+  background: #fff;
+  font-weight: 700;
+}
+.custom-scroll-card.is-active .custom-scroll-art { background: rgba(255,255,255,.13); }
+.custom-scroll-art i { background: rgba(255,255,255,.28); }
+.custom-scroll-art i:first-child { background: rgba(255,255,255,.42); }
+
+.custom-scroll-copy { position: sticky; z-index: 1; }
+.custom-scroll-copy span,
+.custom-scroll-mobile-copy small { color: rgba(255,255,255,.42); }
+.custom-scroll-copy h2,
+.custom-scroll-mobile-copy h2 {
+  font-size: clamp(38px, 4vw, 60px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+}
+.custom-scroll-copy p,
+.custom-scroll-mobile-copy p {
+  margin-bottom: 26px;
+  color: var(--custom-muted);
+  font-size: 15px;
+}
+.custom-scroll-copy .custom-service-tags,
+.custom-scroll-mobile-copy .custom-service-tags { margin-bottom: 32px; }
+
+@media (max-width: 900px) {
+  .custom-scroll-story { display: block; }
+  .custom-scroll-story::before { display: none; }
+  .custom-scroll-cards { gap: 12px; }
+  .custom-scroll-card,
+  .custom-scroll-card.is-active { opacity: 1; }
+  .custom-scroll-mobile-copy .custom-service-tags { margin-bottom: 22px; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Сцена: анимация сферы тянется от первого экрана до конца второго.
+   Видео залипает (sticky) на высоту вьюпорта, поэтому скролл-история
+   проезжает поверх живого фона — и стеклянным плашкам есть что размывать.
+   ───────────────────────────────────────────────────────────────────────────── */
+.custom-stage {
+  position: relative;
+  isolation: isolate;
+  background: #000;
+}
+.custom-stage-media {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+}
+.custom-stage .custom-hero-video {
+  position: sticky;
+  z-index: 0;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  opacity: .59;
+  object-fit: cover;
+}
+.custom-stage .custom-hero-shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  height: auto;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 46%, rgba(0,0,0,.55) 72%, #050505 100%);
+  pointer-events: none;
+}
+.custom-stage > .custom-hero,
+.custom-stage > .custom-section {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+.custom-stage > .custom-hero { min-height: 100svh; }
+
+/* Плашки тоньше: меньше высота, тоньше рамка, легче внутренний макет */
+.custom-scroll-card {
+  aspect-ratio: 2.75 / 1;
+  min-height: 0;
+  padding: clamp(18px, 2.4vw, 30px);
+  border-width: 1px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    0 16px 44px rgba(0,0,0,.4);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  opacity: .62;
+}
+.custom-scroll-card.is-active { background: rgba(255,255,255,.12); opacity: 1; }
+.custom-scroll-art {
+  width: min(64%, 330px);
+  aspect-ratio: 2.5;
+  grid-template-columns: 52px 1fr;
+  gap: 10px;
+  padding: 13px;
+  border-radius: 16px;
+}
+.custom-scroll-art > span { border-radius: 11px; font-size: 11px; }
+.custom-scroll-art > div { gap: 9px; }
+.custom-scroll-art i { height: 9px; border-radius: 999px; }
+
+@media (max-width: 900px) {
+  .custom-stage .custom-hero-video { position: absolute; height: 100%; }
+  .custom-scroll-card,
+  .custom-scroll-card.is-active { aspect-ratio: auto; }
+  .custom-scroll-art { width: 100%; aspect-ratio: 2.5; }
+}
+
+/* Параллакс и затемнение сферы: --stage-progress считает JS (0 → 1 по сцене) */
+.custom-stage { --stage-progress: 0; }
+.custom-stage-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+}
+.custom-stage .custom-hero-video {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: calc(.62 - var(--stage-progress) * .44);
+  object-fit: cover;
+  /* фон уезжает медленнее контента и слегка наплывает */
+  transform: translate3d(0, calc(var(--stage-progress) * -14vh), 0) scale(calc(1 + var(--stage-progress) * .08));
+  transform-origin: 50% 40%;
+  will-change: transform, opacity;
+}
+.custom-stage .custom-hero-shade {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 15%, rgba(0,0,0,.18) 44%, rgba(0,0,0,.66) 74%, #050505 100%);
+}
+/* Дополнительная вуаль, набирающая плотность к концу сцены */
+.custom-stage::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  background: #050505;
+  opacity: calc(var(--stage-progress) * .55);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-stage .custom-hero-video { opacity: .5; transform: none; }
+  .custom-stage::after { opacity: .25; }
+}
+
+@media (max-width: 900px) {
+  .custom-stage-sticky { position: absolute; inset: 0; height: 100%; }
+  .custom-stage .custom-hero-video { transform: none; opacity: .5; }
+}
