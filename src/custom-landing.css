@@ -2137,3 +2137,122 @@
   .custom-stage-sticky { position: absolute; inset: 0; height: 100%; }
   .custom-stage .custom-hero-video { transform: none; opacity: .5; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Плашки услуг по референсу Вики: тонкие стеклянные строки —
+   квадрат с номером, название, теги через точку и стрелка справа.
+   ───────────────────────────────────────────────────────────────────────────── */
+.custom-scroll-cards { gap: 10px; }
+
+.custom-scroll-card {
+  display: grid;
+  aspect-ratio: auto;
+  min-height: 76px;
+  grid-template-columns: 52px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px 12px 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    0 12px 34px rgba(0,0,0,.34);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  opacity: .68;
+  transform: none;
+}
+.custom-scroll-card.is-active {
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.12);
+  opacity: 1;
+  transform: none;
+}
+.custom-scroll-card::after { height: 52%; }
+
+.custom-scroll-badge {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  color: rgba(255,255,255,.8);
+  background: rgba(255,255,255,.1);
+  font-size: 12px;
+  font-weight: 700;
+  transition: color 240ms ease, background-color 240ms ease;
+}
+.custom-scroll-card.is-active .custom-scroll-badge {
+  border-color: transparent;
+  color: #050505;
+  background: #fff;
+}
+
+.custom-scroll-title {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+.custom-scroll-title strong {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.custom-scroll-title small {
+  overflow: hidden;
+  color: rgba(255,255,255,.45);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.custom-scroll-chevron {
+  position: relative;
+  z-index: 1;
+  color: rgba(255,255,255,.3);
+  transition: color 240ms ease, transform 240ms var(--custom-ease);
+}
+.custom-scroll-card.is-active .custom-scroll-chevron { color: rgba(255,255,255,.75); transform: translateX(3px); }
+
+@media (max-width: 900px) {
+  .custom-scroll-card {
+    grid-template-columns: 46px minmax(0, 1fr) 18px;
+    min-height: 0;
+    padding: 14px 16px 14px 14px;
+  }
+  .custom-scroll-badge { width: 46px; height: 46px; border-radius: 13px; }
+  .custom-scroll-mobile-copy {
+    display: block;
+    grid-column: 1 / -1;
+    padding: 6px 2px 4px;
+  }
+  .custom-scroll-mobile-copy p { margin-bottom: 16px; font-size: 14px; }
+  .custom-scroll-title strong { white-space: normal; }
+  .custom-scroll-title small { white-space: normal; }
+}
+
+/* Баланс: затемняем к низу сцены, но оставляем сферу видимой под стеклом */
+.custom-stage .custom-hero-video { opacity: calc(.62 - var(--stage-progress) * .28); }
+.custom-stage::after { opacity: calc(var(--stage-progress) * .34); }
+.custom-stage .custom-hero-shade {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 16%, rgba(0,0,0,.12) 46%, rgba(0,0,0,.5) 76%, #050505 100%);
+}
+.custom-scroll-card { min-height: 84px; }
+.custom-scroll-cards { gap: 12px; }
+
+@media (max-width: 900px) {
+  /* на узком экране строка раскрыта целиком — стрелка-указатель не нужна */
+  .custom-scroll-card { grid-template-columns: 46px minmax(0, 1fr); }
+  .custom-scroll-chevron { display: none; }
+  .custom-scroll-mobile-copy { padding-top: 10px; }
+}

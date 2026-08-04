@@ -337,23 +337,14 @@ export function CustomLanding() {
               key={service.number}
               onMouseEnter={() => setActiveService(index)}
             >
-              <div className="custom-scroll-art" aria-hidden="true">
-                <span>{service.number}</span>
-                <div>
-                  <i />
-                  <i />
-                  <i />
-                </div>
-              </div>
+              <span className="custom-scroll-badge" aria-hidden="true">{service.number}</span>
+              <span className="custom-scroll-title">
+                <strong>{service.title}</strong>
+                <small>{service.tags.join(" · ")}</small>
+              </span>
+              <ArrowRight className="custom-scroll-chevron" size={17} aria-hidden="true" />
               <div className="custom-scroll-mobile-copy">
-                <small>Услуги · {service.number}</small>
-                <h2>{service.title}</h2>
                 <p>{service.text}</p>
-                <div className="custom-service-tags">
-                  {service.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
                 <ArrowLink>Обсудить задачу</ArrowLink>
               </div>
             </article>
