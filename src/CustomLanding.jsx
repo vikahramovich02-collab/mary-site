@@ -336,6 +336,11 @@ export function CustomLanding() {
               data-scroll-service={index}
               key={service.number}
               onMouseEnter={() => setActiveService(index)}
+              style={{
+                // расстояние до активной строки и сторона — из них считается перспектива стопки
+                "--distance": Math.abs(index - activeService),
+                "--side": Math.sign(index - activeService),
+              }}
             >
               <span className="custom-scroll-badge" aria-hidden="true">{service.number}</span>
               <span className="custom-scroll-title">
