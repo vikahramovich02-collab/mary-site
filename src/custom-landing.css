@@ -2301,3 +2301,55 @@
 @media (max-width: 900px) {
   .custom-stage > .custom-hero { filter: none; }
 }
+
+/* Футер выравнивается по той же сетке, что и секции: бренд уходит к левому краю */
+.custom-footer {
+  padding: clamp(72px, 7vw, 108px) max(24px, calc((100vw - 1272px) / 2)) 34px;
+}
+.custom-footer-main,
+.custom-footer-bottom {
+  width: 100%;
+  max-width: 1272px;
+  margin-inline: auto;
+}
+.custom-footer-brand { justify-self: start; text-align: left; }
+.custom-footer-brand .custom-brand { margin-left: 0; }
+
+@media (max-width: 760px) {
+  .custom-footer { padding: 64px 20px 30px; }
+}
+
+/* Бренд-колонка футера прижата к левому краю сетки */
+.custom-footer-main { justify-items: start; }
+.custom-footer-brand {
+  justify-self: start;
+  max-width: 100%;
+  margin: 0;
+}
+.custom-footer-brand .custom-brand { justify-self: start; }
+
+/* Старое `.custom-footer > div` делало ряды флексом с прижатием вправо —
+   поэтому бренд висел по центру. Возвращаем сетку явно. */
+.custom-footer > .custom-footer-main {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(420px, .78fr);
+  justify-content: normal;
+  gap: clamp(70px, 11vw, 180px);
+}
+.custom-footer > .custom-footer-bottom {
+  display: grid;
+  grid-template-columns: 1fr minmax(420px, .78fr);
+  justify-content: normal;
+  gap: clamp(70px, 11vw, 180px);
+  color: rgba(255,255,255,.42);
+  font-size: 14px;
+}
+
+@media (max-width: 1080px) {
+  .custom-footer > .custom-footer-main,
+  .custom-footer > .custom-footer-bottom { grid-template-columns: 1fr 1fr; gap: 70px; }
+}
+@media (max-width: 760px) {
+  .custom-footer > .custom-footer-main,
+  .custom-footer > .custom-footer-bottom { grid-template-columns: 1fr; gap: 30px; }
+}
