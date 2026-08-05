@@ -2256,3 +2256,48 @@
   .custom-scroll-chevron { display: none; }
   .custom-scroll-mobile-copy { padding-top: 10px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Первый экран залипает: пока сцена прокручивается, hero стоит на месте
+   и плавно уходит, а стеклянные плашки второго блока наезжают поверх него.
+   ───────────────────────────────────────────────────────────────────────────── */
+.custom-stage > .custom-hero {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  height: 100svh;
+  min-height: 100svh;
+  opacity: clamp(0, calc(1 - var(--stage-progress) * 2.6), 1);
+  transform: scale(calc(1 - var(--stage-progress) * .05));
+  transform-origin: 50% 42%;
+  will-change: opacity, transform;
+}
+.custom-stage > .custom-section {
+  position: relative;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-stage > .custom-hero { position: relative; opacity: 1; transform: none; }
+}
+
+@media (max-width: 900px) {
+  .custom-stage > .custom-hero {
+    position: relative;
+    height: auto;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Уход первого экрана: быстрее и с расфокусом, чтобы текст не «висел» полупрозрачным */
+.custom-stage > .custom-hero {
+  opacity: clamp(0, calc(1 - var(--stage-progress) * 3.6), 1);
+  filter: blur(calc(var(--stage-progress) * 5px));
+}
+@media (prefers-reduced-motion: reduce) {
+  .custom-stage > .custom-hero { filter: none; }
+}
+@media (max-width: 900px) {
+  .custom-stage > .custom-hero { filter: none; }
+}
