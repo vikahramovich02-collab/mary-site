@@ -299,11 +299,8 @@ export function CustomLanding() {
         </div>
 
         <div className="custom-hero-logos" aria-label="С нами работают">
-          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-          <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-          <img src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
-          <img src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
+          <img className="is-mtbank" src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+          <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
         </div>
 
         <div className="custom-hero-bottom" id="team">
@@ -316,7 +313,7 @@ export function CustomLanding() {
               <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
             </span>
             <div>
-              <p>Погружаемся в работу компании, проектируем решение</p>
+              <p>Разберу задачу лично и скажу, где автоматизация окупится, а где нет</p>
               <small>CEO Mary</small>
               <strong>Александр Лукашевич</strong>
               <a href="#contact">
@@ -431,7 +428,7 @@ export function CustomLanding() {
         <SectionIntro
           eyebrow="Вопросы"
           title="Спросите Mary о работе команды"
-          text="Выберите готовый вопрос или напишите свой. В прототипе ответы берутся из локальной базы Mary Custom."
+          text="Выберите готовый вопрос или напишите свой — ответим так же, как ответили бы на вводной встрече."
         />
         <div className="custom-faq-chat">
           <div className="custom-chat-message is-mary">
@@ -482,7 +479,7 @@ export function CustomLanding() {
             <div className="custom-success" role="status">
               <span><Check size={28} /></span>
               <h3>Контакт сохранён</h3>
-              <p>В рабочей версии менеджер получит задачу, предварительную оценку и ваш контакт.</p>
+              <p>Задача и контакт у нас. Вернёмся с разбором и составом работ в течение рабочего дня.</p>
               <button className="custom-button custom-button-light" type="button" onClick={() => {
                 setSubmitted(false);
                 setEstimate(null);

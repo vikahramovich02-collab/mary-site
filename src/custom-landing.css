@@ -2432,3 +2432,24 @@
   .custom-scroll-card,
   .custom-scroll-card.is-active { margin-block: 0; opacity: 1; transform: none; }
 }
+
+/* Карточка CEO лежит на светлом куске сферы — добавляем плотности, иначе текст не читается */
+.custom-founder-photo,
+.custom-founder-card > div {
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(10,10,10,.42);
+  backdrop-filter: blur(22px) saturate(140%);
+}
+.custom-founder-card p { color: rgba(255,255,255,.92); }
+.custom-founder-card small { color: rgba(255,255,255,.6); }
+
+/* Логотипов теперь два — держим ряд собранным, а не растянутым по ширине */
+.custom-hero-logos { gap: clamp(34px, 5vw, 64px); }
+/* Размер бокса теперь привязан к самому лого, а не к позиции в ряду
+   (раньше nth-last-child(-n+2) ловил оба оставшихся знака и жал МТбанк до 29px) */
+.custom-hero-logos img.is-mtbank { height: 96px; }
+.custom-hero-logos img.is-htp { height: 29px; }
+@media (max-width: 720px) {
+  .custom-hero-logos img.is-mtbank { height: 58px; }
+  .custom-hero-logos img.is-htp { height: 18px; }
+}
