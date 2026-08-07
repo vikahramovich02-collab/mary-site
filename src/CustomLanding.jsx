@@ -290,7 +290,7 @@ export function CustomLanding() {
 
         <div className="custom-hero-content">
           <h1 id="custom-hero-title">
-            Автоматизируем бизнес-<span>процессы под ключ</span>
+            Разрабатываем продукты <span>и автоматизируем бизнес</span>
           </h1>
           <div className="custom-hero-cta">
             <a className="custom-button custom-button-light" href="#contact">Заказать</a>
