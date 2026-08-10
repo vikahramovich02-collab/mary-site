@@ -7,6 +7,7 @@ import {
   X,
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import { HeroField } from "./HeroField.jsx";
 import "./custom-landing.css";
 
 const services = [
@@ -238,17 +239,7 @@ export function CustomLanding() {
       <div className="custom-stage">
         <div className="custom-stage-media" aria-hidden="true">
           <div className="custom-stage-sticky">
-            <video
-              className="custom-hero-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster="/media/mary-hero-poster.jpg"
-            >
-              <source src="/media/mary-hero.mp4" type="video/mp4" />
-            </video>
+            <HeroField className="custom-hero-video" />
           </div>
         </div>
         <div className="custom-hero-shade" aria-hidden="true" />
