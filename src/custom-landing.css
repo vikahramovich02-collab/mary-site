@@ -2954,3 +2954,57 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 @media (prefers-reduced-motion: reduce) {
   .pf-node { opacity: 1; transform: none; transition: none; }
 }
+
+/* ===== Реальные экраны платформы ===== */
+.pf-screens-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+.pf-screens-tabs button {
+  padding: 9px 16px;
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--custom-muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.pf-screens-tabs button:hover { background: #f6f6f7; color: #262633; }
+.pf-screens-tabs button.is-active {
+  border-color: #262633;
+  background: #262633;
+  color: #fff;
+}
+.pf-screens-shot {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--custom-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.pf-screens-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: pf-screen-in 320ms ease both;
+}
+@keyframes pf-screen-in { from { opacity: 0; } to { opacity: 1; } }
+.pf-screens-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: baseline;
+  margin-top: 22px;
+}
+.pf-screens-copy h3 { margin: 0; color: #262633; font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.pf-screens-copy p { max-width: 62ch; margin: 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
+@media (max-width: 900px) {
+  .pf-screens-copy { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-screens-shot img { animation: none; }
+}

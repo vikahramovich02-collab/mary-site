@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
+import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
 const niches = [
@@ -203,6 +204,14 @@ export function PlatformLanding() {
             <article key={n}><span>{n}</span><div><h3>{t}</h3><p>{x}</p></div><small><Check size={15} />{r}</small></article>
           ))}
         </div>
+      </section>
+
+      <section className="custom-section pf-screens-section" id="screens">
+        <SectionIntro
+          title="Так это выглядит внутри"
+          text="Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы."
+        />
+        <ProductTabs />
       </section>
 
       <section className="custom-section" id="companies">
