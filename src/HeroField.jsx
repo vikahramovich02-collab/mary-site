@@ -199,7 +199,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
 
     const light = tone === "light";
     const ctx = canvas.getContext("2d", { alpha: false });
-    const paper = light ? "#f7f8fa" : "#000";
+    const paper = light ? "#fff" : "#000";
     const ink = light ? "38,38,51" : "255,255,255";
     // на светлом точки должны только подсвечивать фон, иначе забивают текст
     const alphaFloor = light ? 0.05 : 0.5;

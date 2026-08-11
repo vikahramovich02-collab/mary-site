@@ -6,6 +6,7 @@ import {
 import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
+import { MaryDog } from "./MaryDog.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
@@ -16,12 +17,6 @@ const niches = [
   { key: "fitness", title: "Фитнес и студии", text: "Абонементы, расписание, возврат клиентов.", status: "soon" },
   { key: "barber", title: "Барбершопы и ногтевые", text: "Быстрая запись и повторные визиты.", status: "soon" },
   { key: "services", title: "Услуги с записью", text: "Автосервисы, репетиторы и другие сферы.", status: "soon" },
-];
-
-const problems = [
-  ["Зоопарк костылей", "AI удешевил разработку — каждый отдел собрал себе инструмент. Но никто не собирает компанию целиком."],
-  ["Священная корова", "Логика живёт в голове одного сотрудника. Уходит человек — встаёт направление бизнеса."],
-  ["Хаос дороже разработки", "У компании есть код, но нет контекста. Платить приходится уже за зависимость от людей."],
 ];
 
 const solution = [
@@ -156,6 +151,8 @@ export function PlatformLanding() {
             <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
           </div>
         </div>
+
+        <MaryDog />
       </section>
 
       <section className="custom-section pf-assembly-section" aria-label="Как Mary собирает процесс">
@@ -166,19 +163,7 @@ export function PlatformLanding() {
         <AssemblyDemo />
       </section>
 
-      <section className="custom-section custom-problems" id="platform">
-        <SectionIntro
-          title="У компании есть код, но нет контекста"
-          text="AI удешевил разработку — обслуживание хаоса стало дорогим. Mary превращает разрозненные автоматизации в единую систему компании."
-        />
-        <div className="custom-outcome-grid">
-          {problems.map(([t, x], i) => (
-            <article key={t}><span>{String(i + 1).padStart(2, "0")}</span><h3>{t}</h3><p>{x}</p></article>
-          ))}
-        </div>
-      </section>
-
-      <section className="custom-section">
+      <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />
         <div className="mary-checks">
           {solution.map((s) => (
