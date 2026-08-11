@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 //   "halftone" — ровная сетка, размер точки задаёт волну (как в референсах Вики)
 //   "waves"    — поле точек, уходящее в перспективу
 //   "object"   — приплюснутая точечная «подушка»
-const MODE = "halftone";
+const MODE = "object";
 
 const DESKTOP = typeof window === "undefined" || window.innerWidth >= 760;
 const LEVELS = 16; // ступени яркости: рисуем пачками, чтобы не дёргать fillStyle на каждую точку
@@ -97,7 +97,11 @@ function buildField() {
 
 /* ── режим «объект»: приплюснутая точечная «подушка» ───────────────────── */
 
-const POINTS = DESKTOP ? 82000 : 30000;
+// Точки лежат ровной сеткой: ряды по широте, в каждом ряду число точек
+// пропорционально его длине — поэтому шаг везде одинаковый, без сгущения у полюса.
+const OBJ_ROWS = DESKTOP ? 190 : 110;
+const OBJ_COLS = DESKTOP ? 330 : 190;
+const OBJ_DOT = 2.05; // максимальный радиус точки в CSS-пикселях
 const SQUIRCLE = 3.2; // 2 — шар, больше — ближе к скруглённому кубу
 
 const WAVES_OBJECT = [
@@ -106,32 +110,40 @@ const WAVES_OBJECT = [
   { k: [1.4, -0.7, 2.9], speed: 0.17, amp: 0.042 },
 ];
 
+const WAVE_SPAN = WAVES_OBJECT.reduce((sum, w) => sum + w.amp, 0);
+
 function buildObject() {
-  const bx = new Float32Array(POINTS);
-  const by = new Float32Array(POINTS);
-  const bz = new Float32Array(POINTS);
-  const nx = new Float32Array(POINTS);
-  const ny = new Float32Array(POINTS);
-  const nz = new Float32Array(POINTS);
-  const phase = WAVES_OBJECT.map(() => ({ s: new Float32Array(POINTS), c: new Float32Array(POINTS) }));
+  const dirs = [];
+  const tiltX = -0.22; // лёгкий наклон, чтобы объект был виден чуть сверху
 
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  const tiltX = -0.22;
+  for (let row = 0; row < OBJ_ROWS; row += 1) {
+    const v = (-Math.PI / 2) + (Math.PI * (row + 0.5)) / OBJ_ROWS;
+    const ring = Math.cos(v);
+    const cols = Math.max(8, Math.round(OBJ_COLS * ring));
+    for (let col = 0; col < cols; col += 1) {
+      const u = (Math.PI * 2 * col) / cols;
+      dirs.push([Math.cos(u) * ring, Math.sin(v), Math.sin(u) * ring]);
+    }
+  }
 
-  for (let i = 0; i < POINTS; i += 1) {
-    // равномерное распределение по сфере (спираль Фибоначчи)
-    const y = 1 - (2 * i + 1) / POINTS;
-    const r = Math.sqrt(Math.max(1 - y * y, 0));
-    const theta = golden * i;
-    let dx = Math.cos(theta) * r;
-    let dy = y;
-    let dz = Math.sin(theta) * r;
+  const count = dirs.length;
+  const bx = new Float32Array(count);
+  const by = new Float32Array(count);
+  const bz = new Float32Array(count);
+  const nx = new Float32Array(count);
+  const ny = new Float32Array(count);
+  const nz = new Float32Array(count);
+  const phase = WAVES_OBJECT.map(() => ({ s: new Float32Array(count), c: new Float32Array(count) }));
+
+  for (let i = 0; i < count; i += 1) {
+    let [dx, dy, dz] = dirs[i];
 
     const ty = dy * Math.cos(tiltX) - dz * Math.sin(tiltX);
     const tz = dy * Math.sin(tiltX) + dz * Math.cos(tiltX);
     dy = ty;
     dz = tz;
 
+    // радиус скруглённого куба в этом направлении — из шара получается абстрактный объект
     const shape =
       1 /
       Math.pow(
@@ -156,7 +168,7 @@ function buildObject() {
     }
   }
 
-  return { count: POINTS, bx, by, bz, nx, ny, nz, phase };
+  return { count, bx, by, bz, nx, ny, nz, phase };
 }
 
 /* ── компонент ─────────────────────────────────────────────────────────── */
@@ -283,7 +295,7 @@ export function HeroField({ className = "" }) {
       const cy = height * 0.56;
       const radiusX = Math.min(width * 0.46, height * 0.78);
       const radiusY = radiusX * 0.58;
-      const dot = 1.2 * dpr;
+      const maxDot = OBJ_DOT * dpr;
 
       bucketN.fill(0);
 
@@ -304,12 +316,17 @@ export function HeroField({ className = "" }) {
         const sy = (cy - py * radiusY * persp) * dpr;
         if (sx < -4 || sy < -4 || sx > canvas.width + 4 || sy > canvas.height + 4) continue;
 
+        // ХАЛФТОН: волну рисует не яркость, а размер точки — на гребне крупная, во впадине почти нет
+        const fill = Math.min(Math.max(d / (WAVE_SPAN * 2) + 0.5, 0), 1);
+        const size = maxDot * Math.pow(fill, 1.9);
+        if (size < 0.3) continue;
+
         const edge = 1 - rnz;
         const level = Math.min(LEVELS - 1, (edge * Math.sqrt(edge) * LEVELS * 1.25) | 0);
         const n = bucketN[level];
         bucketX[level][n] = sx;
         bucketY[level][n] = sy;
-        bucketS[level][n] = dot;
+        bucketS[level][n] = size;
         bucketN[level] = n + 1;
       }
     };
@@ -336,7 +353,13 @@ export function HeroField({ className = "" }) {
         const xs = bucketX[level];
         const ys = bucketY[level];
         const ss = bucketS[level];
-        for (let i = 0; i < n; i += 1) ctx.fillRect(xs[i], ys[i], ss[i], ss[i]);
+        // круглые точки: весь уровень яркости — один путь и одна заливка
+        ctx.beginPath();
+        for (let i = 0; i < n; i += 1) {
+          ctx.moveTo(xs[i] + ss[i], ys[i]);
+          ctx.arc(xs[i], ys[i], ss[i], 0, Math.PI * 2);
+        }
+        ctx.fill();
       }
     };
 
