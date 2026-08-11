@@ -7,7 +7,7 @@ import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
-import { WorkflowScroll } from "./WorkflowScroll.jsx";
+import { PlatformPanels } from "./PlatformPanels.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
@@ -18,13 +18,6 @@ const niches = [
   { key: "fitness", title: "Фитнес и студии", text: "Абонементы, расписание, возврат клиентов.", status: "soon" },
   { key: "barber", title: "Барбершопы и ногтевые", text: "Быстрая запись и повторные визиты.", status: "soon" },
   { key: "services", title: "Услуги с записью", text: "Автосервисы, репетиторы и другие сферы.", status: "soon" },
-];
-
-const solution = [
-  "Готовые блоки, а не пустой конструктор — CRM, агенты, процессы уже внутри",
-  "Chat-first: описываете задачу словами — Mary собирает рабочую систему",
-  "Собирает компанию целиком, а контекст остаётся в системе, не в головах",
-  "Импортирует то, что уже навайбкодили, — в актив компании",
 ];
 
 const features = [
@@ -180,14 +173,8 @@ export function PlatformLanding() {
 
       <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />
-        <div className="mary-checks">
-          {solution.map((s) => (
-            <div className="mary-check" key={s}><Check size={22} /><b>{s}</b></div>
-          ))}
-        </div>
+        <PlatformPanels />
       </section>
-
-      <WorkflowScroll />
 
       <section className="custom-section" id="features">
         <SectionIntro title="Не один агент, а рабочая среда" text="Готовые блоки, которые Mary собирает под вашу задачу." />
@@ -213,13 +200,7 @@ export function PlatformLanding() {
         </div>
       </section>
 
-      <section className="custom-section pf-screens-section" id="screens">
-        <SectionIntro
-          title="Так это выглядит внутри"
-          text="Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы."
-        />
-        <ProductTabs />
-      </section>
+      <ProductTabs />
 
       <section className="custom-section beauty-ints-section">
         <SectionIntro

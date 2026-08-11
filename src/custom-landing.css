@@ -2956,6 +2956,194 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .pf-node { opacity: 1; transform: none; transition: none; }
 }
 
+/* ===== Реальные экраны платформы =====
+   Слева вертикальный список крупным текстом (активный — чернила, остальные бледные),
+   справа сам экран и подпись под ним. */
+.pf-screens {
+  display: grid;
+  grid-template-columns: minmax(240px, .82fr) minmax(0, 2fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.pf-screens-menu { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.pf-screens-menu button {
+  display: block;
+  width: 100%;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: #c6c6cc;
+  font: inherit;
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.16;
+  text-align: left;
+  cursor: pointer;
+  transition: color 260ms ease;
+}
+.pf-screens-menu button:hover { color: #8b8b93; }
+.pf-screens-menu button.is-active { color: #111318; }
+
+.pf-screens-shot {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--custom-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.pf-screens-shot img { display: block; width: 100%; height: auto; animation: pf-screen-in 380ms ease both; }
+@keyframes pf-screen-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.pf-screens-copy { margin-top: 22px; animation: pf-screen-in 380ms ease both; }
+.pf-screens-copy h3 { margin: 0; color: #262633; font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+.pf-screens-copy p { max-width: 62ch; margin: 8px 0 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .pf-screens { grid-template-columns: 1fr; }
+  .pf-screens-menu { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .pf-screens-menu button { width: auto; font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-screens-shot img, .pf-screens-copy { animation: none; }
+}
+
+/* ===== Блок «живая сборка» на главной ===== */
+.pf-assembly {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.pf-assembly-chat,
+.pf-assembly-canvas {
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--custom-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.pf-assembly-label,
+.pf-assembly-canvas-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8b8b93;
+  font-size: 13px;
+}
+.pf-assembly-canvas-head strong { color: #262633; font-size: 15px; font-weight: 600; }
+.pf-assembly-canvas-head em {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e3f1fc;
+  color: #0794ff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+}
+.pf-assembly-canvas-head svg { color: #8b8b93; }
+
+.pf-assembly-thread { flex: 1; margin-top: 22px; }
+.pf-assembly-user {
+  width: fit-content;
+  max-width: 82%;
+  margin: 0 0 22px auto;
+  padding: 11px 16px;
+  border-radius: 18px;
+  background: #f1f1f3;
+  color: #262633;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.pf-assembly-who {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  color: #8b8b93;
+  font-size: 13px;
+}
+.pf-assembly-who img { width: 14px; height: 18px; filter: invert(1); }
+.pf-assembly-mary p { margin: 0 0 10px; color: #262633; font-size: 15px; line-height: 1.5; }
+.pf-assembly-status { color: #8b8b93 !important; font-size: 13px !important; }
+
+.pf-assembly-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 10px 10px 10px 18px;
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  color: #8b8b93;
+  font-size: 14px;
+}
+.pf-assembly-input i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f1f1f3;
+  color: #5f6570;
+}
+
+.pf-assembly-nodes {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.pf-node {
+  position: relative;
+  padding: 14px 16px 15px 34px;
+  border: 1px solid var(--custom-line);
+  border-radius: 12px;
+  background: #fff;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+.pf-node.is-shown { opacity: 1; transform: none; }
+/* соединитель между узлами */
+.pf-node + .pf-node::before {
+  position: absolute;
+  top: -13px;
+  left: 17px;
+  width: 1px;
+  height: 12px;
+  background: var(--custom-line);
+  content: "";
+}
+.pf-node-dot {
+  position: absolute;
+  top: 19px;
+  left: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #262633;
+}
+.pf-node.is-blue .pf-node-dot { background: #0794ff; }
+.pf-node.is-violet .pf-node-dot { background: #b6a3f6; }
+.pf-node strong { display: block; color: #262633; font-size: 15px; font-weight: 500; }
+.pf-node small { display: block; margin-top: 3px; color: #8b8b93; font-size: 13px; }
+.pf-node:last-child { border-style: dashed; }
+
+.pf-assembly-hint { margin: 14px 0 0; color: #a4a4ac; font-size: 13px; }
+
+@media (max-width: 900px) {
+  .pf-assembly { grid-template-columns: 1fr; }
+  .pf-assembly-chat, .pf-assembly-canvas { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-node { opacity: 1; transform: none; transition: none; }
+}
+
 /* ===== Реальные экраны платформы ===== */
 .pf-screens-tabs {
   display: flex;
@@ -3423,3 +3611,131 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 }
 .pf-tracks p { margin: 10px 0 0; color: var(--custom-muted); font-size: 15px; line-height: 1.55; }
 @media (max-width: 900px) { .pf-tracks { grid-template-columns: 1fr; } }
+
+/* ===== Панели-гармошка «Одна платформа собирает вашу компанию» ===== */
+.pf-panels-row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  min-height: 420px;
+}
+.pf-panel {
+  display: flex;
+  flex: 0 0 clamp(150px, 15vw, 220px);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 24px 28px;
+  border-radius: 18px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: flex-basis 520ms cubic-bezier(.22, .8, .28, 1), background-color 320ms ease;
+}
+.pf-panel.is-open { flex: 1 1 auto; background: #f4f4f5; }
+.pf-panel-media { display: flex; flex: 1; align-items: center; justify-content: center; }
+.pf-panel-short {
+  display: block;
+  color: #262633;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+}
+.pf-panel-body h3 { margin: 0; color: #111318; font-size: clamp(20px, 2vw, 26px); font-weight: 600; letter-spacing: -.02em; }
+.pf-panel-body ul { display: grid; gap: 10px; margin: 16px 0 0; padding: 0; list-style: none; }
+.pf-panel-body li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--custom-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.pf-panel-body li svg { flex: 0 0 15px; margin-top: 4px; color: #8b8b93; }
+
+/* содержимое панелей */
+.pf-panel-chat { display: grid; gap: 10px; width: 100%; max-width: 320px; }
+.pf-panel-bubble, .pf-panel-reply {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.pf-panel-bubble { justify-self: end; background: #ececee; color: #262633; }
+.pf-panel-reply { justify-self: start; background: #fff; color: #262633; }
+.pf-panel-chip {
+  justify-self: start;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #e3f1fc;
+  color: #0794ff;
+  font-size: 12px;
+}
+.pf-panel-team { display: grid; gap: 10px; justify-items: center; }
+.pf-panel-agent {
+  padding: 8px 16px;
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  background: #fff;
+  color: #262633;
+  font-size: 14px;
+}
+.pf-panel-agent.is-blue { color: #0794ff; }
+.pf-panel-agent.is-violet { color: #8b74f0; }
+.pf-panel-agent.is-human { color: #f0993c; }
+.pf-panel-control { display: grid; gap: 10px; width: 100%; max-width: 300px; }
+.pf-panel-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: #fff;
+  color: #262633;
+  font-size: 14px;
+}
+.pf-panel-row i { width: 8px; height: 8px; border-radius: 50%; background: #4caf82; }
+.pf-panel-row.is-wait i { background: #f0993c; }
+
+.pf-panels-dots { display: flex; gap: 6px; justify-content: center; margin-top: 22px; }
+.pf-panels-dots span {
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--custom-line);
+  transition: background-color 260ms ease;
+}
+.pf-panels-dots span.is-on { background: #262633; }
+
+@media (max-width: 900px) {
+  .pf-panels-row { flex-direction: column; min-height: 0; }
+  .pf-panel, .pf-panel.is-open { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) { .pf-panel { transition: none; } }
+
+/* экраны переключаются скроллом: секция залипает на три экрана прокрутки */
+.pf-screens-section { position: relative; height: 340vh; background: #fff; }
+.pf-screens-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
+  padding: 0 max(24px, calc((100vw - 1272px) / 2));
+  overflow: hidden;
+}
+.pf-screens-head { margin-bottom: 44px; }
+.pf-screens-head h2 {
+  max-width: 18ch;
+  margin: 0;
+  font-size: clamp(30px, 3.6vw, 52px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -.04em;
+}
+.pf-screens-head p { max-width: 52ch; margin: 14px 0 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
+.pf-screens-shot img { max-height: 52svh; object-fit: contain; object-position: top; }
+@media (max-width: 900px) {
+  .pf-screens-section { height: auto; }
+  .pf-screens-sticky { position: static; height: auto; padding: 60px max(20px, 5vw); }
+  .pf-screens-shot img { max-height: none; }
+}

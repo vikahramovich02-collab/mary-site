@@ -1,80 +1,117 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Реальные экраны платформы, выгруженные из Figma (файл Mary, страница MARY FINAL).
-// Показываем по одному крупно: в сетке из шести превью интерфейс нечитаем.
+// Экраны платформы. Список слева назван не фичами, а тем, что закрывается у бизнеса.
 const tabs = [
   {
-    key: "chat",
-    tab: "Чат",
-    title: "Всё через один чат",
-    text: "Настроить, поправить, спросить, посмотреть отчёт — обычным сообщением. Осваивать интерфейс не нужно.",
+    key: "processes",
+    tab: "Настройка процессов",
+    title: "Процесс собран под ваш бизнес",
+    text: "Шаги, роли и сроки видно целиком: где сейчас каждая задача и на чём всё встало.",
   },
   {
-    key: "processes",
-    tab: "Бизнес-процессы",
-    title: "Процесс видно целиком",
-    text: "Где сейчас каждая задача, кто отвечает за шаг и где всё встало. Правки — словами в чате.",
+    key: "chat",
+    tab: "Правки словами",
+    title: "Меняется в чате, а не в настройках",
+    text: "Нужно иначе — пишете обычным сообщением. Без конструкторов, интеграторов и разработчиков.",
   },
   {
     key: "knowledge",
-    tab: "База знаний",
-    title: "Отвечает по вашим правилам",
-    text: "Прайсы, услуги, скрипты и файлы. Агенты берут ответы только отсюда и ничего не выдумывают.",
+    tab: "Память компании",
+    title: "Правила живут в системе, а не в головах",
+    text: "Прайсы, скрипты, условия и файлы — агенты отвечают только отсюда и ничего не выдумывают.",
   },
   {
     key: "connections",
-    tab: "Подключения",
-    title: "Каналы и системы на месте",
-    text: "Instagram, Telegram, YCLIENTS и остальное подключается в пару кликов. Переносить ничего не нужно.",
-  },
-  {
-    key: "employees",
-    tab: "Сотрудники",
-    title: "Видно, кто за что отвечает",
-    text: "Mary держит рутину и отдаёт человеку только то, где человек действительно нужен.",
+    tab: "Любые подключения",
+    title: "Собирает то, что у вас уже есть",
+    text: "Мессенджеры, CRM, системы записи и календари работают в одном процессе. Переносить ничего не нужно.",
   },
   {
     key: "analytics",
-    tab: "Аналитика",
-    title: "Где теряются клиенты",
-    text: "Путь от обращения до записи и потери на каждом этапе. Не отчёт ради отчёта, а место, где чинить.",
+    tab: "Ямы в бизнесе",
+    title: "Видно, где утекают деньги",
+    text: "Путь от обращения до оплаты и точка, где клиенты отваливаются. Не отчёт ради отчёта.",
+  },
+  {
+    key: "employees",
+    tab: "Люди на своих местах",
+    title: "Человек нужен там, где он правда нужен",
+    text: "Рутину держит Mary, сотруднику уходит спорное: скидка, жалоба, нестандарт.",
   },
 ];
 
 export function ProductTabs() {
+  const sectionRef = useRef(null);
   const [active, setActive] = useState(0);
   const current = tabs[active];
 
+  // активный пункт выбирает скролл: секция залипает, а список идёт сверху вниз
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(-rect.top / travel, 0), 0.999);
+      setActive(Math.floor(progress * tabs.length));
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
-    <div className="pf-screens">
-      <div className="pf-screens-tabs" role="tablist" aria-label="Разделы платформы">
-        {tabs.map((item, index) => (
-          <button
-            aria-selected={index === active}
-            className={index === active ? "is-active" : ""}
-            key={item.key}
-            onClick={() => setActive(index)}
-            role="tab"
-            type="button"
-          >
-            {item.tab}
-          </button>
-        ))}
-      </div>
+    <section className="pf-screens-section" id="screens" ref={sectionRef}>
+      <div className="pf-screens-sticky">
+        <header className="pf-screens-head">
+          <h2>Так это выглядит внутри</h2>
+          <p>Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы.</p>
+        </header>
 
-      <figure className="pf-screens-shot">
-        <img
-          alt={`Экран платформы Mary — ${current.tab}`}
-          key={current.key}
-          loading="lazy"
-          src={`/media/screens/${current.key}.png`}
-        />
-      </figure>
+        <div className="pf-screens">
+          <ul className="pf-screens-menu" aria-label="Что закрывает платформа">
+            {tabs.map((item, index) => (
+              <li key={item.key}>
+                <button
+                  aria-current={index === active}
+                  className={index === active ? "is-active" : ""}
+                  onClick={() => setActive(index)}
+                  type="button"
+                >
+                  {item.tab}
+                </button>
+              </li>
+            ))}
+          </ul>
 
-      <div className="pf-screens-copy" key={current.key}>
-        <h3>{current.title}</h3>
-        <p>{current.text}</p>
+          <div className="pf-screens-stage">
+            <figure className="pf-screens-shot">
+              <img
+                alt={`Экран платформы Mary — ${current.tab}`}
+                key={current.key}
+                loading="lazy"
+                src={`/media/screens/${current.key}.png`}
+              />
+            </figure>
+            <div className="pf-screens-copy" key={`copy-${current.key}`}>
+              <h3>{current.title}</h3>
+              <p>{current.text}</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
