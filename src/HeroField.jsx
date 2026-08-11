@@ -104,11 +104,17 @@ const OBJ_COLS = DESKTOP ? 330 : 190;
 const OBJ_DOT = 2.05; // максимальный радиус точки в CSS-пикселях
 const SQUIRCLE = 3.2; // 2 — шар, больше — ближе к скруглённому кубу
 
+// Волны двух видов. Плоская едет через объект насквозь и на глаз читается как
+// плоский градиент, поэтому основную работу делают КРУГОВЫЕ: они расходятся
+// кольцами от точки на самой поверхности, и форма начинает читаться объёмной.
 const WAVES_OBJECT = [
-  { k: [2.6, 1.1, 0.6], speed: 0.34, amp: 0.075 },
-  { k: [-0.9, 2.4, 1.7], speed: -0.23, amp: 0.055 },
-  { k: [1.4, -0.7, 2.9], speed: 0.17, amp: 0.042 },
+  { from: [0.86, 0.34, 0.38], freq: 6.4, speed: 0.26, amp: 0.1 },
+  { from: [-0.62, -0.46, 0.64], freq: 4.6, speed: -0.17, amp: 0.075 },
+  { from: [0.1, 0.95, -0.3], freq: 8.2, speed: 0.11, amp: 0.045 },
+  { k: [1.6, -2.2, 1.1], speed: 0.09, amp: 0.03 },
 ];
+
+const OBJ_SPIN = 0.085; // скорость поворота, рад/с
 
 const WAVE_SPAN = WAVES_OBJECT.reduce((sum, w) => sum + w.amp, 0);
 
@@ -161,8 +167,17 @@ function buildObject() {
     nz[i] = dz;
 
     for (let w = 0; w < WAVES_OBJECT.length; w += 1) {
-      const k = WAVES_OBJECT[w].k;
-      const p = k[0] * bx[i] + k[1] * by[i] + k[2] * bz[i];
+      const wave = WAVES_OBJECT[w];
+      let p;
+      if (wave.from) {
+        // расстояние по поверхности до источника — из него получаются расходящиеся кольца
+        const ax = bx[i] - wave.from[0];
+        const ay = by[i] - wave.from[1];
+        const az = bz[i] - wave.from[2];
+        p = Math.sqrt(ax * ax + ay * ay + az * az) * wave.freq;
+      } else {
+        p = wave.k[0] * bx[i] + wave.k[1] * by[i] + wave.k[2] * bz[i];
+      }
       phase[w].s[i] = Math.sin(p);
       phase[w].c[i] = Math.cos(p);
     }
@@ -287,7 +302,7 @@ export function HeroField({ className = "" }) {
 
     const drawObject = (t) => {
       const wt = timePhases(WAVES_OBJECT, t);
-      const spin = t * 0.045;
+      const spin = t * OBJ_SPIN;
       const cosSpin = Math.cos(spin);
       const sinSpin = Math.sin(spin);
 
@@ -317,8 +332,9 @@ export function HeroField({ className = "" }) {
         if (sx < -4 || sy < -4 || sx > canvas.width + 4 || sy > canvas.height + 4) continue;
 
         // ХАЛФТОН: волну рисует не яркость, а размер точки — на гребне крупная, во впадине почти нет
-        const fill = Math.min(Math.max(d / (WAVE_SPAN * 2) + 0.5, 0), 1);
-        const size = maxDot * Math.pow(fill, 1.9);
+        const fill = Math.min(Math.max(d / (WAVE_SPAN * 1.7) + 0.5, 0), 1);
+        // ближние точки крупнее — это и даёт ощущение объёма, а не плоской ряби
+        const size = maxDot * Math.pow(fill, 1.9) * (0.72 + rnz * 0.5);
         if (size < 0.3) continue;
 
         const edge = 1 - rnz;
@@ -348,7 +364,8 @@ export function HeroField({ className = "" }) {
       for (let level = 0; level < LEVELS; level += 1) {
         const n = bucketN[level];
         if (!n) continue;
-        const alpha = 0.22 + (level / (LEVELS - 1)) * 0.78;
+        // в халфтоне разницу держит размер точки, поэтому яркость гуляет слабо
+        const alpha = 0.5 + (level / (LEVELS - 1)) * 0.5;
         ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
         const xs = bucketX[level];
         const ys = bucketY[level];
