@@ -4,6 +4,7 @@ import {
   Bot, GitBranch, BookOpen, PlugZap, LineChart, Inbox,
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import "./custom-landing.css";
 
 const niches = [
@@ -152,6 +153,14 @@ export function PlatformLanding() {
           </div>
           <p className="pf-trust">Уже 26 компаний · 23 салона · работает на живом бизнесе</p>
         </div>
+      </section>
+
+      <section className="custom-section pf-assembly-section" aria-label="Как Mary собирает процесс">
+        <SectionIntro
+          title="Опишите задачу — процесс соберётся на глазах"
+          text="Слева вы говорите обычными словами. Справа Mary собирает процесс узел за узлом: кто встречает клиента, кто подбирает время, где нужен человек."
+        />
+        <AssemblyDemo />
       </section>
 
       <section className="custom-section custom-problems" id="platform">

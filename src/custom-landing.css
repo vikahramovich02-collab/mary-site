@@ -2756,3 +2756,201 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .beauty-answers .custom-outcome-grid article > span { display: inline-flex; align-items: center; }
 @media (max-width: 1080px) { .beauty-scope { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .beauty-scope { grid-template-columns: 1fr; } }
+
+/* ===== Стилистика платформы из Figma (файл Mary, экраны Chat / Main) =====
+   Палитра снята с самих экранов: холст #fcfcfc, панели белые, рамка-волосок
+   #ececee, наведение #f6f6f7, вставки #fafafa, чернила #262633, вторичный
+   #5f6570, синий #0794ff только для ссылок и действий. Теней в макете нет. */
+.custom-site.beauty-light {
+  --custom-line: #ececee;
+  --custom-muted: #5f6570;
+  --custom-soft: #fafafa;
+  background: #fcfcfc !important;
+  background-image: none;
+}
+
+.beauty-light .custom-hero {
+  border: 0;
+  border-radius: 0;
+  background: #fcfcfc !important;
+  box-shadow: none;
+}
+.beauty-light .custom-hero h1 span { color: #8b8b93; }
+
+/* карточки: белая панель, рамка-волосок, радиус 14, без тени */
+.beauty-light .custom-outcome-grid article,
+.beauty-light .custom-format-grid article,
+.beauty-light .custom-process-list article,
+.beauty-light .beauty-scope article,
+.beauty-light .mary-nichecard,
+.beauty-light .mary-niche article,
+.beauty-light .custom-faq-chat,
+.beauty-light .custom-contact-panel {
+  border: 1px solid var(--custom-line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: none;
+}
+.beauty-light .mary-nichecard:hover,
+.beauty-light .mary-niche article:hover { background: #f6f6f7; }
+
+/* разделители секций — тоже волосок */
+.beauty-light .custom-section + .custom-section,
+.beauty-light .custom-contact { border-top: 1px solid var(--custom-line) !important; }
+
+/* пилюли интеграций — как чипы в макете */
+.beauty-light .beauty-int {
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+/* цифры: в макете нет крупного синего — оставляем чернила, синий уводим в ссылки */
+.beauty-light .mary-metrics strong,
+.beauty-light .mary-metrics b { color: #262633; }
+
+/* чат: пузырь пользователя и вставка Mary — ровно как на экране чата */
+.beauty-light .custom-chat-message.is-user > p,
+.beauty-light .custom-chat-message.is-user { border-radius: 18px; background: #f1f1f3; color: #262633; }
+.beauty-light .custom-chat-message.is-mary { border: 0; background: transparent; }
+.beauty-light .custom-chat-message.is-mary > p { color: #262633; }
+.beauty-light .custom-faq-options li button { border-radius: 10px; }
+.beauty-light .custom-faq-options li button:hover { background: #f6f6f7; }
+
+/* ===== Блок «живая сборка» на главной ===== */
+.pf-assembly {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.pf-assembly-chat,
+.pf-assembly-canvas {
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  padding: 22px 22px 20px;
+  border: 1px solid var(--custom-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.pf-assembly-label,
+.pf-assembly-canvas-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8b8b93;
+  font-size: 13px;
+}
+.pf-assembly-canvas-head strong { color: #262633; font-size: 15px; font-weight: 600; }
+.pf-assembly-canvas-head em {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e3f1fc;
+  color: #0794ff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+}
+.pf-assembly-canvas-head svg { color: #8b8b93; }
+
+.pf-assembly-thread { flex: 1; margin-top: 22px; }
+.pf-assembly-user {
+  width: fit-content;
+  max-width: 82%;
+  margin: 0 0 22px auto;
+  padding: 11px 16px;
+  border-radius: 18px;
+  background: #f1f1f3;
+  color: #262633;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.pf-assembly-who {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  color: #8b8b93;
+  font-size: 13px;
+}
+.pf-assembly-who img { width: 14px; height: 18px; filter: invert(1); }
+.pf-assembly-mary p { margin: 0 0 10px; color: #262633; font-size: 15px; line-height: 1.5; }
+.pf-assembly-status { color: #8b8b93 !important; font-size: 13px !important; }
+
+.pf-assembly-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 10px 10px 10px 18px;
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  color: #8b8b93;
+  font-size: 14px;
+}
+.pf-assembly-input i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f1f1f3;
+  color: #5f6570;
+}
+
+.pf-assembly-nodes {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.pf-node {
+  position: relative;
+  padding: 14px 16px 15px 34px;
+  border: 1px solid var(--custom-line);
+  border-radius: 12px;
+  background: #fff;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+.pf-node.is-shown { opacity: 1; transform: none; }
+/* соединитель между узлами */
+.pf-node + .pf-node::before {
+  position: absolute;
+  top: -13px;
+  left: 17px;
+  width: 1px;
+  height: 12px;
+  background: var(--custom-line);
+  content: "";
+}
+.pf-node-dot {
+  position: absolute;
+  top: 19px;
+  left: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #262633;
+}
+.pf-node.is-blue .pf-node-dot { background: #0794ff; }
+.pf-node.is-violet .pf-node-dot { background: #b6a3f6; }
+.pf-node strong { display: block; color: #262633; font-size: 15px; font-weight: 500; }
+.pf-node small { display: block; margin-top: 3px; color: #8b8b93; font-size: 13px; }
+.pf-node:last-child { border-style: dashed; }
+
+.pf-assembly-hint { margin: 14px 0 0; color: #a4a4ac; font-size: 13px; }
+
+@media (max-width: 900px) {
+  .pf-assembly { grid-template-columns: 1fr; }
+  .pf-assembly-chat, .pf-assembly-canvas { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-node { opacity: 1; transform: none; transition: none; }
+}
