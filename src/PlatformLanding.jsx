@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
+import { HeroField } from "./HeroField.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
@@ -89,6 +90,7 @@ export function PlatformLanding() {
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
       <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
+        <HeroField className="pf-hero-field" mode="halftone" tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header">

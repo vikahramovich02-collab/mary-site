@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 // Раньше это был 3-секундный mp4 — на повторе была видна склейка. Здесь всё рисуется
 // живьём, а волны заданы формулой от времени, поэтому петли нет и шва не бывает.
 //
-// MODE — что показываем:
+// Режим по умолчанию; каждый лендинг может задать свой через проп mode:
 //   "halftone" — ровная сетка, размер точки задаёт волну (как в референсах Вики)
 //   "waves"    — поле точек, уходящее в перспективу
 //   "object"   — приплюснутая точечная «подушка»
-const MODE = "object";
+const DEFAULT_MODE = "object";
 
 const DESKTOP = typeof window === "undefined" || window.innerWidth >= 760;
 const LEVELS = 16; // ступени яркости: рисуем пачками, чтобы не дёргать fillStyle на каждую точку
@@ -190,7 +190,7 @@ function buildObject() {
 
 // tone: "dark" — белые точки на чёрном (мир Mary Custom),
 //       "light" — чернильные точки на белом (мир платформы Mary)
-export function HeroField({ className = "", tone = "dark" }) {
+export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -202,10 +202,10 @@ export function HeroField({ className = "", tone = "dark" }) {
     const paper = light ? "#f7f8fa" : "#000";
     const ink = light ? "38,38,51" : "255,255,255";
     // на светлом точки должны только подсвечивать фон, иначе забивают текст
-    const alphaFloor = light ? 0.05 : 0.5;
-    const alphaSpan = light ? 0.16 : 0.5;
+    const alphaFloor = light ? 0.04 : 0.5;
+    const alphaSpan = light ? 0.1 : 0.5;
     // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
-    const geo = MODE === "halftone" ? { count: 0 } : MODE === "waves" ? buildField() : buildObject();
+    const geo = mode === "halftone" ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const bucketX = Array.from({ length: LEVELS }, () => new Float32Array(geo.count));
@@ -237,7 +237,8 @@ export function HeroField({ className = "", tone = "dark" }) {
       const cell = CELL * dpr;
       const cols = Math.ceil(width / CELL) + 1;
       const rows = Math.ceil(height / CELL) + 1;
-      const maxR = cell * DOT_MAX;
+      // по белому крупная тёмная точка читается тяжелее, чем белая по чёрному
+      const maxR = cell * DOT_MAX * (light ? 0.72 : 1);
       const scale = 1 / (width * dpr);
 
       const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
@@ -358,12 +359,12 @@ export function HeroField({ className = "", tone = "dark" }) {
     const paint = (time) => {
       const t = still ? 6 : (time - start) / 1000;
 
-      if (MODE === "halftone") {
+      if (mode === "halftone") {
         paintHalftone(t);
         return;
       }
 
-      if (MODE === "waves") drawField(t);
+      if (mode === "waves") drawField(t);
       else drawObject(t);
 
       ctx.fillStyle = paper;
@@ -412,7 +413,7 @@ export function HeroField({ className = "", tone = "dark" }) {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [tone]);
+  }, [tone, mode]);
 
   return <canvas className={className} ref={ref} aria-hidden="true" />;
 }
