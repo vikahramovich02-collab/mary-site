@@ -36,11 +36,13 @@ const features = [
   [Inbox, "Входящие", "Mary приносит только то, что требует вашего решения — спор о цене, жалобу, нестандарт."],
 ];
 
-const steps = [
-  ["01", "Опишите задачу словами", "Без ТЗ и конструкторов — обычным сообщением, что нужно компании.", "Контекст собран"],
-  ["02", "Mary собирает систему", "Из готовых блоков поднимает процесс под вас — на глазах, за минуты.", "Процесс готов"],
-  ["03", "Запускаете в работу", "Mary отвечает и ведёт процесс 24/7, спорное поднимает человеку.", "Работает сама"],
-  ["04", "Смотрите и растёте", "Видите результат и где теряете, собираете следующие процессы.", "Управление по данным"],
+const tracks = [
+  ["Отвечает клиентам", "В мессенджерах, за секунды, круглосуточно."],
+  ["Ведёт запись", "Подбирает время и создаёт визит в вашей системе."],
+  ["Помнит правила", "Прайс, скрипты, условия — ответы только отсюда."],
+  ["Держит процесс", "Видно, где каждая задача и где всё встало."],
+  ["Поднимает спорное", "Скидки, жалобы и нестандарт уходят человеку."],
+  ["Показывает потери", "Где клиенты отваливаются и что чинить."],
 ];
 
 const faqs = [
@@ -157,6 +159,25 @@ export function PlatformLanding() {
         <AssemblyDemo />
       </section>
 
+      <section className="custom-section pf-video-section" id="video">
+        <SectionIntro
+          title="Как это выглядит в работе"
+          text="Полторы минуты — и понятно, как система собирается и живёт дальше."
+        />
+        <figure className="pf-video">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/media/screens/chat.png"
+            preload="none"
+          >
+            <source src="/media/platform-demo.mp4" type="video/mp4" />
+          </video>
+        </figure>
+      </section>
+
       <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />
         <div className="mary-checks">
@@ -180,11 +201,14 @@ export function PlatformLanding() {
         </div>
       </section>
 
-      <section className="custom-section custom-process" id="how">
-        <SectionIntro title="От задачи до работающей системы" text="Вы описываете задачу словами — остальное собирает Mary. Настраивать конструкторы не нужно." />
-        <div className="custom-process-list">
-          {steps.map(([n, t, x, r]) => (
-            <article key={n}><span>{n}</span><div><h3>{t}</h3><p>{x}</p></div><small><Check size={15} />{r}</small></article>
+      <section className="custom-section pf-tracks-section" id="tracks">
+        <SectionIntro title="Что снимается с людей" />
+        <div className="pf-tracks">
+          {tracks.map(([title, text]) => (
+            <article key={title}>
+              <strong>{title}</strong>
+              <p>{text}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -195,6 +219,18 @@ export function PlatformLanding() {
           text="Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы."
         />
         <ProductTabs />
+      </section>
+
+      <section className="custom-section beauty-ints-section">
+        <SectionIntro
+          title="Встраивается в то, чем вы уже пользуетесь"
+          text="Каналы, CRM, записи и календари — из коробки. Нужен другой сервис — подключаем по запросу, переносить ничего не нужно."
+        />
+        <div className="beauty-ints">
+          {["Instagram", "Telegram", "WhatsApp", "ВКонтакте", "YCLIENTS", "Altegio", "amoCRM", "Битрикс24", "1С", "Google Календарь", "Телефония", "+ ваш сервис"].map((name) => (
+            <span className="beauty-int" key={name}><i aria-hidden="true" />{name}</span>
+          ))}
+        </div>
       </section>
 
       <section className="custom-section" id="companies">
@@ -212,15 +248,6 @@ export function PlatformLanding() {
               </Tag>
             );
           })}
-        </div>
-      </section>
-
-      <section className="custom-section beauty-ints-section">
-        <SectionIntro title="Работает с вашими каналами и системами" />
-        <div className="beauty-ints">
-          {["YCLIENTS", "Instagram", "Telegram", "VK", "Altegio", "Битрикс24", "Телефония"].map((name) => (
-            <span className="beauty-int" key={name}><i aria-hidden="true" />{name}</span>
-          ))}
         </div>
       </section>
 
