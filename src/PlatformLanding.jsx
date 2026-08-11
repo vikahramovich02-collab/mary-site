@@ -89,6 +89,7 @@ export function PlatformLanding() {
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header pf-header">
+          <Brand />
           <nav className="custom-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
             <a href="#platform">Платформа</a>
             <div className="mary-dd">
@@ -118,7 +119,6 @@ export function PlatformLanding() {
             </div>
             <a href="#how">Как работает</a>
           </nav>
-          <Brand />
           <div className="custom-header-actions">
             <a className="custom-button custom-button-ghost custom-button-small" href="/?page=custom">Разработать</a>
             <a className="custom-button custom-button-light custom-button-small" href="/?page=platform">Войти в Mary</a>

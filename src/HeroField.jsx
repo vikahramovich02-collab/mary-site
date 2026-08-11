@@ -238,13 +238,13 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
       const cols = Math.ceil(width / CELL) + 1;
       const rows = Math.ceil(height / CELL) + 1;
       // по белому крупная тёмная точка читается тяжелее, чем белая по чёрному
-      const maxR = cell * DOT_MAX * (light ? 0.62 : 1);
+      const maxR = cell * DOT_MAX * (light ? 0.8 : 1);
       const scale = 1 / (width * dpr);
 
       const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
 
       // халфтон рисуется одной заливкой: по белому она должна быть заметно слабее
-      ctx.fillStyle = `rgba(${ink},${light ? ".2" : ".88"})`;
+      ctx.fillStyle = `rgba(${ink},${light ? ".26" : ".88"})`;
       ctx.beginPath();
 
       // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
@@ -279,10 +279,12 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
 
           // из суммы волн получаем заполнение 0…1 и загоняем его в размер точки
           // на светлом купол должен быть заполнен целиком, волна лишь играет размером
+          // размах волны по размеру точки: на светлом он был почти нулевой,
+          // из-за этого купол выглядел неподвижным
           const fill = light
-            ? Math.min(Math.max(v * 0.26 + 0.6, 0), 1)
+            ? Math.min(Math.max(v * 0.44 + 0.5, 0), 1)
             : Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
-          const r = maxR * Math.pow(fill, light ? 1.5 : 2.2) * shape;
+          const r = maxR * Math.pow(fill, light ? 1.8 : 2.2) * shape;
           if (r < 0.28) continue;
 
           ctx.moveTo(x + r, y);
