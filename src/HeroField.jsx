@@ -202,8 +202,8 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
     const paper = light ? "#f7f8fa" : "#000";
     const ink = light ? "38,38,51" : "255,255,255";
     // на светлом точки должны только подсвечивать фон, иначе забивают текст
-    const alphaFloor = light ? 0.04 : 0.5;
-    const alphaSpan = light ? 0.1 : 0.5;
+    const alphaFloor = light ? 0.05 : 0.5;
+    const alphaSpan = light ? 0.09 : 0.5;
     // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
     const geo = mode === "halftone" ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -238,23 +238,38 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
       const cols = Math.ceil(width / CELL) + 1;
       const rows = Math.ceil(height / CELL) + 1;
       // по белому крупная тёмная точка читается тяжелее, чем белая по чёрному
-      const maxR = cell * DOT_MAX * (light ? 0.72 : 1);
+      const maxR = cell * DOT_MAX * (light ? 0.62 : 1);
       const scale = 1 / (width * dpr);
 
       const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
 
-      ctx.fillStyle = `rgba(${ink},.88)`;
+      // халфтон рисуется одной заливкой: по белому она должна быть заметно слабее
+      ctx.fillStyle = `rgba(${ink},${light ? ".2" : ".88"})`;
       ctx.beginPath();
+
+      // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
+      // так это нарисовано в макете главной. В тёмном остаётся полоса снизу вверх.
+      const domeX = (width * dpr) / 2;
+      const domeY = height * dpr * 1.5;
+      const domeR = height * dpr * 1.08;
 
       for (let row = 0; row < rows; row += 1) {
         const y = row * cell;
-        // вверху экрана, под заголовком, точки мельче — текст остаётся читаемым
         const band = Math.min(Math.max((y / (height * dpr) - 0.3) / 0.5, 0), 1);
         const strength = band * band * (3 - 2 * band);
-        if (strength <= 0.01) continue;
+        if (!light && strength <= 0.01) continue;
 
         for (let col = 0; col < cols; col += 1) {
           const x = col * cell;
+
+          let shape = strength;
+          if (light) {
+            const dx = x - domeX;
+            const dy = y - domeY;
+            const edge = domeR - Math.sqrt(dx * dx + dy * dy);
+            shape = Math.min(Math.max(edge / (28 * dpr), 0), 1);
+            if (shape <= 0.01) continue;
+          }
 
           let v = 0;
           for (let w = 0; w < HALFTONE.length; w += 1) {
@@ -263,8 +278,11 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
           }
 
           // из суммы волн получаем заполнение 0…1 и загоняем его в размер точки
-          const fill = Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
-          const r = maxR * Math.pow(fill, 2.2) * strength;
+          // на светлом купол должен быть заполнен целиком, волна лишь играет размером
+          const fill = light
+            ? Math.min(Math.max(v * 0.26 + 0.6, 0), 1)
+            : Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
+          const r = maxR * Math.pow(fill, light ? 1.5 : 2.2) * shape;
           if (r < 0.28) continue;
 
           ctx.moveTo(x + r, y);

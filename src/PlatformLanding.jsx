@@ -93,8 +93,7 @@ export function PlatformLanding() {
         <HeroField className="pf-hero-field" mode="halftone" tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
-        <header className="custom-header">
-          <Brand />
+        <header className="custom-header pf-header">
           <nav className="custom-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
             <a href="#platform">Платформа</a>
             <div className="mary-dd">
@@ -124,9 +123,10 @@ export function PlatformLanding() {
             </div>
             <a href="#how">Как работает</a>
           </nav>
+          <Brand />
           <div className="custom-header-actions">
-            <a className="custom-language" href="#top" aria-label="Язык: русский">RU</a>
-            <a className="custom-button custom-button-light custom-button-small" href="/?page=platform">Открыть демо</a>
+            <a className="custom-button custom-button-ghost custom-button-small" href="/?page=custom">Разработать</a>
+            <a className="custom-button custom-button-light custom-button-small" href="/?page=platform">Войти в Mary</a>
             <button className="custom-menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Меню"><Menu size={21} /></button>
           </div>
         </header>
@@ -145,16 +145,16 @@ export function PlatformLanding() {
         )}
 
         <div className="custom-hero-content">
-          <h1 id="pf-hero-title">Соберите рабочую систему<span>в два клика, а не за квартал</span></h1>
-          <p className="custom-hero-copy">
-            Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков,
-            подключит каналы и запустит его в работу. Без ТЗ, конструкторов и разработки.
-          </p>
+          <h1 id="pf-hero-title">Соберёт рабочую систему в 2 клика</h1>
+          <p className="custom-hero-copy">Chat-first платформа автоматизации бизнеса</p>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="/?page=platform">Открыть демо</a>
-            <a className="custom-button custom-button-ghost" href="#companies">Выбрать нишу</a>
+            <a className="custom-button custom-button-ghost" href="#how">Как это работает</a>
+            <a className="custom-button custom-button-light" href="/?page=platform">Собрать</a>
           </div>
-          <p className="pf-trust">Уже 26 компаний · 23 салона · работает на живом бизнесе</p>
+          <div className="pf-hero-logos" aria-label="С нами работают">
+            <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
+            <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
+          </div>
         </div>
       </section>
 
