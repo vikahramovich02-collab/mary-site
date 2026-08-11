@@ -113,10 +113,9 @@ function ArrowLink({ children, href = "#contact", className = "" }) {
   );
 }
 
-function SectionIntro({ eyebrow, title, text }) {
+function SectionIntro({ title, text }) {
   return (
     <div className="custom-section-intro">
-      <span>{eyebrow}</span>
       <h2>{title}</h2>
       {text && <p>{text}</p>}
     </div>
@@ -346,7 +345,6 @@ export function CustomLanding() {
 
         <aside className="custom-scroll-copy">
           <div key={services[activeService].number}>
-            <span>Услуги · {services[activeService].number} / {String(services.length).padStart(2, "0")}</span>
             <h2>{services[activeService].title}</h2>
             <p>{services[activeService].text}</p>
             <div className="custom-service-tags">
@@ -362,7 +360,6 @@ export function CustomLanding() {
 
       <section className="custom-section custom-outcomes">
         <SectionIntro
-          eyebrow="Результат"
           title="Что остаётся у бизнеса после запуска"
           text="Не набор отдельных работ, а решение, правила управления и основа для следующих изменений."
         />
@@ -379,7 +376,6 @@ export function CustomLanding() {
 
       <section className="custom-section custom-process" id="process">
         <SectionIntro
-          eyebrow="Как работаем"
           title="Как задача превращается в работающий результат"
           text="Четыре понятных этапа. На каждом показываем рабочий результат и согласуем следующий шаг."
         />
@@ -397,7 +393,6 @@ export function CustomLanding() {
 
       <section className="custom-section custom-formats" id="formats">
         <SectionIntro
-          eyebrow="Форматы работы"
           title="Выбираем формат под задачу"
           text="После вводного разговора предлагаем состав работ, который соответствует цели, уровню определённости и масштабу запуска."
         />
@@ -417,7 +412,6 @@ export function CustomLanding() {
 
       <section className="custom-section custom-faq" id="faq">
         <SectionIntro
-          eyebrow="Вопросы"
           title="Спросите Mary о работе команды"
           text="Выберите готовый вопрос или напишите свой — ответим так же, как ответили бы на вводной встрече."
         />

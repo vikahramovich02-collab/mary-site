@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react";
 // Раньше это был 3-секундный mp4 — на повторе была видна склейка. Здесь всё рисуется
 // живьём, а волны заданы формулой от времени, поэтому петли нет и шва не бывает.
 //
-// MODE — что показываем: "waves" (уходящее в перспективу поле) или "object" (приплюснутая «подушка»).
-const MODE = "waves";
+// MODE — что показываем:
+//   "halftone" — ровная сетка, размер точки задаёт волну (как в референсах Вики)
+//   "waves"    — поле точек, уходящее в перспективу
+//   "object"   — приплюснутая точечная «подушка»
+const MODE = "halftone";
 
 const DESKTOP = typeof window === "undefined" || window.innerWidth >= 760;
 const LEVELS = 16; // ступени яркости: рисуем пачками, чтобы не дёргать fillStyle на каждую точку
@@ -28,6 +31,17 @@ function timePhases(waves, t) {
     return { sin: Math.sin(a), cos: Math.cos(a) };
   });
 }
+
+/* ── режим «халфтон»: ровная сетка, волну рисует размер точки ──────────── */
+
+const CELL = 15; // шаг сетки в CSS-пикселях
+const DOT_MAX = 0.46; // максимальный радиус в долях шага
+const HALFTONE = [
+  // k — направление и частота волны в долях ширины экрана, speed — скорость бега
+  { k: [3.1, 1.15], speed: 0.13, amp: 0.62 },
+  { k: [-1.7, 2.35], speed: -0.09, amp: 0.44 },
+  { k: [4.6, -2.9], speed: 0.06, amp: 0.24 },
+];
 
 /* ── режим «волны»: поле точек, уходящее к горизонту ───────────────────── */
 
@@ -155,7 +169,8 @@ export function HeroField({ className = "" }) {
     if (!canvas) return undefined;
 
     const ctx = canvas.getContext("2d", { alpha: false });
-    const geo = MODE === "waves" ? buildField() : buildObject();
+    // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
+    const geo = MODE === "halftone" ? { count: 0 } : MODE === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const bucketX = Array.from({ length: LEVELS }, () => new Float32Array(geo.count));
@@ -176,6 +191,52 @@ export function HeroField({ className = "" }) {
       height = Math.max(rect.height, 1);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
+    };
+
+    // Халфтон рисуется отдельно от остальных режимов: одна заливка на весь кадр,
+    // все точки собираются в один путь — поэтому сетка может быть сколь угодно частой.
+    const paintHalftone = (t) => {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const cell = CELL * dpr;
+      const cols = Math.ceil(width / CELL) + 1;
+      const rows = Math.ceil(height / CELL) + 1;
+      const maxR = cell * DOT_MAX;
+      const scale = 1 / (width * dpr);
+
+      const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
+
+      ctx.fillStyle = "rgba(255,255,255,.88)";
+      ctx.beginPath();
+
+      for (let row = 0; row < rows; row += 1) {
+        const y = row * cell;
+        // вверху экрана, под заголовком, точки мельче — текст остаётся читаемым
+        const band = Math.min(Math.max((y / (height * dpr) - 0.3) / 0.5, 0), 1);
+        const strength = band * band * (3 - 2 * band);
+        if (strength <= 0.01) continue;
+
+        for (let col = 0; col < cols; col += 1) {
+          const x = col * cell;
+
+          let v = 0;
+          for (let w = 0; w < HALFTONE.length; w += 1) {
+            const k = HALFTONE[w].k;
+            v += HALFTONE[w].amp * Math.sin((k[0] * x + k[1] * y) * scale * Math.PI * 2 - wt[w]);
+          }
+
+          // из суммы волн получаем заполнение 0…1 и загоняем его в размер точки
+          const fill = Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
+          const r = maxR * Math.pow(fill, 2.2) * strength;
+          if (r < 0.28) continue;
+
+          ctx.moveTo(x + r, y);
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+        }
+      }
+
+      ctx.fill();
     };
 
     const drawField = (t) => {
@@ -255,6 +316,11 @@ export function HeroField({ className = "" }) {
 
     const paint = (time) => {
       const t = still ? 6 : (time - start) / 1000;
+
+      if (MODE === "halftone") {
+        paintHalftone(t);
+        return;
+      }
 
       if (MODE === "waves") drawField(t);
       else drawObject(t);
