@@ -2461,3 +2461,225 @@
   .custom-section-intro p { grid-column: 1; margin-top: 18px; }
 }
 
+/* ===== Beauty niche page ===== */
+.beauty-hero { min-height: auto; padding-bottom: 90px; }
+.beauty-hero .custom-hero-content {
+  position: relative;
+  z-index: 2;
+  left: auto;
+  top: auto;
+  transform: none;
+  margin: 12vh auto 0;
+}
+.beauty-hero .custom-language { min-width: auto; padding: 0 16px; }
+.beauty-hero-tag {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--custom-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.beauty-eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--custom-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.custom-section-intro .beauty-eyebrow { grid-column: 1; }
+.custom-section-intro h2 { grid-column: 1; }
+.beauty-ints { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.beauty-int {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.beauty-int i { width: 9px; height: 9px; border-radius: 50%; background: var(--custom-accent); }
+.beauty-ints-section .beauty-ints { margin-top: 30px; }
+.beauty-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; font-size: 13px; font-weight: 700; color: var(--custom-muted); }
+.beauty-field input {
+  padding: 14px 16px;
+  border: 1px solid var(--custom-line);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--custom-ink);
+}
+.beauty-field input:focus-visible { outline: 2px solid #6f83ff; outline-offset: 2px; }
+
+/* ===== Beauty niche — committed LIGHT theme (стиль платформы Mary) ===== */
+.custom-site.beauty-light {
+  --custom-black: #ffffff;
+  --custom-ink: #262633;
+  --custom-muted: rgba(38,38,51,.56);
+  --custom-line: rgba(38,38,51,.10);
+  --custom-soft: #f4f5f7;
+  --custom-accent: #0794ff;
+  color: #262633;
+  background: #f4f5f7 !important;
+  background-image: radial-gradient(rgba(38,38,51,.045) 1px, transparent 1.6px);
+  background-size: 24px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+}
+.beauty-light h1, .beauty-light h2, .beauty-light h3, .beauty-light strong { color: #262633; }
+
+/* hero */
+.beauty-light .custom-hero { background: #ffffff !important; color: #262633; border: 1px solid var(--custom-line); box-shadow: 0 20px 60px rgba(38,38,51,.07); }
+.beauty-light .custom-hero-shade { display: none; }
+.beauty-light .custom-hero h1 { color: #262633; }
+.beauty-light .custom-hero h1 span { color: rgba(38,38,51,.42); }
+.beauty-light .custom-hero-copy { color: var(--custom-muted); }
+.beauty-light .beauty-hero-tag { color: #0a74d1; }
+
+/* header / nav */
+.beauty-light .custom-brand { color: #262633; }
+.beauty-light .custom-brand img { filter: none; }
+.beauty-light .custom-nav { background: rgba(255,255,255,.72); border-color: var(--custom-line); box-shadow: 0 8px 30px rgba(38,38,51,.08); }
+.beauty-light .custom-nav a { color: var(--custom-muted); }
+.beauty-light .custom-nav a:hover { color: #262633; background: rgba(38,38,51,.05); }
+.beauty-light .custom-language { background: #fff; border: 1px solid var(--custom-line); color: #262633; }
+
+/* buttons */
+.beauty-light .custom-button-light { background: var(--custom-accent) !important; color: #fff !important; }
+.beauty-light .custom-button-light:hover { background: #0a86e6 !important; }
+.beauty-light .custom-button-ghost { background: transparent !important; color: #262633 !important; border-color: var(--custom-line) !important; }
+.beauty-light .custom-button-ghost:hover { background: rgba(38,38,51,.05) !important; }
+.beauty-light .custom-button-dark { background: #262633 !important; color: #fff !important; }
+
+/* section intros + eyebrows */
+.beauty-light .custom-section-intro > span,
+.beauty-light .custom-section-intro p { color: var(--custom-muted); }
+.beauty-light .beauty-eyebrow { color: #0a74d1; }
+
+/* cards */
+.beauty-light .custom-outcome-grid,
+.beauty-light .custom-outcome-grid article,
+.beauty-light .custom-format-grid,
+.beauty-light .custom-format-grid article,
+.beauty-light .custom-process-list,
+.beauty-light .custom-process-list article { border-color: var(--custom-line) !important; background: transparent !important; }
+.beauty-light .custom-outcome-grid p,
+.beauty-light .custom-format-grid p,
+.beauty-light .custom-format-grid small,
+.beauty-light .custom-process-list p,
+.beauty-light .custom-outcome-grid article > span,
+.beauty-light .custom-format-grid article > span,
+.beauty-light .custom-process-list article > span { color: var(--custom-muted); }
+.beauty-light .custom-process-list small { color: #0a74d1; }
+.beauty-light .custom-arrow-link { color: #0a74d1; }
+
+/* integrations pills (light) */
+.beauty-light .beauty-int { background: #fff; border-color: var(--custom-line); color: #262633; box-shadow: 0 6px 20px rgba(38,38,51,.06); }
+.beauty-light .beauty-int i { background: var(--custom-accent); }
+
+/* faq chat */
+.beauty-light .custom-faq-chat { background: #fff !important; border: 1px solid var(--custom-line); box-shadow: 0 14px 44px rgba(38,38,51,.07); }
+.beauty-light .custom-chat-message.is-mary { background: var(--custom-soft) !important; color: #262633; }
+.beauty-light .custom-chat-message.is-user { background: var(--custom-accent) !important; color: #fff; }
+.beauty-light .custom-chat-message.is-dark { background: #262633 !important; color: #fff; }
+.beauty-light .custom-chat-message small { color: var(--custom-muted); }
+.beauty-light .custom-faq-options button { color: #262633; }
+.beauty-light .custom-faq-options button span { color: var(--custom-muted); }
+
+/* contact */
+.beauty-light .custom-contact { background: #fff !important; color: #262633; }
+.beauty-light .custom-contact-copy > span { color: #0a74d1; }
+.beauty-light .custom-contact-copy h2 { color: #262633; }
+.beauty-light .custom-contact-copy > p,
+.beauty-light .custom-contact-copy > div { color: var(--custom-muted); }
+.beauty-light .custom-contact-panel { background: var(--custom-soft) !important; border-color: var(--custom-line) !important; }
+.beauty-light .beauty-field { color: var(--custom-muted); }
+.beauty-light .beauty-field input { background: #fff; border-color: var(--custom-line); color: #262633; }
+.beauty-light .custom-consent { color: var(--custom-muted); }
+.beauty-light .custom-success h3 { color: #262633; }
+.beauty-light .custom-success p { color: var(--custom-muted); }
+.beauty-light .custom-success > span { background: var(--custom-accent); color: #fff; }
+
+/* footer */
+.beauty-light .custom-footer { background: var(--custom-soft) !important; color: #262633; border-top-color: var(--custom-line); }
+.beauty-light .custom-footer-brand .custom-brand { color: #262633; }
+.beauty-light .custom-footer-brand p,
+.beauty-light .custom-footer > p,
+.beauty-light .custom-footer > div,
+.beauty-light .custom-footer-links a { color: var(--custom-muted); }
+.beauty-light .custom-footer a:hover { color: #262633; }
+
+/* ===== Platform landing — nav dropdowns, niches, metrics ===== */
+.pf-trust { margin: 26px auto 0; color: var(--custom-muted); font-size: 14px; }
+
+.mary-dd { position: relative; display: flex; }
+.mary-dd > button {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 10px 15px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--custom-muted);
+  font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.beauty-light .mary-dd > button:hover { color: #262633; background: rgba(38,38,51,.05); }
+.mary-dd-menu {
+  position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+  min-width: 280px; padding: 12px; z-index: 40;
+  background: #fff; border: 1px solid var(--custom-line); border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(38,38,51,.16);
+  display: grid; gap: 4px;
+}
+.mary-dd-menu.wide { min-width: 540px; grid-template-columns: 1fr 1fr; }
+.mary-dd-menu a {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border-radius: 11px; color: #262633; font-size: 14px; font-weight: 600;
+}
+.mary-dd-menu a small { color: var(--custom-muted); font-size: 11px; font-weight: 500; }
+.mary-dd-menu a:hover { background: var(--custom-soft); }
+.mary-dd-menu a.soon { opacity: .5; cursor: default; pointer-events: none; }
+
+.mary-feature-ic { display: inline-grid !important; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: var(--custom-soft); border: 1px solid var(--custom-line); color: #0a74d1; }
+.beauty-light .mary-features h3 { margin-top: 22px; }
+
+.mary-checks { display: grid; gap: 15px; margin-top: 6px; }
+.mary-check { display: flex; align-items: flex-start; gap: 13px; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.4; }
+.mary-check svg { flex: 0 0 auto; margin-top: 3px; color: #0a74d1; }
+.mary-check b { font-weight: 600; color: #262633; }
+
+.mary-niche { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.mary-nichecard {
+  position: relative; display: flex; flex-direction: column; gap: 9px;
+  min-height: 168px; padding: 24px; border-radius: 18px;
+  background: #fff; border: 1px solid var(--custom-line); box-shadow: 0 8px 26px rgba(38,38,51,.06);
+  transition: transform .18s var(--custom-ease), box-shadow .18s var(--custom-ease);
+}
+a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rgba(38,38,51,.11); }
+.mary-nichecard h3 { font-size: 19px; letter-spacing: -.03em; }
+.mary-nichecard p { flex: 1; margin: 0; color: var(--custom-muted); font-size: 14px; }
+.mary-nichecard .go { color: #0a74d1; font-size: 14px; font-weight: 650; }
+.mary-nichecard.soon { opacity: .64; }
+.mary-badge { position: absolute; top: 18px; right: 18px; padding: 4px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.mary-badge.live { background: rgba(52,199,89,.14); color: #1e9e46; }
+.mary-badge.soon { background: var(--custom-soft); color: var(--custom-muted); }
+
+.mary-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+.mary-metric { border-top: 1px solid var(--custom-line); padding-top: 18px; }
+.mary-metric .n { display: block; font-size: clamp(38px, 4vw, 54px); font-weight: 720; letter-spacing: -.04em; line-height: .92; color: #0a74d1; }
+.mary-metric b { display: block; margin-top: 13px; font-size: 17px; color: #262633; }
+.mary-metric p { margin-top: 5px; color: var(--custom-muted); font-size: 13px; }
+
+@media (max-width: 900px) {
+  .mary-niche { grid-template-columns: 1fr 1fr; }
+  .mary-dd-menu.wide { grid-template-columns: 1fr; min-width: 260px; }
+}
+@media (max-width: 720px) {
+  .mary-niche { grid-template-columns: 1fr; }
+  .mary-metrics { grid-template-columns: 1fr 1fr; }
+}
+

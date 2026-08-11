@@ -248,6 +248,7 @@ export function CustomLanding() {
           <Brand dark />
           <nav className="custom-nav" aria-label="Навигация по странице">
             <a href="#services">Услуги</a>
+            <a href="/?page=beauty">Салоны</a>
             <a href="#process">Как работаем</a>
             <a href="#formats">Форматы</a>
             <a href="#team">Команда</a>

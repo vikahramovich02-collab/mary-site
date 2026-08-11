@@ -58,6 +58,9 @@ import {
   X,
 } from "lucide-react";
 import { CustomLanding } from "./CustomLanding.jsx";
+import { BeautyLanding } from "./BeautyLanding.jsx";
+import { PlatformLanding } from "./PlatformLanding.jsx";
+import { Onboarding } from "./Onboarding.jsx";
 
 const clients = [
   {
@@ -1009,9 +1012,15 @@ function PlatformApp() {
 
 export function App() {
   const requestedPage = new URLSearchParams(window.location.search).get("page");
+  const path = window.location.pathname;
   const isPlatform =
-    window.location.pathname === "/platform" ||
-    window.location.pathname === "/platform/" ||
-    requestedPage === "platform";
-  return isPlatform ? <PlatformApp /> : <CustomLanding />;
+    path === "/platform" || path === "/platform/" || requestedPage === "platform";
+  const isBeauty = path === "/beauty" || path === "/beauty/" || requestedPage === "beauty";
+  const isCustom = path === "/custom" || path === "/custom/" || requestedPage === "custom";
+  const isOnboarding = path === "/onboarding" || requestedPage === "onboarding";
+  if (isOnboarding) return <Onboarding />;
+  if (isPlatform) return <PlatformApp />;
+  if (isBeauty) return <BeautyLanding />;
+  if (isCustom) return <CustomLanding />;
+  return <PlatformLanding />;
 }
