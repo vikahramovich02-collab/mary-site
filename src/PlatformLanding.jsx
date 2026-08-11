@@ -4,6 +4,7 @@ import {
   Bot, GitBranch, BookOpen, PlugZap, LineChart, Inbox,
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import { HeroField } from "./HeroField.jsx";
 import "./custom-landing.css";
 
 const niches = [
@@ -88,6 +89,7 @@ export function PlatformLanding() {
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
       <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
+        <HeroField className="pf-hero-field" tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header">

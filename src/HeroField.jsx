@@ -188,14 +188,22 @@ function buildObject() {
 
 /* ── компонент ─────────────────────────────────────────────────────────── */
 
-export function HeroField({ className = "" }) {
+// tone: "dark" — белые точки на чёрном (мир Mary Custom),
+//       "light" — чернильные точки на белом (мир платформы Mary)
+export function HeroField({ className = "", tone = "dark" }) {
   const ref = useRef(null);
 
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return undefined;
 
+    const light = tone === "light";
     const ctx = canvas.getContext("2d", { alpha: false });
+    const paper = light ? "#f7f8fa" : "#000";
+    const ink = light ? "38,38,51" : "255,255,255";
+    // на светлом точки должны только подсвечивать фон, иначе забивают текст
+    const alphaFloor = light ? 0.05 : 0.5;
+    const alphaSpan = light ? 0.16 : 0.5;
     // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
     const geo = MODE === "halftone" ? { count: 0 } : MODE === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -223,7 +231,7 @@ export function HeroField({ className = "" }) {
     // Халфтон рисуется отдельно от остальных режимов: одна заливка на весь кадр,
     // все точки собираются в один путь — поэтому сетка может быть сколь угодно частой.
     const paintHalftone = (t) => {
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = paper;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const cell = CELL * dpr;
@@ -234,7 +242,7 @@ export function HeroField({ className = "" }) {
 
       const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
 
-      ctx.fillStyle = "rgba(255,255,255,.88)";
+      ctx.fillStyle = `rgba(${ink},.88)`;
       ctx.beginPath();
 
       for (let row = 0; row < rows; row += 1) {
@@ -358,15 +366,15 @@ export function HeroField({ className = "" }) {
       if (MODE === "waves") drawField(t);
       else drawObject(t);
 
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = paper;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let level = 0; level < LEVELS; level += 1) {
         const n = bucketN[level];
         if (!n) continue;
         // в халфтоне разницу держит размер точки, поэтому яркость гуляет слабо
-        const alpha = 0.5 + (level / (LEVELS - 1)) * 0.5;
-        ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        const alpha = alphaFloor + (level / (LEVELS - 1)) * alphaSpan;
+        ctx.fillStyle = `rgba(${ink},${alpha.toFixed(3)})`;
         const xs = bucketX[level];
         const ys = bucketY[level];
         const ss = bucketS[level];
@@ -404,7 +412,7 @@ export function HeroField({ className = "" }) {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [tone]);
 
   return <canvas className={className} ref={ref} aria-hidden="true" />;
 }
