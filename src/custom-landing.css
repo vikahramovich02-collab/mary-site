@@ -2460,3 +2460,30 @@
   .custom-section-intro { grid-template-columns: 1fr; }
   .custom-section-intro p { grid-column: 1; margin-top: 18px; }
 }
+
+/* Картинка услуги в правой колонке скролл-истории */
+.custom-service-visual {
+  margin: 0 0 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  background: #0b0b0b;
+  aspect-ratio: 4 / 3;
+}
+.custom-service-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: custom-visual-in 520ms var(--custom-ease) both;
+}
+@keyframes custom-visual-in {
+  from { opacity: 0; transform: scale(1.03); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .custom-service-visual img { animation: none; }
+}
+@media (max-width: 900px) {
+  .custom-service-visual { display: none; }
+}
