@@ -13,42 +13,36 @@ import "./custom-landing.css";
 const services = [
   {
     number: "01",
-    image: "/media/services/01.jpg",
     title: "Исследование и продуктовый дизайн",
     text: "Проверяем идею, изучаем пользователей и процессы, проектируем сценарии и создаём прототип до начала разработки.",
     tags: ["Интервью", "Сценарии", "Прототип"],
   },
   {
     number: "02",
-    image: "/media/services/02.jpg",
     title: "Веб-сервисы и личные кабинеты",
     text: "Разрабатываем клиентские продукты, порталы, кабинеты и внутренние системы — от первой версии до развития.",
     tags: ["Порталы", "Кабинеты", "Внутренние системы"],
   },
   {
     number: "03",
-    image: "/media/services/03.jpg",
     title: "Мобильные приложения",
     text: "Создаём мобильный опыт вокруг ключевого сценария бизнеса и связываем приложение с действующими системами.",
     tags: ["iOS", "Android", "Связка с системами"],
   },
   {
     number: "04",
-    image: "/media/services/04.jpg",
     title: "Автоматизация и AI",
     text: "Убираем ручные операции, внедряем AI-сценарии, маршруты согласований и контроль исключений.",
     tags: ["AI-сценарии", "Согласования", "Контроль исключений"],
   },
   {
     number: "05",
-    image: "/media/services/05.jpg",
     title: "Интеграции и данные",
     text: "Связываем CRM, ERP, банки, телефонию, мессенджеры и внутренние сервисы в единый процесс.",
     tags: ["CRM и ERP", "Банки", "Телефония", "Мессенджеры"],
   },
   {
     number: "06",
-    image: "/media/services/06.jpg",
     title: "Поддержка и развитие",
     text: "После запуска следим за стабильностью, собираем обратную связь и развиваем продукт или автоматизацию вместе с бизнесом.",
     tags: ["Стабильность", "Обратная связь", "Развитие"],
@@ -351,9 +345,6 @@ export function CustomLanding() {
 
         <aside className="custom-scroll-copy">
           <div key={services[activeService].number}>
-            <figure className="custom-service-visual">
-              <img src={services[activeService].image} alt="" loading="lazy" />
-            </figure>
             <h2>{services[activeService].title}</h2>
             <p>{services[activeService].text}</p>
             <a className="custom-button custom-button-dark" href="#contact">Обсудить задачу</a>
