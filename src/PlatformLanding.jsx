@@ -7,6 +7,7 @@ import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
+import { WorkflowScroll } from "./WorkflowScroll.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
@@ -171,6 +172,8 @@ export function PlatformLanding() {
           ))}
         </div>
       </section>
+
+      <WorkflowScroll />
 
       <section className="custom-section" id="features">
         <SectionIntro title="Не один агент, а рабочая среда" text="Готовые блоки, которые Mary собирает под вашу задачу." />

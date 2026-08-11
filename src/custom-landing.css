@@ -3254,12 +3254,12 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .dog-lid { transform: translateY(-34px); }
 }
 
-/* ===== Курсор-лапка на сайте Mary ===== */
+/* ===== Курсор-точка на сайте Mary ===== */
 .custom-site.beauty-light,
 .custom-site.beauty-light * {
   cursor:
-    -webkit-image-set(url("/media/paw-32.png") 1x, url("/media/paw-64.png") 2x) 8 6,
-    url("/media/paw-32.png") 8 6,
+    -webkit-image-set(url("/media/dot-32.png") 1x, url("/media/dot-64.png") 2x) 16 16,
+    url("/media/dot-32.png") 16 16,
     auto;
 }
 .custom-site.beauty-light a,
@@ -3267,8 +3267,8 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .custom-site.beauty-light [role="tab"],
 .custom-site.beauty-light label {
   cursor:
-    -webkit-image-set(url("/media/paw-32.png") 1x, url("/media/paw-64.png") 2x) 8 6,
-    url("/media/paw-32.png") 8 6,
+    -webkit-image-set(url("/media/dot-32.png") 1x, url("/media/dot-64.png") 2x) 16 16,
+    url("/media/dot-32.png") 16 16,
     pointer;
 }
 .custom-site.beauty-light input,
@@ -3277,3 +3277,103 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 /* герой ровно на высоту экрана — иначе под собакой оставалась белая полоса */
 .beauty-light .beauty-hero { min-height: 100svh; padding-bottom: 0; }
 .mary-dog-jump.is-in { animation-name: dog-jump; }
+
+/* ===== Сборка процесса по скроллу ===== */
+.pf-flow { position: relative; height: 320vh; background: #fff; }
+.pf-flow-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
+  overflow: hidden;
+}
+.pf-flow-head {
+  padding: 0 max(24px, calc((100vw - 1272px) / 2));
+  margin-bottom: 54px;
+}
+.pf-flow-head h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(32px, 4.3vw, 62px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -.04em;
+}
+.pf-flow-head p { max-width: 54ch; margin: 18px 0 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
+.pf-flow-count { display: inline-block; margin-top: 18px; color: #a4a4ac; font-size: 13px; font-variant-numeric: tabular-nums; }
+
+.pf-flow-viewport { overflow: hidden; }
+.pf-flow-track {
+  display: flex;
+  align-items: stretch;
+  gap: 46px;
+  margin: 0;
+  padding: 0 max(24px, calc((100vw - 1272px) / 2));
+  list-style: none;
+  will-change: transform;
+}
+
+.pf-flow-node {
+  position: relative;
+  display: flex;
+  flex: 0 0 236px;
+  flex-direction: column;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--custom-line);
+  border-radius: 14px;
+  background: #fff;
+  opacity: 0;
+  transform: translateY(14px) scale(.96);
+  transition: opacity 420ms ease, transform 420ms cubic-bezier(.2, .8, .3, 1.1);
+}
+.pf-flow-node.is-on { opacity: 1; transform: none; }
+
+/* связь между узлами */
+.pf-flow-node + .pf-flow-node::before {
+  position: absolute;
+  top: 50%;
+  left: -46px;
+  width: 46px;
+  height: 1px;
+  background: var(--custom-line);
+  content: "";
+}
+
+.pf-flow-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  color: #8b8b93;
+  font-size: 12px;
+  font-weight: 500;
+}
+.pf-flow-kind::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+.pf-flow-node strong { color: #262633; font-size: 15px; font-weight: 500; line-height: 1.35; }
+.pf-flow-node small { margin-top: 10px; color: #8b8b93; font-size: 13px; }
+
+.pf-flow-node.is-start .pf-flow-kind { color: #262633; }
+.pf-flow-node.is-task .pf-flow-kind { color: #0794ff; }
+.pf-flow-node.is-mary .pf-flow-kind { color: #8b74f0; }
+.pf-flow-node.is-human .pf-flow-kind { color: #f0993c; }
+.pf-flow-node.is-ask { background: #fafafa; }
+.pf-flow-node.is-ask .pf-flow-kind { color: #a4a4ac; }
+
+@media (max-width: 900px) {
+  .pf-flow { height: auto; }
+  .pf-flow-sticky { position: static; height: auto; padding: 60px 0; }
+  .pf-flow-viewport { overflow-x: auto; }
+  .pf-flow-track { transform: none !important; }
+  .pf-flow-node { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-flow-node { opacity: 1; transform: none; transition: none; }
+}
