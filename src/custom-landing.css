@@ -3154,7 +3154,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   will-change: transform;
 }
 .mary-dog-jump.is-in { animation: dog-jump 940ms cubic-bezier(.32, .82, .36, 1) forwards; }
-.mary-dog-jump.is-still { transform: translateY(8%); }
+.mary-dog-jump.is-still { transform: translateY(11%); }
 
 /* прыжок: вытянулась в полёте, сжалась при приземлении, качнулась и встала */
 @keyframes dog-jump {
@@ -3163,7 +3163,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   60%  { transform: translateY(11%) scale(1.12, .86); }
   74%  { transform: translateY(-3%) scale(.97, 1.05); }
   87%  { transform: translateY(10%) scale(1.04, .96); }
-  100% { transform: translateY(8%) scale(1, 1); }
+  100% { transform: translateY(11%) scale(1, 1); }
 }
 
 .dog-breath {
@@ -3253,3 +3253,27 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .mary-dog-jump { transform: translateY(8%); }
   .dog-lid { transform: translateY(-34px); }
 }
+
+/* ===== Курсор-лапка на сайте Mary ===== */
+.custom-site.beauty-light,
+.custom-site.beauty-light * {
+  cursor:
+    -webkit-image-set(url("/media/paw-32.png") 1x, url("/media/paw-64.png") 2x) 8 6,
+    url("/media/paw-32.png") 8 6,
+    auto;
+}
+.custom-site.beauty-light a,
+.custom-site.beauty-light button,
+.custom-site.beauty-light [role="tab"],
+.custom-site.beauty-light label {
+  cursor:
+    -webkit-image-set(url("/media/paw-32.png") 1x, url("/media/paw-64.png") 2x) 8 6,
+    url("/media/paw-32.png") 8 6,
+    pointer;
+}
+.custom-site.beauty-light input,
+.custom-site.beauty-light textarea { cursor: text; }
+
+/* герой ровно на высоту экрана — иначе под собакой оставалась белая полоса */
+.beauty-light .beauty-hero { min-height: 100svh; padding-bottom: 0; }
+.mary-dog-jump.is-in { animation-name: dog-jump; }
