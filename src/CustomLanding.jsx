@@ -97,7 +97,7 @@ const faqs = [
 
 function Brand({ dark = false }) {
   return (
-    <a className={`custom-brand ${dark ? "is-dark" : ""}`} href="#top" aria-label="Mary Custom, к началу страницы">
+    <a className={`custom-brand ${dark ? "is-dark" : ""}`} href="/" aria-label="Mary, на главную">
       <img src={maryMark} alt="" />
       <span>mary</span>
     </a>
