@@ -4,7 +4,6 @@ import {
   Bot, GitBranch, BookOpen, PlugZap, LineChart, Inbox,
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
-import { HeroField } from "./HeroField.jsx";
 import "./custom-landing.css";
 
 const niches = [
@@ -69,10 +68,9 @@ function Brand() {
   );
 }
 
-function SectionIntro({ eyebrow, title, text }) {
+function SectionIntro({ title, text }) {
   return (
     <div className="custom-section-intro">
-      {eyebrow && <span className="beauty-eyebrow">{eyebrow}</span>}
       <h2>{title}</h2>
       {text && <p>{text}</p>}
     </div>
@@ -89,7 +87,6 @@ export function PlatformLanding() {
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
       <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
-        <HeroField className="pf-hero-field" tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header">
@@ -144,7 +141,6 @@ export function PlatformLanding() {
         )}
 
         <div className="custom-hero-content">
-          <span className="beauty-hero-tag">Платформа Mary</span>
           <h1 id="pf-hero-title">Опишите задачу —<span>Mary соберёт рабочую систему</span></h1>
           <p className="custom-hero-copy">
             Chat-first платформа автоматизации бизнеса. Не пустой конструктор, а готовые блоки,
@@ -160,7 +156,6 @@ export function PlatformLanding() {
 
       <section className="custom-section custom-problems" id="platform">
         <SectionIntro
-          eyebrow="Зачем"
           title="У компании есть код, но нет контекста"
           text="AI удешевил разработку — обслуживание хаоса стало дорогим. Mary превращает разрозненные автоматизации в единую систему компании."
         />
@@ -172,7 +167,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section">
-        <SectionIntro eyebrow="Что такое Mary" title="Одна платформа собирает вашу компанию" />
+        <SectionIntro title="Одна платформа собирает вашу компанию" />
         <div className="mary-checks">
           {solution.map((s) => (
             <div className="mary-check" key={s}><Check size={22} /><b>{s}</b></div>
@@ -181,7 +176,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section" id="features">
-        <SectionIntro eyebrow="Возможности" title="Не один агент, а рабочая среда" text="Готовые блоки, которые Mary собирает под вашу задачу." />
+        <SectionIntro title="Не один агент, а рабочая среда" text="Готовые блоки, которые Mary собирает под вашу задачу." />
         <div className="custom-outcome-grid mary-features">
           {features.map(([Icon, t, x]) => (
             <article key={t}>
@@ -193,7 +188,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section custom-process" id="how">
-        <SectionIntro eyebrow="Как это работает" title="От задачи до работающей системы" text="Вы описываете задачу словами — остальное собирает Mary. Настраивать конструкторы не нужно." />
+        <SectionIntro title="От задачи до работающей системы" text="Вы описываете задачу словами — остальное собирает Mary. Настраивать конструкторы не нужно." />
         <div className="custom-process-list">
           {steps.map(([n, t, x, r]) => (
             <article key={n}><span>{n}</span><div><h3>{t}</h3><p>{x}</p></div><small><Check size={15} />{r}</small></article>
@@ -202,7 +197,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section" id="companies">
-        <SectionIntro eyebrow="Компании" title="Ниши, где встраиваем Mary" text="Начинаем с салонов красоты. Дальше — смежные сферы с записью: тот же кор + пара интеграций." />
+        <SectionIntro title="Ниши, где встраиваем Mary" text="Начинаем с салонов красоты. Дальше — смежные сферы с записью: тот же кор + пара интеграций." />
         <div className="mary-niche">
           {niches.map((n) => {
             const live = n.status === "live";
@@ -220,7 +215,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section beauty-ints-section">
-        <SectionIntro eyebrow="Интеграции" title="Работает с вашими каналами и системами" />
+        <SectionIntro title="Работает с вашими каналами и системами" />
         <div className="beauty-ints">
           {["YCLIENTS", "Instagram", "Telegram", "VK", "Altegio", "Битрикс24", "Телефония"].map((name) => (
             <span className="beauty-int" key={name}><i aria-hidden="true" />{name}</span>
@@ -229,7 +224,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section">
-        <SectionIntro eyebrow="Уже работает" title="Спрос появился раньше релиза" />
+        <SectionIntro title="Спрос появился раньше релиза" />
         <div className="mary-metrics">
           {metrics.map(([n, b, p]) => (
             <article className="mary-metric" key={b}><span className="n">{n}</span><b>{b}</b><p>{p}</p></article>
@@ -238,7 +233,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section custom-faq" id="faq">
-        <SectionIntro eyebrow="Вопросы" title="Коротко о платформе" />
+        <SectionIntro title="Коротко о платформе" />
         <div className="custom-faq-chat">
           <div className="custom-chat-message is-mary"><small>Mary</small><p>Расскажу, что за платформа и как она собирает систему под вашу компанию.</p></div>
           <ol className="custom-faq-options" aria-label="Вопросы">

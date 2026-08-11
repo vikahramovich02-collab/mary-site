@@ -53,10 +53,9 @@ function ArrowLink({ children, href = "#contact", className = "" }) {
   );
 }
 
-function SectionIntro({ eyebrow, title, text }) {
+function SectionIntro({ title, text }) {
   return (
     <div className="custom-section-intro">
-      {eyebrow && <span className="beauty-eyebrow">{eyebrow}</span>}
       <h2>{title}</h2>
       {text && <p>{text}</p>}
     </div>
@@ -115,7 +114,6 @@ export function BeautyLanding() {
         )}
 
         <div className="custom-hero-content">
-          <span className="beauty-hero-tag">Для салонов красоты</span>
           <h1 id="beauty-hero-title">
             Администратор салона,
             <span>который отвечает и записывает 24/7</span>
@@ -133,7 +131,6 @@ export function BeautyLanding() {
 
       <section className="custom-section custom-problems" id="problems">
         <SectionIntro
-          eyebrow="Знакомо?"
           title="Где салон теряет клиентов и деньги"
           text="Обычно всё упирается в скорость ответа и запись. Именно там уходят клиенты — тихо и незаметно."
         />
@@ -150,7 +147,6 @@ export function BeautyLanding() {
 
       <section className="custom-section" id="features">
         <SectionIntro
-          eyebrow="Что делает Mary"
           title="Отвечает, записывает и возвращает клиентов"
           text="Не просто чат-бот с красивыми ответами, а администратор, который доводит обращение до записи."
         />
@@ -169,7 +165,6 @@ export function BeautyLanding() {
 
       <section className="custom-section custom-process" id="how">
         <SectionIntro
-          eyebrow="Как это работает"
           title="От подключения до записей — несколько дней"
           text="Вы описываете салон обычными словами, остальное собираем мы. Настраивать конструкторы не нужно."
         />
@@ -187,7 +182,6 @@ export function BeautyLanding() {
 
       <section className="custom-section beauty-ints-section">
         <SectionIntro
-          eyebrow="Интеграции"
           title="Работает с вашими каналами и записью"
           text="Ничего не переносим и не ломаем — Mary встраивается в то, чем вы уже пользуетесь."
         />
@@ -200,7 +194,6 @@ export function BeautyLanding() {
 
       <section className="custom-section custom-faq" id="faq">
         <SectionIntro
-          eyebrow="Вопросы"
           title="Спросите Mary о работе в салоне"
           text="Выберите вопрос — ответим так же, как ответили бы на коротком разборе вашего салона."
         />
