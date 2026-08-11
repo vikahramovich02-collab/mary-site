@@ -190,7 +190,9 @@ function buildObject() {
 
 // tone: "dark" — белые точки на чёрном (мир Mary Custom),
 //       "light" — чернильные точки на белом (мир платформы Mary)
-export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }) {
+// speed — множитель скорости волн, spread — форма маски халфтона:
+// "band" (полоса снизу), "dome" (купол) или "full" (на всю площадь)
+export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, speed = 1, spread, dotScale = 1, dotAlpha }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -241,7 +243,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
       const maxR = cell * DOT_MAX * (light ? 0.8 : 1);
       const scale = 1 / (width * dpr);
 
-      const wt = HALFTONE.map((w) => t * w.speed * Math.PI * 2);
+      const wt = HALFTONE.map((w) => t * w.speed * speed * Math.PI * 2);
 
       // халфтон рисуется одной заливкой: по белому она должна быть заметно слабее
       ctx.fillStyle = `rgba(${ink},${light ? ".26" : ".88"})`;
@@ -249,6 +251,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
 
       // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
       // так это нарисовано в макете главной. В тёмном остаётся полоса снизу вверх.
+      const shapeMode = spread || (light ? "dome" : "band");
       const domeX = (width * dpr) / 2;
       const domeY = height * dpr * 1.5;
       const domeR = height * dpr * 1.08;
@@ -257,13 +260,13 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
         const y = row * cell;
         const band = Math.min(Math.max((y / (height * dpr) - 0.3) / 0.5, 0), 1);
         const strength = band * band * (3 - 2 * band);
-        if (!light && strength <= 0.01) continue;
+        if (shapeMode === "band" && strength <= 0.01) continue;
 
         for (let col = 0; col < cols; col += 1) {
           const x = col * cell;
 
-          let shape = strength;
-          if (light) {
+          let shape = shapeMode === "full" ? 1 : strength;
+          if (shapeMode === "dome") {
             const dx = x - domeX;
             const dy = y - domeY;
             const edge = domeR - Math.sqrt(dx * dx + dy * dy);
@@ -433,7 +436,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE }
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [tone, mode]);
+  }, [tone, mode, speed, spread, dotScale, dotAlpha]);
 
   return <canvas className={className} ref={ref} aria-hidden="true" />;
 }

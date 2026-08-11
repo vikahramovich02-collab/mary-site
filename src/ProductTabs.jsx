@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { HeroField } from "./HeroField.jsx";
 
 // Экраны платформы. Список слева назван не фичами, а тем, что закрывается у бизнеса.
 const tabs = [
@@ -75,6 +76,16 @@ export function ProductTabs() {
   return (
     <section className="pf-screens-section" id="screens" ref={sectionRef}>
       <div className="pf-screens-sticky">
+        {/* тот же халфтон, что в герое, только по чёрному и очень медленный */}
+        <HeroField
+          className="pf-screens-field"
+          dotAlpha={0.3}
+          dotScale={0.5}
+          mode="halftone"
+          speed={0.18}
+          spread="full"
+          tone="dark"
+        />
         <header className="pf-screens-head">
           <h2>Так это выглядит внутри</h2>
           <p>Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы.</p>
