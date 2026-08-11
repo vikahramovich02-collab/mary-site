@@ -145,10 +145,10 @@ export function PlatformLanding() {
         )}
 
         <div className="custom-hero-content">
-          <h1 id="pf-hero-title">Опишите задачу —<span>Mary соберёт рабочую систему</span></h1>
+          <h1 id="pf-hero-title">Соберите рабочую систему<span>в два клика, а не за квартал</span></h1>
           <p className="custom-hero-copy">
-            Chat-first платформа автоматизации бизнеса. Не пустой конструктор, а готовые блоки,
-            из которых Mary собирает нужную систему под вашу компанию.
+            Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков,
+            подключит каналы и запустит его в работу. Без ТЗ, конструкторов и разработки.
           </p>
           <div className="custom-hero-cta">
             <a className="custom-button custom-button-light" href="/?page=platform">Открыть демо</a>
