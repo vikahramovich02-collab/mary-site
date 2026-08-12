@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Check, Menu, X, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import { HeroField } from "./HeroField.jsx";
 import "./custom-landing.css";
 
 // Пары «триггер → потеря» и их зеркальные ответы — из питчдека для BEAUTYCON
@@ -92,8 +93,16 @@ export function BeautyLanding() {
   };
 
   return (
-    <main className="custom-site beauty-light" id="top">
+    <main className="custom-site beauty-light beauty-page" id="top">
       <section className="custom-hero beauty-hero" aria-labelledby="beauty-hero-title">
+        {/* халфтон-вертушка на фоне: розовая, очень светлая */}
+        <HeroField
+          className="pf-hero-field"
+          dotAlpha={0.5}
+          inkColor="240,168,190"
+          mode="petals"
+          tone="light"
+        />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header">

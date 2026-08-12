@@ -3292,6 +3292,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   letter-spacing: -.03em;
 }
 .beauty-light .custom-hero h1 span { display: inline; color: inherit; }
+.beauty-page .custom-hero h1 span { display: block; }
 .beauty-light .custom-hero-copy {
   max-width: none;
   margin: 22px auto 0;
@@ -3918,3 +3919,9 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 }
 .pf-hero-logos img { height: 46px; filter: grayscale(1) brightness(0); opacity: .2; }
 .pf-hero-logos img.is-htp { height: 26px; }
+
+/* на странице салонов вертушка живёт во всю высоту первого экрана */
+.beauty-page .beauty-hero { position: relative; min-height: 92svh; isolation: isolate; }
+.beauty-page .beauty-hero::after {
+  background: radial-gradient(46% 34% at 50% 34%, rgba(255,255,255,.94) 0%, rgba(255,255,255,.7) 55%, rgba(255,255,255,0) 100%);
+}

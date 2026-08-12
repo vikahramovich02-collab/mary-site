@@ -8,6 +8,7 @@ import { useEffect, useRef } from "react";
 //   "halftone" — ровная сетка, размер точки задаёт волну (как в референсах Вики)
 //   "waves"    — поле точек, уходящее в перспективу
 //   "object"   — приплюснутая точечная «подушка»
+//   "petals"   — халфтон-вертушка из четырёх лепестков
 const DEFAULT_MODE = "object";
 
 const DESKTOP = typeof window === "undefined" || window.innerWidth >= 760;
@@ -192,7 +193,7 @@ function buildObject() {
 //       "light" — чернильные точки на белом (мир платформы Mary)
 // speed — множитель скорости волн, spread — форма маски халфтона:
 // "band" (полоса снизу), "dome" (купол) или "full" (на всю площадь)
-export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, speed = 1, spread, dotScale = 1, dotAlpha }) {
+export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, speed = 1, spread, dotScale = 1, dotAlpha, inkColor }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -202,12 +203,12 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
     const light = tone === "light";
     const ctx = canvas.getContext("2d", { alpha: false });
     const paper = light ? "#fff" : "#000";
-    const ink = light ? "38,38,51" : "255,255,255";
+    const ink = inkColor || (light ? "38,38,51" : "255,255,255");
     // на светлом точки должны только подсвечивать фон, иначе забивают текст
     const alphaFloor = light ? 0.05 : 0.5;
     const alphaSpan = light ? 0.09 : 0.5;
     // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
-    const geo = mode === "halftone" ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
+    const geo = mode === "halftone" || mode === "petals" ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const bucketX = Array.from({ length: LEVELS }, () => new Float32Array(geo.count));
@@ -232,6 +233,52 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
 
     // Халфтон рисуется отдельно от остальных режимов: одна заливка на весь кадр,
     // все точки собираются в один путь — поэтому сетка может быть сколь угодно частой.
+    // Вертушка: четыре лепестка, закрученных по спирали. Размер точки задаёт
+    // плотность лепестка — к краю он растворяется, в центре дырка.
+    const paintPetals = (t) => {
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const cell = CELL * dpr;
+      const cols = Math.ceil(width / CELL) + 1;
+      const rows = Math.ceil(height / CELL) + 1;
+      const maxR = cell * DOT_MAX * dotScale;
+
+      const cx = (width * dpr) / 2;
+      const cy = (height * dpr) / 2;
+      const span = Math.min(width, height) * dpr * 0.62;
+      const spin = t * 0.06 * speed;
+
+      ctx.fillStyle = `rgba(${ink},${dotAlpha ?? 0.85})`;
+      ctx.beginPath();
+
+      for (let row = 0; row < rows; row += 1) {
+        const y = row * cell;
+        for (let col = 0; col < cols; col += 1) {
+          const x = col * cell;
+          const dx = x - cx;
+          const dy = y - cy;
+          const rr = Math.sqrt(dx * dx + dy * dy) / span;
+          if (rr > 1.05) continue;
+
+          // четыре лопасти + закрутка: чем дальше от центра, тем сильнее сдвиг
+          const blade = 0.5 + 0.5 * Math.cos(4 * (Math.atan2(dy, dx) + spin) + 3.1 * rr);
+          // дырка в середине и мягкий край снаружи
+          const hole = Math.min(Math.max((rr - 0.16) / 0.18, 0), 1);
+          const edge = 1 - Math.min(Math.max((rr - 0.68) / 0.34, 0), 1);
+          // высокая степень делает лепестки узкими, между ними остаётся чистое поле
+          const density = Math.pow(blade, 4.2) * hole * edge * (1.35 - rr) * 1.5;
+          const r = maxR * Math.min(density, 1);
+          if (r < 0.28) continue;
+
+          ctx.moveTo(x + r, y);
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+        }
+      }
+
+      ctx.fill();
+    };
+
     const paintHalftone = (t) => {
       ctx.fillStyle = paper;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -384,6 +431,11 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
     const paint = (time) => {
       const t = still ? 6 : (time - start) / 1000;
 
+      if (mode === "petals") {
+        paintPetals(t);
+        return;
+      }
+
       if (mode === "halftone") {
         paintHalftone(t);
         return;
@@ -438,7 +490,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [tone, mode, speed, spread, dotScale, dotAlpha]);
+  }, [tone, mode, speed, spread, dotScale, dotAlpha, inkColor]);
 
   return <canvas className={className} ref={ref} aria-hidden="true" />;
 }
