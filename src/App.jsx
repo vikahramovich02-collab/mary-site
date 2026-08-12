@@ -59,6 +59,8 @@ import {
 } from "lucide-react";
 import { CustomLanding } from "./CustomLanding.jsx";
 import { BlogPage } from "./BlogPage.jsx";
+import { JobsPage } from "./JobsPage.jsx";
+import { ContactsPage } from "./ContactsPage.jsx";
 import { BeautyLanding } from "./BeautyLanding.jsx";
 import { PlatformLanding } from "./PlatformLanding.jsx";
 import { Onboarding } from "./Onboarding.jsx";
@@ -1020,8 +1022,12 @@ export function App() {
   const isCustom = path === "/custom" || path === "/custom/" || requestedPage === "custom";
   const isOnboarding = path === "/onboarding" || requestedPage === "onboarding";
   const isBlog = path === "/blog" || path === "/blog/" || requestedPage === "blog";
+  const isJobs = path === "/jobs" || path === "/jobs/" || requestedPage === "jobs";
+  const isContacts = path === "/contacts" || path === "/contacts/" || requestedPage === "contacts";
   if (isOnboarding) return <Onboarding />;
   if (isBlog) return <BlogPage />;
+  if (isJobs) return <JobsPage />;
+  if (isContacts) return <ContactsPage />;
   if (isPlatform) return <PlatformApp />;
   if (isBeauty) return <BeautyLanding />;
   if (isCustom) return <CustomLanding />;

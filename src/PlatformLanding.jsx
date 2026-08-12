@@ -64,8 +64,8 @@ export function PlatformLanding() {
         <header className="custom-header pf-header">
           <nav className="pf-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
             <a href="/?page=blog"><img alt="" src={navDot} />Блог</a>
-            <a href="#jobs"><img alt="" src={navDot} />Вакансии</a>
-            <a href="#contact"><img alt="" src={navDot} />Контакты</a>
+            <a href="/?page=jobs"><img alt="" src={navDot} />Вакансии</a>
+            <a href="/?page=contacts"><img alt="" src={navDot} />Контакты</a>
             <div className="mary-dd">
               <button type="button" onClick={() => toggle("companies")} aria-expanded={dd === "companies"}>
                 <img alt="" src={navDot} />

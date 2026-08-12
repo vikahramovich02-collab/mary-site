@@ -6,6 +6,7 @@ import navDot from "./assets/nav-dot.svg";
 import "./custom-landing.css";
 
 const tabs = [
+  ["all", "Все"],
   ["news", "Новости"],
   ["articles", "Статьи"],
   ["updates", "Апдейты"],
@@ -67,16 +68,16 @@ function Brand() {
 }
 
 export function BlogPage() {
-  const [tab, setTab] = useState("news");
+  const [tab, setTab] = useState("all");
   const [companies, setCompanies] = useState(false);
-  const visible = posts.filter((post) => post.kind === tab);
+  const visible = tab === "all" ? posts : posts.filter((post) => post.kind === tab);
 
   return (
     <main className="custom-site beauty-light blog-page" id="top">
       <header className="custom-header pf-header">
         <nav className="pf-nav" aria-label="Навигация">
           <a href="/?page=blog"><img alt="" src={navDot} />Блог</a>
-          <a href="#jobs"><img alt="" src={navDot} />Вакансии</a>
+          <a href="/?page=jobs"><img alt="" src={navDot} />Вакансии</a>
           <div className="mary-dd">
             <button type="button" onClick={() => setCompanies((v) => !v)} aria-expanded={companies}>
               <img alt="" src={navDot} />

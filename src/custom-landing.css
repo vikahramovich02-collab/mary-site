@@ -4130,3 +4130,33 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .blog-head { padding: 64px 20px 32px; }
   .blog-grid { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
 }
+
+/* ===== Пустые состояния и списки внутренних страниц ===== */
+.page-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  min-height: 46svh;
+  padding: 0 40px;
+  text-align: center;
+}
+.page-empty p { margin: 0; color: #a7a7a7; font-size: 22px; font-weight: 500; }
+.page-empty-hint { max-width: 46ch; color: #c2c2c8 !important; font-size: 15px !important; font-weight: 400 !important; line-height: 1.6; }
+
+.jobs-list, .contacts-list { display: grid; padding: 0 40px; }
+.jobs-row, .contacts-row {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--custom-line);
+  color: #151617;
+  text-decoration: none;
+}
+.jobs-row:first-child, .contacts-row:first-child { border-top: 1px solid var(--custom-line); }
+.jobs-row strong, .contacts-row strong { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+.jobs-row span, .contacts-row span { color: #a4a4ac; font-size: 15px; }
+.jobs-row:hover strong, .contacts-row:hover strong { color: #000; }
