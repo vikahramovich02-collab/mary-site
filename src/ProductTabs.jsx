@@ -43,8 +43,18 @@ const tabs = [
 
 export function ProductTabs() {
   const sectionRef = useRef(null);
+  const menuRef = useRef(null);
   const [active, setActive] = useState(0);
+  const [lift, setLift] = useState(0);
   const current = tabs[active];
+
+  // список едет вверх так, чтобы активный пункт всегда стоял на одной высоте
+  useEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+    const item = menu.children[active];
+    if (item) setLift(item.offsetTop);
+  }, [active]);
 
   // активный пункт выбирает скролл: секция залипает, а список идёт сверху вниз
   useEffect(() => {
@@ -92,7 +102,13 @@ export function ProductTabs() {
         </header>
 
         <div className="pf-screens">
-          <ul className="pf-screens-menu" aria-label="Что закрывает платформа">
+          <div className="pf-screens-menu-window">
+            <ul
+              aria-label="Что закрывает платформа"
+              className="pf-screens-menu"
+              ref={menuRef}
+              style={{ transform: `translate3d(0, ${-lift}px, 0)` }}
+            >
             {tabs.map((item, index) => (
               <li key={item.key}>
                 <button
@@ -105,7 +121,8 @@ export function ProductTabs() {
                 </button>
               </li>
             ))}
-          </ul>
+            </ul>
+          </div>
 
           <div className="pf-screens-stage">
             <figure className="pf-screens-shot">
