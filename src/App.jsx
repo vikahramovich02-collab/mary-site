@@ -58,6 +58,7 @@ import {
   X,
 } from "lucide-react";
 import { CustomLanding } from "./CustomLanding.jsx";
+import { BlogPage } from "./BlogPage.jsx";
 import { BeautyLanding } from "./BeautyLanding.jsx";
 import { PlatformLanding } from "./PlatformLanding.jsx";
 import { Onboarding } from "./Onboarding.jsx";
@@ -1018,7 +1019,9 @@ export function App() {
   const isBeauty = path === "/beauty" || path === "/beauty/" || requestedPage === "beauty";
   const isCustom = path === "/custom" || path === "/custom/" || requestedPage === "custom";
   const isOnboarding = path === "/onboarding" || requestedPage === "onboarding";
+  const isBlog = path === "/blog" || path === "/blog/" || requestedPage === "blog";
   if (isOnboarding) return <Onboarding />;
+  if (isBlog) return <BlogPage />;
   if (isPlatform) return <PlatformApp />;
   if (isBeauty) return <BeautyLanding />;
   if (isCustom) return <CustomLanding />;
