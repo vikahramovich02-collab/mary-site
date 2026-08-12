@@ -19,9 +19,9 @@ const posts = [
     kind: "news",
     title: "«Мы не платим зарплату лишним программистам…»",
     source: "Статья на Onlainer.by",
-    // TODO: подставить настоящую ссылку на публикацию
-    href: "",
-    cover: "",
+    href: "https://tech.onliner.by/2026/05/21/ai-13",
+    external: true,
+    cover: "/media/blog/onliner-ai.jpg",
   },
   {
     id: "poteri",
@@ -29,6 +29,30 @@ const posts = [
     title: "Сколько салон теряет на пропущенных сообщениях: считаем на калькуляторе",
     source: "7 минут чтения",
     href: "/blog/poteri-na-propushchennyh-soobshcheniyah",
+    cover: "",
+  },
+  {
+    id: "posle-zakrytiya",
+    kind: "articles",
+    title: "Кто отвечает в салоне после закрытия",
+    source: "6 минут чтения",
+    href: "/blog/kto-otvechaet-posle-zakrytiya",
+    cover: "",
+  },
+  {
+    id: "yclients",
+    kind: "articles",
+    title: "YCLIENTS и Instagram: как связать запись и переписку",
+    source: "7 минут чтения",
+    href: "/blog/yclients-i-instagram",
+    cover: "",
+  },
+  {
+    id: "oshibki",
+    kind: "articles",
+    title: "Что делать, если AI ответил клиенту неправильно",
+    source: "6 минут чтения",
+    href: "/blog/esli-ai-otvetil-nepravilno",
     cover: "",
   },
 ];
@@ -99,11 +123,22 @@ export function BlogPage() {
       <section className="blog-grid">
         {visible.map((post) => (
           <article className="blog-card" key={post.id}>
-            <a className="blog-cover" href={post.href || undefined}>
+            <a
+              className="blog-cover"
+              href={post.href || undefined}
+              rel={post.external ? "noreferrer" : undefined}
+              target={post.external ? "_blank" : undefined}
+            >
               {post.cover ? <img alt="" src={post.cover} /> : <span className="blog-cover-empty" />}
             </a>
             <h2>
-              <a href={post.href || undefined}>{post.title}</a>
+              <a
+                href={post.href || undefined}
+                rel={post.external ? "noreferrer" : undefined}
+                target={post.external ? "_blank" : undefined}
+              >
+                {post.title}
+              </a>
             </h2>
             <p className="blog-source">
               {post.source}
