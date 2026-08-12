@@ -42,10 +42,14 @@ export function ChatReveal() {
     <section className="pf-chat-scene" ref={sceneRef} aria-label="Как выглядит работа в чате">
       <div className="pf-chat-sticky">
         <figure className="pf-chat-frame">
-          {/* пока постер: положите ролик в /media/platform-demo.mp4 и он подхватится */}
-          <video autoPlay loop muted playsInline poster="/media/screens/chat.png" preload="none">
-            <source src="/media/platform-demo.mp4" type="video/mp4" />
-          </video>
+          {/*
+            Пока картинка: пустой <video> без файла Chrome рисует серой заглушкой
+            с перечёркнутым динамиком. Когда появится ролик, меняем img на:
+            <video autoPlay loop muted playsInline poster="/media/screens/chat.png">
+              <source src="/media/platform-demo.mp4" type="video/mp4" />
+            </video>
+          */}
+          <img alt="Чат с Mary: процесс собирается на глазах" src="/media/screens/chat.png" />
         </figure>
       </div>
     </section>

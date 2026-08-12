@@ -4240,6 +4240,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   background: #fff;
   box-shadow: 0 calc(30px + 40px * var(--p)) calc(60px + 60px * var(--p)) rgba(21, 22, 23, calc(.1 + .12 * var(--p)));
 }
+.pf-chat-frame img,
 .pf-chat-frame video {
   display: block;
   width: 100%;
