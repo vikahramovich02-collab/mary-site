@@ -228,7 +228,6 @@ export function PlatformLanding() {
               <a href="/?page=platform">Демо</a>
             </nav>
             <nav aria-label="Ещё">
-              <a href="#companies">Компании</a>
               <a href="/?page=beauty">Салоны</a>
               <a href="/?page=custom">Заказать разработку</a>
               <a href="#contact">Обсудить</a>
