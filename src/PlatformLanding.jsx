@@ -4,6 +4,7 @@ import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
 import navDot from "./assets/nav-dot.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
+import { ChatReveal } from "./ChatReveal.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
@@ -136,6 +137,8 @@ export function PlatformLanding() {
         <MaryDog />
       </section>
 
+      <ChatReveal />
+
       <section className="custom-section pf-assembly-section" aria-label="Как Mary собирает процесс">
         <SectionIntro
           title="Всё делается в чате"
@@ -143,19 +146,6 @@ export function PlatformLanding() {
         />
         <AssemblyDemo />
 
-        {/* тот же разговор, только вживую: ролик из самой платформы */}
-        <figure className="pf-video">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster="/media/screens/chat.png"
-            preload="none"
-          >
-            <source src="/media/platform-demo.mp4" type="video/mp4" />
-          </video>
-        </figure>
       </section>
 
       <section className="custom-section" id="platform">

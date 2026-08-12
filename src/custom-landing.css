@@ -4209,3 +4209,46 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .article-body th, .article-body td { padding: 12px 10px; border-bottom: 1px solid var(--custom-line); text-align: left; }
 .article-body th { color: #a4a4ac; font-weight: 500; }
 .article-body hr { margin: 44px 0 0; border: 0; border-top: 1px solid var(--custom-line); }
+
+/* ===== Чат выплывает снизу и разворачивается на весь экран ===== */
+.pf-chat-scene {
+  --p: 0;
+  position: relative;
+  z-index: 4;
+  height: 260vh;
+  /* заходит на первый экран, поэтому и накрывает его анимацию */
+  margin-top: -34svh;
+}
+.pf-chat-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  pointer-events: none;
+}
+.pf-chat-frame {
+  width: calc(34% + 66% * var(--p));
+  height: calc(38svh + 62svh * var(--p));
+  margin: 0;
+  overflow: hidden;
+  /* снизу вверх: чем дальше прогресс, тем ближе кадр к центру экрана */
+  transform: translateY(calc((1 - var(--p)) * 30svh));
+  border: 1px solid var(--custom-line);
+  border-radius: calc(24px - 20px * var(--p));
+  background: #fff;
+  box-shadow: 0 calc(30px + 40px * var(--p)) calc(60px + 60px * var(--p)) rgba(21, 22, 23, calc(.1 + .12 * var(--p)));
+}
+.pf-chat-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+@media (max-width: 900px) {
+  .pf-chat-scene { height: auto; margin-top: 0; }
+  .pf-chat-sticky { position: static; height: auto; padding: 40px 20px; }
+  .pf-chat-frame { width: 100%; height: auto; aspect-ratio: 16 / 10; transform: none; }
+}
