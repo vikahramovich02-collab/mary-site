@@ -1,11 +1,11 @@
-import { Globe, Phone, PlugZap } from "lucide-react";
+import { Globe, PlugZap } from "lucide-react";
 
 // Бегущие дорожки интеграций. Каждая строка — свой набор, своя скорость и своё
 // направление; содержимое дублируется, поэтому лента едет бесшовно.
 //
 // Логотипы настоящие: у кого есть в simple-icons — svg, у остальных (российские
 // сервисы) — официальные фавиконы, приведённые к 128px. Там, где логотипа нет
-// в принципе (телефония, сайт, «ваш сервис»), остаётся тонкая иконка.
+// в принципе (сайт и формы, «ваш сервис»), остаётся тонкая иконка.
 const rows = [
   [
     ["Instagram", "instagram.svg"],
@@ -20,14 +20,14 @@ const rows = [
     ["Altegio", "altegio.png"],
     ["Битрикс24", "bitrix24.png"],
     ["Google Диск", "googledrive.svg"],
-    ["Телефония", Phone],
-    ["Авито", "avito.png"],
+    ["Google Таблицы", "googlesheets.svg"],
+    ["Notion", "notion.svg"],
   ],
   [
     ["1С", "onec.png"],
     ["Почта", "mail.png"],
-    ["Google Таблицы", "googlesheets.svg"],
-    ["Notion", "notion.svg"],
+    ["WhatsApp", "whatsapp.svg"],
+    ["Telegram", "telegram.svg"],
     ["Сайт и формы", Globe],
     ["Ваш сервис", PlugZap],
   ],
