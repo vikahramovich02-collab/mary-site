@@ -4160,3 +4160,52 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .jobs-row strong, .contacts-row strong { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
 .jobs-row span, .contacts-row span { color: #a4a4ac; font-size: 15px; }
 .jobs-row:hover strong, .contacts-row:hover strong { color: #000; }
+
+/* ===== Страница статьи ===== */
+.article { max-width: 720px; margin: 0 auto; padding: 40px 24px 0; }
+.article-back { display: inline-block; margin-bottom: 34px; color: #a4a4ac; font-size: 15px; text-decoration: none; }
+.article-back:hover { color: #151617; }
+.article h1 {
+  margin: 0;
+  color: #151617;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.06;
+}
+.article-meta { margin: 16px 0 0; color: #a4a4ac; font-size: 15px; }
+.article-body { margin-top: 40px; color: #2b2f36; font-size: 18px; line-height: 1.7; }
+.article-body h2 {
+  margin: 48px 0 0;
+  color: #151617;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+.article-body h3 { margin: 34px 0 0; font-size: 21px; font-weight: 600; }
+.article-body p { margin: 18px 0 0; }
+.article-body ul { margin: 18px 0 0; padding-left: 22px; }
+.article-body li { margin-top: 8px; }
+.article-body a { color: #151617; text-decoration: underline; text-underline-offset: 3px; }
+.article-body strong { color: #151617; font-weight: 600; }
+.article-body code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f2f2f4;
+  font-size: .92em;
+}
+.article-body pre {
+  margin: 24px 0 0;
+  padding: 20px 22px;
+  overflow-x: auto;
+  border-radius: 14px;
+  background: #f7f7f8;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.article-body pre code { padding: 0; background: none; }
+.article-body table { width: 100%; margin: 26px 0 0; border-collapse: collapse; font-size: 16px; }
+.article-body th, .article-body td { padding: 12px 10px; border-bottom: 1px solid var(--custom-line); text-align: left; }
+.article-body th { color: #a4a4ac; font-weight: 500; }
+.article-body hr { margin: 44px 0 0; border: 0; border-top: 1px solid var(--custom-line); }

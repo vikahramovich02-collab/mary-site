@@ -61,6 +61,7 @@ import { CustomLanding } from "./CustomLanding.jsx";
 import { BlogPage } from "./BlogPage.jsx";
 import { JobsPage } from "./JobsPage.jsx";
 import { ContactsPage } from "./ContactsPage.jsx";
+import { ArticlePage } from "./ArticlePage.jsx";
 import { BeautyLanding } from "./BeautyLanding.jsx";
 import { PlatformLanding } from "./PlatformLanding.jsx";
 import { Onboarding } from "./Onboarding.jsx";
@@ -1025,6 +1026,12 @@ export function App() {
   const isJobs = path === "/jobs" || path === "/jobs/" || requestedPage === "jobs";
   const isContacts = path === "/contacts" || path === "/contacts/" || requestedPage === "contacts";
   if (isOnboarding) return <Onboarding />;
+  const articleSlug = path.startsWith("/blog/")
+    ? path.replace("/blog/", "").replace(/\/$/, "")
+    : requestedPage === "article"
+      ? new URLSearchParams(window.location.search).get("slug") || ""
+      : "";
+  if (articleSlug) return <ArticlePage slug={articleSlug} />;
   if (isBlog) return <BlogPage />;
   if (isJobs) return <JobsPage />;
   if (isContacts) return <ContactsPage />;

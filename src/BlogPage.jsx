@@ -29,7 +29,7 @@ const posts = [
     kind: "articles",
     title: "Сколько салон теряет на пропущенных сообщениях: считаем на калькуляторе",
     source: "7 минут чтения",
-    href: "/blog/poteri-na-propushchennyh-soobshcheniyah",
+    href: "/?page=article&slug=poteri-na-propushchennyh-soobshcheniyah",
     cover: "",
   },
   {
@@ -37,7 +37,7 @@ const posts = [
     kind: "articles",
     title: "Кто отвечает в салоне после закрытия",
     source: "6 минут чтения",
-    href: "/blog/kto-otvechaet-posle-zakrytiya",
+    href: "/?page=article&slug=kto-otvechaet-posle-zakrytiya",
     cover: "",
   },
   {
@@ -45,7 +45,7 @@ const posts = [
     kind: "articles",
     title: "YCLIENTS и Instagram: как связать запись и переписку",
     source: "7 минут чтения",
-    href: "/blog/yclients-i-instagram",
+    href: "/?page=article&slug=yclients-i-instagram",
     cover: "",
   },
   {
@@ -53,7 +53,7 @@ const posts = [
     kind: "articles",
     title: "Что делать, если AI ответил клиенту неправильно",
     source: "6 минут чтения",
-    href: "/blog/esli-ai-otvetil-nepravilno",
+    href: "/?page=article&slug=esli-ai-otvetil-nepravilno",
     cover: "",
   },
 ];
