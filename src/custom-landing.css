@@ -2998,17 +2998,15 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .pf-screens-menu button:hover { color: #8b8b93; }
 .pf-screens-menu button.is-active { color: #111318; }
 
-/* экран лежит в белой панели, как в референсе */
+/* экран лежит прямо на чёрном, как в макете */
 .pf-screens-shot {
   margin: 0;
   overflow: hidden;
-  padding: 14px;
-  border: 0;
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: #0b0b0b;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, .6);
 }
-.pf-screens-shot img { border-radius: 12px; }
 .pf-screens-shot img { display: block; width: 100%; height: auto; animation: pf-screen-in 380ms ease both; }
 @keyframes pf-screen-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
@@ -3185,17 +3183,15 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   background: #262633;
   color: #fff;
 }
-/* экран лежит в белой панели, как в референсе */
+/* экран лежит прямо на чёрном, как в макете */
 .pf-screens-shot {
   margin: 0;
   overflow: hidden;
-  padding: 14px;
-  border: 0;
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: #0b0b0b;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, .6);
 }
-.pf-screens-shot img { border-radius: 12px; }
 .pf-screens-shot img {
   display: block;
   width: 100%;
@@ -3764,19 +3760,6 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 
 /* ===== Секция экранов на чёрном ===== */
 .pf-screens-section { background: #000 !important; isolation: isolate; }
-/* подложка раздела: сильно размытый и притушенный экран, мягко проявляется */
-.pf-screens-bg {
-  position: absolute;
-  z-index: 0;
-  inset: -8%;
-  background-position: center;
-  background-size: cover;
-  filter: blur(60px) saturate(140%) brightness(.5);
-  opacity: 0;
-  animation: pf-bg-in 900ms ease forwards;
-}
-@keyframes pf-bg-in { to { opacity: .55; } }
-
 .pf-screens-field {
   position: absolute;
   z-index: 0;

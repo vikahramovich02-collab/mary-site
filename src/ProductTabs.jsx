@@ -86,12 +86,6 @@ export function ProductTabs() {
   return (
     <section className="pf-screens-section" id="screens" ref={sectionRef}>
       <div className="pf-screens-sticky">
-        {/* подложка под активный раздел: его же экран, крупно и размыто */}
-        <div
-          className="pf-screens-bg"
-          key={`bg-${current.key}`}
-          style={{ backgroundImage: `url(/media/screens/${current.key}.png)` }}
-        />
         {/* тот же халфтон, что в герое, только по чёрному и очень медленный */}
         <HeroField
           className="pf-screens-field"
