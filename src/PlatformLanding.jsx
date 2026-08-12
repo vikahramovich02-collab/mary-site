@@ -204,10 +204,7 @@ export function PlatformLanding() {
       <ProductTabs />
 
       <section className="custom-section beauty-ints-section" id="integrations">
-        <SectionIntro
-          title="Встраивается в то, чем вы уже пользуетесь"
-          text="Каналы, CRM, записи и календари — из коробки. Нужен другой сервис — подключаем по запросу, переносить ничего не нужно."
-        />
+        <h2 className="int-title">Встраивается в то, чем вы уже пользуетесь</h2>
         <IntegrationsMarquee />
       </section>
 
