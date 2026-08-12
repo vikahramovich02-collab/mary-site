@@ -3927,14 +3927,14 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 }
 
 /* ===== Первый экран, вторая редакция макета (Figma 10482:9370) ===== */
-/* холст светло-серый, а не белый */
-.custom-site.beauty-light { background: #f6f6f6 !important; }
+/* холст белый */
+.custom-site.beauty-light { background: #fff !important; }
 .beauty-light .custom-hero,
 .beauty-light .custom-section,
 .beauty-light .custom-contact,
 .beauty-light .custom-footer,
 .beauty-light .beauty-ints-section,
-.beauty-light .pf-assembly-section { background: #f6f6f6 !important; }
+.beauty-light .pf-assembly-section { background: #fff !important; }
 
 /* заголовок: 74px Semibold, чернила #151617, ширина 849 */
 .beauty-light .custom-hero h1 {

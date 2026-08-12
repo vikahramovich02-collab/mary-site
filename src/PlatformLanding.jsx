@@ -170,24 +170,6 @@ export function PlatformLanding() {
         <IntegrationsMarquee />
       </section>
 
-      <section className="custom-section" id="companies">
-        <SectionIntro title="Ниши, где встраиваем Mary" text="Красота и производство уже работают на клиентах. Соседние сферы подключаются тем же ядром плюс пара интеграций." />
-        <div className="mary-niche">
-          {niches.map((n) => {
-            const live = n.status === "live";
-            const Tag = live ? "a" : "div";
-            return (
-              <Tag key={n.key} className={`mary-nichecard ${live ? "" : "soon"}`} {...(live ? { href: n.href } : {})}>
-                <span className={`mary-badge ${live ? "live" : "soon"}`}>{live ? "Доступно" : "Скоро"}</span>
-                <h3>{n.title}</h3>
-                <p>{n.text}</p>
-                {live && <span className="go">Открыть лендинг →</span>}
-              </Tag>
-            );
-          })}
-        </div>
-      </section>
-
       <section className="custom-section custom-faq" id="faq">
         <SectionIntro title="Коротко о платформе" />
         <div className="custom-faq-chat">
