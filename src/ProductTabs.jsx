@@ -79,8 +79,8 @@ export function ProductTabs() {
         {/* тот же халфтон, что в герое, только по чёрному и очень медленный */}
         <HeroField
           className="pf-screens-field"
-          dotAlpha={0.3}
-          dotScale={0.5}
+          dotAlpha={0.14}
+          dotScale={0.42}
           mode="halftone"
           speed={0.18}
           spread="full"

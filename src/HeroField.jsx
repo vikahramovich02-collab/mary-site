@@ -240,13 +240,13 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       const cols = Math.ceil(width / CELL) + 1;
       const rows = Math.ceil(height / CELL) + 1;
       // по белому крупная тёмная точка читается тяжелее, чем белая по чёрному
-      const maxR = cell * DOT_MAX * (light ? 0.8 : 1);
+      const maxR = cell * DOT_MAX * (light ? 0.8 : 1) * dotScale;
       const scale = 1 / (width * dpr);
 
       const wt = HALFTONE.map((w) => t * w.speed * speed * Math.PI * 2);
 
-      // халфтон рисуется одной заливкой: по белому она должна быть заметно слабее
-      ctx.fillStyle = `rgba(${ink},${light ? ".26" : ".88"})`;
+      // халфтон рисуется одной заливкой; сила задаётся снаружи через dotAlpha
+      ctx.fillStyle = `rgba(${ink},${dotAlpha ?? (light ? 0.26 : 0.88)})`;
       ctx.beginPath();
 
       // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
