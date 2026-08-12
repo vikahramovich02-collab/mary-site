@@ -33,9 +33,12 @@ const rows = [
   ],
 ];
 
-function Mark({ name, icon }) {
+function Mark({ icon }) {
   if (typeof icon === "string") {
-    return <img alt="" loading="lazy" src={`/media/logos/${icon}`} />;
+    // фавиконы уже нарисованы плашкой — растягиваем на весь кружок,
+    // svg-глифы оставляем мелкими по центру
+    const fill = icon.endsWith(".png");
+    return <img alt="" className={fill ? "is-fill" : ""} loading="lazy" src={`/media/logos/${icon}`} />;
   }
   const Icon = icon;
   return <Icon size={20} strokeWidth={1.6} />;
@@ -50,7 +53,7 @@ export function IntegrationsMarquee() {
             {/* два одинаковых набора подряд — на стыке лента не дёргается */}
             {[...row, ...row].map(([name, icon], i) => (
               <span className="int-chip" key={`${name}-${i}`}>
-                <i aria-hidden="true"><Mark icon={icon} name={name} /></i>
+                <i aria-hidden="true"><Mark icon={icon} /></i>
                 {name}
               </span>
             ))}
