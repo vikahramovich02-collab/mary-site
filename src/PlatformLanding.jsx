@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  ArrowRight, Check, Menu, X, ChevronDown, Sparkles,
-  Bot, GitBranch, BookOpen, PlugZap, LineChart, Inbox,
-} from "lucide-react";
+import { ArrowRight, Check, Menu, X, ChevronDown, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
@@ -19,15 +16,6 @@ const niches = [
   { key: "fitness", title: "Фитнес и студии", text: "Абонементы, расписание, возврат клиентов.", status: "soon" },
   { key: "barber", title: "Барбершопы и ногтевые", text: "Быстрая запись и повторные визиты.", status: "soon" },
   { key: "services", title: "Услуги с записью", text: "Автосервисы, репетиторы и другие сферы.", status: "soon" },
-];
-
-const features = [
-  [Bot, "AI-агенты", "Специалисты под задачи: поддержка, запись, продажи. Работают сами, спорное — человеку."],
-  [GitBranch, "Бизнес-процессы", "Видно весь процесс целиком и где сейчас каждая задача. Правки — словами в чате."],
-  [BookOpen, "База знаний", "Мозг процессов: прайсы, скрипты, правила, файлы. Агенты отвечают только отсюда."],
-  [PlugZap, "Интеграции", "Каналы и системы: мессенджеры, YClients, CRM, телефония — в едином процессе."],
-  [LineChart, "Аналитика", "Где и почему теряются клиенты, что улучшить. Не отчёт ради отчёта, а решения."],
-  [Inbox, "Входящие", "Mary приносит только то, что требует вашего решения — спор о цене, жалобу, нестандарт."],
 ];
 
 const faqs = [
@@ -163,18 +151,6 @@ export function PlatformLanding() {
         <PlatformPanels />
       </section>
 
-      <section className="custom-section" id="features">
-        <SectionIntro title="Не один агент, а рабочая среда" text="Готовые блоки, которые Mary собирает под вашу задачу." />
-        <div className="custom-outcome-grid mary-features">
-          {features.map(([Icon, t, x]) => (
-            <article key={t}>
-              <span className="mary-feature-ic"><Icon size={20} /></span>
-              <h3>{t}</h3><p>{x}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <ProductTabs />
 
       <section className="custom-section beauty-ints-section" id="integrations">
@@ -254,7 +230,6 @@ export function PlatformLanding() {
           <div className="custom-footer-links">
             <nav aria-label="Платформа">
               <a href="#platform">Платформа</a>
-              <a href="#features">Возможности</a>
               <a href="#how">Как работает</a>
               <a href="/?page=platform">Демо</a>
             </nav>
