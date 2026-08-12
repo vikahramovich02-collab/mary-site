@@ -3857,3 +3857,11 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .int-track { animation: none; }
   .int-row { overflow-x: auto; }
 }
+
+/* секция интеграций занимает весь экран: заголовок и ленты по центру */
+.beauty-ints-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+}
