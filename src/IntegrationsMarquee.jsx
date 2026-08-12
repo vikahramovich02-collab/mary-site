@@ -1,53 +1,45 @@
-import {
-  Briefcase,
-  Calendar,
-  CalendarCheck,
-  CalendarClock,
-  Database,
-  Camera,
-  Globe,
-  HardDrive,
-  Mail,
-  MessageCircle,
-  MessagesSquare,
-  NotebookPen,
-  Phone,
-  PlugZap,
-  Send,
-  ShoppingBag,
-  Table,
-  Users,
-} from "lucide-react";
+import { Globe, Phone, PlugZap } from "lucide-react";
 
 // Бегущие дорожки интеграций. Каждая строка — свой набор, своя скорость и своё
 // направление; содержимое дублируется, поэтому лента едет бесшовно.
-// Иконки взяты по смыслу сервиса: мессенджер, запись, CRM, диск и так далее.
+//
+// Логотипы настоящие: у кого есть в simple-icons — svg, у остальных (российские
+// сервисы) — официальные фавиконы, приведённые к 128px. Там, где логотипа нет
+// в принципе (телефония, сайт, «ваш сервис»), остаётся тонкая иконка.
 const rows = [
   [
-    ["Instagram", Camera],
-    ["Telegram", Send],
-    ["YCLIENTS", CalendarCheck],
-    ["WhatsApp", MessageCircle],
-    ["amoCRM", Users],
-    ["Google Календарь", Calendar],
+    ["Instagram", "instagram.svg"],
+    ["Telegram", "telegram.svg"],
+    ["YCLIENTS", "yclients.png"],
+    ["WhatsApp", "whatsapp.svg"],
+    ["amoCRM", "amocrm.png"],
+    ["Google Календарь", "googlecalendar.svg"],
   ],
   [
-    ["ВКонтакте", MessagesSquare],
-    ["Altegio", CalendarClock],
-    ["Битрикс24", Briefcase],
-    ["Google Диск", HardDrive],
+    ["ВКонтакте", "vk.svg"],
+    ["Altegio", "altegio.png"],
+    ["Битрикс24", "bitrix24.png"],
+    ["Google Диск", "googledrive.svg"],
     ["Телефония", Phone],
-    ["Авито", ShoppingBag],
+    ["Авито", "avito.png"],
   ],
   [
-    ["1С", Database],
-    ["Почта", Mail],
-    ["Google Таблицы", Table],
-    ["Notion", NotebookPen],
+    ["1С", "onec.png"],
+    ["Почта", "mail.png"],
+    ["Google Таблицы", "googlesheets.svg"],
+    ["Notion", "notion.svg"],
     ["Сайт и формы", Globe],
     ["Ваш сервис", PlugZap],
   ],
 ];
+
+function Mark({ name, icon }) {
+  if (typeof icon === "string") {
+    return <img alt="" loading="lazy" src={`/media/logos/${icon}`} />;
+  }
+  const Icon = icon;
+  return <Icon size={20} strokeWidth={1.6} />;
+}
 
 export function IntegrationsMarquee() {
   return (
@@ -56,9 +48,9 @@ export function IntegrationsMarquee() {
         <div className={`int-row ${index % 2 ? "is-back" : ""}`} key={row[0][0]}>
           <div className="int-track" style={{ "--speed": `${38 + index * 9}s` }}>
             {/* два одинаковых набора подряд — на стыке лента не дёргается */}
-            {[...row, ...row].map(([name, Icon], i) => (
+            {[...row, ...row].map(([name, icon], i) => (
               <span className="int-chip" key={`${name}-${i}`}>
-                <i aria-hidden="true"><Icon size={20} strokeWidth={1.6} /></i>
+                <i aria-hidden="true"><Mark icon={icon} name={name} /></i>
                 {name}
               </span>
             ))}
