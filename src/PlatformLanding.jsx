@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Check, Menu, X, ChevronDown, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import arrowUpRight from "./assets/arrow-up-right.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
@@ -54,11 +55,10 @@ export function PlatformLanding() {
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
       <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
-        <HeroField className="pf-hero-field" mode="halftone" tone="light" />
+        <HeroField className="pf-hero-field" dotAlpha={0.16} mode="halftone" tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header pf-header">
-          <Brand />
           <nav className="custom-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
             <a href="#platform">Платформа</a>
             <div className="mary-dd">
@@ -88,9 +88,13 @@ export function PlatformLanding() {
             </div>
             <a href="#how">Как работает</a>
           </nav>
+          <Brand />
           <div className="custom-header-actions">
-            <a className="custom-button custom-button-ghost custom-button-small" href="/?page=custom">Разработать</a>
-            <a className="custom-button custom-button-light custom-button-small" href="/?page=platform">Войти в Mary</a>
+            <a className="pf-btn is-outline" href="/?page=custom">Заказать</a>
+            <a className="pf-btn is-soft" href="/?page=platform">
+              Войти в Mary
+              <img alt="" src={arrowUpRight} />
+            </a>
             <button className="custom-menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Меню"><Menu size={21} /></button>
           </div>
         </header>
@@ -112,10 +116,13 @@ export function PlatformLanding() {
           <h1 id="pf-hero-title">Соберёт рабочую систему в 2 клика</h1>
           <p className="custom-hero-copy">Chat-first платформа автоматизации бизнеса</p>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-ghost" href="#how">Как это работает</a>
-            <a className="custom-button custom-button-light" href="/?page=platform">Собрать</a>
+            <a className="pf-btn is-dark" href="/?page=platform">
+              Попробовать
+              <img alt="" src={arrowUpRight} />
+            </a>
           </div>
           <div className="pf-hero-logos" aria-label="С нами работают">
+            <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
             <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
             <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
           </div>

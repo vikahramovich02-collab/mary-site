@@ -3259,15 +3259,18 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .beauty-light .mary-niche a { color: #262633; }
 
 /* ===== Первый экран платформы по макету (Figma, node 10450:9370) ===== */
-/* шапка как у OpenAI: логотип слева, сразу за ним пункты, действия справа */
+/* шапка по макету: пункты слева, знак по центру, кнопки справа */
 .beauty-light .pf-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: clamp(20px, 3vw, 40px);
+  padding-top: 24px;
 }
-.beauty-light .pf-header .custom-brand { font-size: 26px; }
-.beauty-light .pf-header .custom-nav { gap: clamp(16px, 2vw, 30px); }
-.beauty-light .pf-header .custom-header-actions { margin-left: auto; }
+.beauty-light .pf-header .custom-nav { justify-self: start; gap: clamp(18px, 2.4vw, 34px); }
+.beauty-light .pf-header .custom-nav > a,
+.beauty-light .pf-header .custom-nav .mary-dd > button { font-size: 14px; font-weight: 400; letter-spacing: -.03em; }
+.beauty-light .pf-header .custom-brand { justify-self: center; font-size: 24.6px; font-weight: 600; }
+.beauty-light .pf-header .custom-header-actions { justify-self: end; gap: 12px; }
 .beauty-light .pf-header .custom-button-small {
   min-height: 40px;
   padding: 0 20px;
@@ -3347,7 +3350,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: clamp(190px, 19vw, 280px);
+  width: min(44vw, 640px);
   pointer-events: none;
   transform: translate(-50%, calc(var(--dog-hide) * 130%));
 }
@@ -3359,7 +3362,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   will-change: transform;
 }
 .mary-dog-jump.is-in { animation: dog-jump 940ms cubic-bezier(.32, .82, .36, 1) forwards; }
-.mary-dog-jump.is-still { transform: translateY(11%); }
+.mary-dog-jump.is-still { transform: translateY(26%); }
 
 /* прыжок: вытянулась в полёте, сжалась при приземлении, качнулась и встала */
 @keyframes dog-jump {
@@ -3368,7 +3371,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   60%  { transform: translateY(11%) scale(1.12, .86); }
   74%  { transform: translateY(-3%) scale(.97, 1.05); }
   87%  { transform: translateY(10%) scale(1.04, .96); }
-  100% { transform: translateY(11%) scale(1, 1); }
+  100% { transform: translateY(26%) scale(1, 1); }
 }
 
 .dog-breath {
@@ -3868,3 +3871,50 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   justify-content: center;
   min-height: 100svh;
 }
+
+/* ===== Первый экран: значения сняты с макета (Figma, node 10482:9370) ===== */
+/* кнопки: высота 44, радиус 40, 14/16px SF Pro Medium, трекинг -0.03em */
+.pf-btn {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 15px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.pf-btn img { width: 16px; height: 16px; }
+.pf-btn.is-outline { border: 1px solid #f0f0f0; color: #000; }
+.pf-btn.is-outline:hover { border-color: #dcdcdc; }
+.pf-btn.is-soft { background: #f0f0f0; color: #6f6f6f; }
+.pf-btn.is-soft:hover { background: #e7e7e7; color: #4a4a4a; }
+.pf-btn.is-dark { padding: 0 16px; background: #000; color: #fff; font-size: 16px; }
+.pf-btn.is-dark:hover { background: #1c1c1e; }
+/* стрелка в svg белая — на светлых кнопках перекрашиваем */
+.pf-btn.is-outline img, .pf-btn.is-soft img { filter: invert(1) opacity(.55); }
+
+/* заголовок: 80px, ширина 891, межстрочный 100%, трекинг -0.03em */
+.beauty-light .custom-hero h1 {
+  max-width: 891px;
+  font-size: clamp(38px, 5.56vw, 80px);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: #000;
+}
+.beauty-light .custom-hero-copy { margin-top: 30px; color: #000; font-size: 16px; letter-spacing: -.03em; }
+.beauty-light .custom-hero-cta { margin-top: 33px; }
+
+/* лого клиентов: 20% чернил, как в макете */
+.pf-hero-logos {
+  position: relative;
+  z-index: 2;
+  margin-top: 46px;
+  gap: 44px;
+}
+.pf-hero-logos img { height: 46px; filter: grayscale(1) brightness(0); opacity: .2; }
+.pf-hero-logos img.is-htp { height: 26px; }

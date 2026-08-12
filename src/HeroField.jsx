@@ -252,9 +252,10 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
       // так это нарисовано в макете главной. В тёмном остаётся полоса снизу вверх.
       const shapeMode = spread || (light ? "dome" : "band");
-      const domeX = (width * dpr) / 2;
-      const domeY = height * dpr * 1.5;
-      const domeR = height * dpr * 1.08;
+      const domeX = width * dpr * 0.536;
+      const domeY = height * dpr * 0.92;
+      const domeRX = width * dpr * 0.738;
+      const domeRY = height * dpr * 0.58;
 
       for (let row = 0; row < rows; row += 1) {
         const y = row * cell;
@@ -267,10 +268,11 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
 
           let shape = shapeMode === "full" ? 1 : strength;
           if (shapeMode === "dome") {
-            const dx = x - domeX;
-            const dy = y - domeY;
-            const edge = domeR - Math.sqrt(dx * dx + dy * dy);
-            shape = Math.min(Math.max(edge / (28 * dpr), 0), 1);
+            const dx = (x - domeX) / domeRX;
+            const dy = (y - domeY) / domeRY;
+            // эллипс, а не круг: в макете купол заметно шире, чем выше
+            const edge = 1 - Math.sqrt(dx * dx + dy * dy);
+            shape = Math.min(Math.max(edge * 14, 0), 1);
             if (shape <= 0.01) continue;
           }
 
@@ -285,7 +287,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
           // размах волны по размеру точки: на светлом он был почти нулевой,
           // из-за этого купол выглядел неподвижным
           const fill = light
-            ? Math.min(Math.max(v * 0.44 + 0.5, 0), 1)
+            ? Math.min(Math.max(v * 0.16 + 0.74, 0), 1)
             : Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
           const r = maxR * Math.pow(fill, light ? 1.8 : 2.2) * shape;
           if (r < 0.28) continue;
