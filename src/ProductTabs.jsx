@@ -86,6 +86,12 @@ export function ProductTabs() {
   return (
     <section className="pf-screens-section" id="screens" ref={sectionRef}>
       <div className="pf-screens-sticky">
+        {/* подложка под активный раздел: его же экран, крупно и размыто */}
+        <div
+          className="pf-screens-bg"
+          key={`bg-${current.key}`}
+          style={{ backgroundImage: `url(/media/screens/${current.key}.png)` }}
+        />
         {/* тот же халфтон, что в герое, только по чёрному и очень медленный */}
         <HeroField
           className="pf-screens-field"
@@ -96,11 +102,6 @@ export function ProductTabs() {
           spread="full"
           tone="dark"
         />
-        <header className="pf-screens-head">
-          <h2>Так это выглядит внутри</h2>
-          <p>Это не чат, который красиво отвечает, а рабочая среда, где бизнес собирает и контролирует свои системы.</p>
-        </header>
-
         <div className="pf-screens">
           <div className="pf-screens-menu-window">
             <ul
