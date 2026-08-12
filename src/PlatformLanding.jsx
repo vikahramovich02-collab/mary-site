@@ -8,6 +8,7 @@ import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
+import { IntegrationsMarquee } from "./IntegrationsMarquee.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
@@ -202,16 +203,12 @@ export function PlatformLanding() {
 
       <ProductTabs />
 
-      <section className="custom-section beauty-ints-section">
+      <section className="custom-section beauty-ints-section" id="integrations">
         <SectionIntro
           title="Встраивается в то, чем вы уже пользуетесь"
           text="Каналы, CRM, записи и календари — из коробки. Нужен другой сервис — подключаем по запросу, переносить ничего не нужно."
         />
-        <div className="beauty-ints">
-          {["Instagram", "Telegram", "WhatsApp", "ВКонтакте", "YCLIENTS", "Altegio", "amoCRM", "Битрикс24", "1С", "Google Календарь", "Телефония", "+ ваш сервис"].map((name) => (
-            <span className="beauty-int" key={name}><i aria-hidden="true" />{name}</span>
-          ))}
-        </div>
+        <IntegrationsMarquee />
       </section>
 
       <section className="custom-section" id="companies">

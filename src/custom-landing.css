@@ -3767,3 +3767,59 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 @media (max-width: 900px) {
   .pf-screens-field { display: none; }
 }
+
+/* ===== Бегущие дорожки интеграций ===== */
+.int-marquee {
+  display: grid;
+  gap: 18px;
+  /* выходим за поля секции, чтобы ленты уезжали за края экрана */
+  margin-inline: calc(-1 * max(24px, (100vw - 1272px) / 2));
+}
+.int-row { overflow: hidden; }
+.int-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: int-run var(--speed, 40s) linear infinite;
+}
+.int-row.is-back .int-track { animation-direction: reverse; }
+.int-row:nth-child(2) .int-track { padding-left: 90px; }
+.int-row:nth-child(3) .int-track { padding-left: 190px; }
+/* лента состоит из двух одинаковых наборов, поэтому сдвиг ровно на половину */
+@keyframes int-run {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.int-chip {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 30px 12px 12px;
+  border: 1px solid var(--custom-line);
+  border-radius: 999px;
+  background: #fff;
+  color: #262633;
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 500;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.int-chip i {
+  display: inline-flex;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f2f4;
+  color: #5f6570;
+}
+
+.int-marquee:hover .int-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .int-track { animation: none; }
+  .int-row { overflow-x: auto; }
+}
