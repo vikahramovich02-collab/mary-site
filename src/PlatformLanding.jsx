@@ -147,17 +147,12 @@ export function PlatformLanding() {
 
       <section className="custom-section pf-assembly-section" aria-label="Как Mary собирает процесс">
         <SectionIntro
-          title="Опишите задачу — процесс соберётся на глазах"
-          text="Слева вы говорите обычными словами. Справа Mary собирает процесс узел за узлом: кто встречает клиента, кто подбирает время, где нужен человек."
+          title="Всё делается в чате"
+          text="Вы говорите обычными словами — процесс собирается на глазах и сразу идёт в работу. Настраивать конструкторы и звать разработчиков не нужно."
         />
         <AssemblyDemo />
-      </section>
 
-      <section className="custom-section pf-video-section" id="video">
-        <SectionIntro
-          title="Как это выглядит в работе"
-          text="Полторы минуты — и понятно, как система собирается и живёт дальше."
-        />
+        {/* тот же разговор, только вживую: ролик из самой платформы */}
         <figure className="pf-video">
           <video
             autoPlay

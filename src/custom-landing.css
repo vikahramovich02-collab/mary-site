@@ -3589,9 +3589,9 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .pf-flow-node.is-done .pf-flow-kind { color: #262633; }
 .pf-flow-node.is-done { border-color: #262633; }
 
-/* ===== Видео платформы ===== */
+/* ===== Видео платформы: лежит в той же секции, что и сборка в чате ===== */
 .pf-video {
-  margin: 0;
+  margin: 46px 0 0;
   overflow: hidden;
   border: 1px solid var(--custom-line);
   border-radius: 18px;
