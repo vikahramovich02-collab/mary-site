@@ -3351,7 +3351,7 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: min(44vw, 640px);
+  width: min(38vw, 560px);
   pointer-events: none;
   transform: translate(-50%, calc(var(--dog-hide) * 130%));
 }
@@ -3925,3 +3925,87 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .beauty-page .beauty-hero::after {
   background: radial-gradient(46% 34% at 50% 34%, rgba(255,255,255,.94) 0%, rgba(255,255,255,.7) 55%, rgba(255,255,255,0) 100%);
 }
+
+/* ===== Первый экран, вторая редакция макета (Figma 10482:9370) ===== */
+/* холст светло-серый, а не белый */
+.custom-site.beauty-light { background: #f6f6f6 !important; }
+.beauty-light .custom-hero,
+.beauty-light .custom-section,
+.beauty-light .custom-contact,
+.beauty-light .custom-footer,
+.beauty-light .beauty-ints-section,
+.beauty-light .pf-assembly-section { background: #f6f6f6 !important; }
+
+/* заголовок: 74px Semibold, чернила #151617, ширина 849 */
+.beauty-light .custom-hero h1 {
+  max-width: 849px;
+  color: #151617;
+  font-size: clamp(36px, 5.14vw, 74px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.beauty-light .custom-hero-copy { color: rgba(73,79,92,.5); }
+.beauty-light .custom-hero-cta { margin-top: 24px; }
+.pf-btn.is-dark { background: #151617; }
+.pf-btn.is-dark:hover { background: #000; }
+
+/* навигация слева: иконка + подпись, 14px, #323538 */
+.pf-nav {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.pf-nav > a,
+.pf-nav .mary-dd > button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #323538;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pf-nav img { width: 14px; height: 14px; }
+.pf-nav > a:hover, .pf-nav .mary-dd > button:hover { color: #000; }
+
+/* правые ссылки: 12px со стрелкой, без подложки */
+.beauty-light .pf-header .pf-link,
+.pf-link {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  color: #323538;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+.beauty-light .pf-header .pf-link { color: #323538; }
+.beauty-light .pf-header .pf-link img { width: 16px; height: 16px; filter: invert(1) opacity(.6); }
+.beauty-light .pf-header .pf-link:hover { color: #000; }
+/* «Войти в Mary» в новой редакции ниже и мельче */
+.beauty-light .pf-header .pf-btn.is-soft {
+  height: 32px;
+  padding: 0 15px;
+  color: #565050;
+  font-size: 12px;
+}
+
+/* логотипы клиентов — настоящие, в цвете */
+.pf-hero-logos {
+  align-items: center;
+  margin-top: 56px;
+  gap: 52px;
+}
+/* высоты подобраны так, чтобы видимая часть знака совпадала с макетом:
+   у МТбанка и Space в png много полей, поэтому бокс выше */
+.pf-hero-logos img { width: auto; height: 40px; filter: none; opacity: 1; }
+.pf-hero-logos img:nth-child(2) { height: 58px; }
+.pf-hero-logos img:nth-child(3) { height: 32px; }
+.pf-hero-logos img:nth-child(4) { height: 54px; }

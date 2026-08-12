@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Check, Menu, X, ChevronDown, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
+import navDot from "./assets/nav-dot.svg";
 import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
@@ -61,11 +62,15 @@ export function PlatformLanding() {
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header pf-header">
-          <nav className="custom-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
-            <a href="#platform">Платформа</a>
+          <nav className="pf-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
+            <a href="#blog"><img alt="" src={navDot} />Блог</a>
+            <a href="#jobs"><img alt="" src={navDot} />Вакансии</a>
+            <a href="#contact"><img alt="" src={navDot} />Контакты</a>
             <div className="mary-dd">
               <button type="button" onClick={() => toggle("companies")} aria-expanded={dd === "companies"}>
-                Компании <ChevronDown size={14} />
+                <img alt="" src={navDot} />
+                Для компаний
+                <ChevronDown size={16} />
               </button>
               {dd === "companies" && (
                 <div className="mary-dd-menu wide">
@@ -77,22 +82,19 @@ export function PlatformLanding() {
                 </div>
               )}
             </div>
-            <div className="mary-dd">
-              <button type="button" onClick={() => toggle("order")} aria-expanded={dd === "order"}>
-                Заказать <ChevronDown size={14} />
-              </button>
-              {dd === "order" && (
-                <div className="mary-dd-menu">
-                  <a href="/?page=custom">Разработка<small>Продукты, кабинеты, приложения</small></a>
-                  <a href="/?page=custom">Автоматизация<small>Процессы, AI, интеграции</small></a>
-                </div>
-              )}
-            </div>
-            <a href="#how">Как работает</a>
           </nav>
+
           <Brand />
+
           <div className="custom-header-actions">
-            <a className="pf-btn is-outline" href="/?page=custom">Заказать</a>
+            <a className="pf-link" href="#investors">
+              Для инвесторов
+              <img alt="" src={arrowUpRight} />
+            </a>
+            <a className="pf-link" href="/?page=custom">
+              Заказать разработку
+              <img alt="" src={arrowUpRight} />
+            </a>
             <a className="pf-btn is-soft" href="/?page=platform">
               Войти в Mary
               <img alt="" src={arrowUpRight} />
@@ -124,9 +126,10 @@ export function PlatformLanding() {
             </a>
           </div>
           <div className="pf-hero-logos" aria-label="С нами работают">
-            <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-            <img src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-            <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
+            <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.png" />
+            <img alt="МТБанк" src="/media/clients/mtbank.png" />
+            <img alt="ПВТ Беларусь" src="/media/clients/htp.png" />
+            <img alt="Space" src="/media/clients/space.png" />
           </div>
         </div>
 
