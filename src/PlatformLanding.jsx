@@ -10,13 +10,15 @@ import { IntegrationsMarquee } from "./IntegrationsMarquee.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
 import "./custom-landing.css";
 
+// Ниши в порядке готовности: сначала то, что уже работает на клиентах,
+// потом соседние (тот же кор + пара интеграций), в конце — другой стек.
 const niches = [
-  { key: "beauty", emoji: "", title: "Салоны красоты", text: "Запись из соцсетей, ответы из прайса, YClients.", href: "/?page=beauty", status: "live" },
-  { key: "cosmetology", title: "Косметология", text: "Консультации, подбор процедур, запись.", status: "soon" },
-  { key: "clinic", title: "Клиники и стоматологии", text: "Приём обращений, запись, напоминания.", status: "soon" },
+  { key: "beauty", title: "Красота", text: "Салоны, барбершопы, ногтевые, брови. Запись из соцсетей и YCLIENTS.", href: "/?page=beauty", status: "live" },
+  { key: "manufacturing", title: "Производство", text: "Заявки, согласования, контроль сроков. Закрытый контур.", status: "live" },
+  { key: "clinic", title: "Клиники и стоматологии", text: "Приём обращений, запись, напоминания о визите.", status: "soon" },
   { key: "fitness", title: "Фитнес и студии", text: "Абонементы, расписание, возврат клиентов.", status: "soon" },
-  { key: "barber", title: "Барбершопы и ногтевые", text: "Быстрая запись и повторные визиты.", status: "soon" },
-  { key: "services", title: "Услуги с записью", text: "Автосервисы, репетиторы и другие сферы.", status: "soon" },
+  { key: "horeca", title: "Рестораны и кафе", text: "Брони, доставка, отзывы. Другой набор систем — делаем следующим.", status: "soon" },
+  { key: "services", title: "Услуги с записью", text: "Автосервисы, груминг, репетиторы и смежные сферы.", status: "soon" },
 ];
 
 const faqs = [
@@ -166,7 +168,7 @@ export function PlatformLanding() {
       </section>
 
       <section className="custom-section" id="companies">
-        <SectionIntro title="Ниши, где встраиваем Mary" text="Начинаем с салонов красоты. Дальше — смежные сферы с записью: тот же кор + пара интеграций." />
+        <SectionIntro title="Ниши, где встраиваем Mary" text="Красота и производство уже работают на клиентах. Соседние сферы подключаются тем же ядром плюс пара интеграций." />
         <div className="mary-niche">
           {niches.map((n) => {
             const live = n.status === "live";
