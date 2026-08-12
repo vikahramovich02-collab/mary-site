@@ -4009,3 +4009,9 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .pf-hero-logos img:nth-child(2) { height: 58px; }
 .pf-hero-logos img:nth-child(3) { height: 32px; }
 .pf-hero-logos img:nth-child(4) { height: 54px; }
+
+/* отступы первого экрана строго по макету: навигация 30px от края и 35px сверху */
+.beauty-light .pf-header { padding: 35px 54px 0 30px; }
+/* поля героя обнуляем: шапка сама держит свои 30/54, а контент центрируется */
+.beauty-light .custom-hero { padding-top: 0; padding-inline: 0; }
+.beauty-light .beauty-hero .custom-hero-content { margin-top: 130px; }
