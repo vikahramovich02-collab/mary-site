@@ -4,7 +4,6 @@ import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
 import navDot from "./assets/nav-dot.svg";
 import { ChatReveal } from "./ChatReveal.jsx";
-import { WorkflowCanvas } from "./WorkflowCanvas.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
@@ -147,7 +146,20 @@ export function PlatformLanding() {
 
       </section>
 
-      <WorkflowCanvas />
+      {/* Ролик собран из самого макета: узлы проявляются по очереди,
+          в конце кадр сводится к оригиналу пиксель в пиксель */}
+      <section className="custom-section wf-video-section" id="workflow">
+        <h2 className="wf-video-title">Процесс собирается на глазах</h2>
+        <p className="wf-video-sub">
+          Вы описали задачу словами — дальше Mary ставит узлы один за другим: кто встречает
+          клиента, где развилка, где нужен человек.
+        </p>
+        <figure className="wf-video-frame">
+          <video autoPlay loop muted playsInline poster="/media/workflow-poster.jpg" preload="metadata">
+            <source src="/media/workflow.mp4" type="video/mp4" />
+          </video>
+        </figure>
+      </section>
 
       <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />

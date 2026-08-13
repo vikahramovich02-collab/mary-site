@@ -4553,3 +4553,35 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   box-shadow: none;
 }
 .wf-node.is-note strong { color: #5f6570; }
+
+/* ===== Ролик воркфлоу в окантовке, как в референсе Mobbin ===== */
+.wf-video-section { text-align: center; }
+.wf-video-title {
+  margin: 0;
+  color: #151617;
+  font-size: clamp(28px, 3.1vw, 40px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+.wf-video-sub {
+  max-width: 60ch;
+  margin: 14px auto 0;
+  color: var(--custom-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.wf-video-frame {
+  margin: 40px 0 0;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid #ececee;
+  border-radius: 24px;
+  background: #fff;
+}
+.wf-video-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
