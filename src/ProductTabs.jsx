@@ -48,7 +48,23 @@ export function ProductTabs() {
   // а не прыгает по пунктам (как в референсе Higgsfield)
   const [pos, setPos] = useState(0);
   const active = Math.min(tabs.length - 1, Math.max(0, Math.round(pos)));
+  const [lift, setLift] = useState(0);
   const current = tabs[active];
+
+  // колонка едет вверх непрерывно: активный пункт держится у центра экрана,
+  // пройденные уходят за верхнюю кромку кадра — как в референсе Higgsfield
+  useEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+    const i = Math.min(tabs.length - 1, Math.max(0, Math.floor(pos)));
+    const a = menu.children[i];
+    const b = menu.children[Math.min(i + 1, tabs.length - 1)];
+    if (!a) return;
+    const k = Math.min(Math.max(pos - i, 0), 1);
+    const center = (el) => el.offsetTop + el.offsetHeight / 2;
+    const target = center(a) + (center(b) - center(a)) * k;
+    setLift(target - window.innerHeight * 0.5);
+  }, [pos]);
 
   // прогресс скролла напрямую двигает список; экран меняется на ближайшем пункте
   useEffect(() => {
@@ -92,9 +108,12 @@ export function ProductTabs() {
         />
         <div className="pf-screens">
           <div className="pf-screens-menu-window">
-            {/* список стоит на месте целиком, как в референсе Higgsfield —
-                скролл только подсвечивает активный пункт */}
-            <ul aria-label="Что закрывает платформа" className="pf-screens-menu" ref={menuRef}>
+            <ul
+              aria-label="Что закрывает платформа"
+              className="pf-screens-menu"
+              ref={menuRef}
+              style={{ transform: `translate3d(0, ${-lift}px, 0)` }}
+            >
             {tabs.map((item, index) => (
               <li key={item.key}>
                 <button
