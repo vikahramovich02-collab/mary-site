@@ -22,8 +22,11 @@ export function SiteHeader() {
           </button>
           {companies && (
             <div className="mary-dd-menu wide">
-              <a href="/?page=beauty">Красота<small>Доступно</small></a>
-              <a className="soon">Производство<small>Доступно</small></a>
+              <a href="/?page=beauty">Красота</a>
+              <a href="#">Производство</a>
+              <a href="#">Клиники</a>
+              <a href="#">Фитнес</a>
+              <a href="#">Хорека</a>
             </div>
           )}
         </div>

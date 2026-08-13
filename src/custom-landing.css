@@ -4226,15 +4226,17 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   align-items: center;
   justify-content: center;
   height: 100svh;
+  overflow: hidden;
   pointer-events: none;
 }
 .pf-chat-frame {
   width: calc(34% + 66% * var(--p));
-  height: calc(38svh + 62svh * var(--p));
+  /* к концу кадр выше экрана — так он занимает всю высоту без полей */
+  height: calc(40svh + 70svh * var(--p));
   margin: 0;
   overflow: hidden;
   /* снизу вверх: чем дальше прогресс, тем ближе кадр к центру экрана */
-  transform: translateY(calc((1 - var(--p)) * 30svh));
+  transform: translateY(calc((1 - var(--p)) * 26svh));
   border: 1px solid var(--custom-line);
   border-radius: calc(24px - 20px * var(--p));
   background: #fff;
@@ -4252,4 +4254,94 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .pf-chat-scene { height: auto; margin-top: 0; }
   .pf-chat-sticky { position: static; height: auto; padding: 40px 20px; }
   .pf-chat-frame { width: 100%; height: auto; aspect-ratio: 16 / 10; transform: none; }
+}
+
+/* точки продолжаются ниже первого экрана — чат наезжает прямо на них */
+.beauty-light .beauty-hero { overflow: visible; }
+.pf-hero-field { height: 172svh; }
+
+/* ===== Плашка «Для компаний» по макету: простой список без подписей ===== */
+.beauty-light .mary-dd-menu,
+.beauty-light .mary-dd-menu.wide {
+  min-width: 210px;
+  padding: 14px 10px;
+  border: 0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(21, 22, 23, .12), 0 2px 6px rgba(21, 22, 23, .06);
+}
+.beauty-light .mary-dd-menu a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 10px;
+  color: #4a4a52;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+}
+.beauty-light .mary-dd-menu a:hover { background: #f4f4f5; color: #151617; }
+.beauty-light .mary-dd-menu a small { display: none; }
+
+/* ===== Контакты ===== */
+.contacts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 110px);
+  padding: 56px 40px 120px;
+}
+.contacts-intro h1 {
+  margin: 0;
+  color: #151617;
+  font-size: clamp(44px, 5.6vw, 80px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.contacts-intro p { max-width: 44ch; margin: 26px 0 0; color: var(--custom-muted); font-size: 17px; line-height: 1.6; }
+.contacts-intro .pf-btn { margin-top: 30px; }
+
+.contacts-cols { display: grid; gap: 40px; align-content: start; padding-top: 12px; }
+.contacts-block h2 {
+  margin: 0 0 14px;
+  color: #a4a4ac;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.contacts-line {
+  display: grid;
+  grid-template-columns: 20px 120px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--custom-line);
+  color: #151617;
+  text-decoration: none;
+}
+.contacts-line svg { color: #a4a4ac; }
+.contacts-line span { color: var(--custom-muted); font-size: 15px; }
+.contacts-line strong { font-size: 17px; font-weight: 500; }
+.contacts-line:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+
+.contacts-socials { display: flex; gap: 10px; }
+.contacts-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--custom-line);
+  border-radius: 50%;
+  color: #151617;
+  transition: background-color 160ms ease;
+}
+.contacts-socials a:hover { background: #f4f4f5; }
+
+.contacts-person { display: flex; gap: 10px; justify-content: space-between; margin: 0 0 12px; }
+.contacts-person span { color: var(--custom-muted); font-size: 15px; }
+.contacts-person strong { color: #151617; font-size: 17px; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .contacts { grid-template-columns: 1fr; padding: 40px 20px 80px; }
 }

@@ -299,10 +299,11 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       // В светлом мире точки собраны в огромный купол, поднимающийся снизу, —
       // так это нарисовано в макете главной. В тёмном остаётся полоса снизу вверх.
       const shapeMode = spread || (light ? "dome" : "band");
+      const screen = Math.min(window.innerHeight, height) * dpr;
       const domeX = width * dpr * 0.536;
-      const domeY = height * dpr * 0.92;
+      const domeY = screen * 0.92;
       const domeRX = width * dpr * 0.738;
-      const domeRY = height * dpr * 0.58;
+      const domeRY = screen * 0.58;
 
       for (let row = 0; row < rows; row += 1) {
         const y = row * cell;

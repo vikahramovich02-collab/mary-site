@@ -75,11 +75,11 @@ export function PlatformLanding() {
               </button>
               {dd === "companies" && (
                 <div className="mary-dd-menu wide">
-                  {niches.map((n) => (
-                    <a key={n.key} href={n.status === "live" ? n.href : undefined} className={n.status === "soon" ? "soon" : ""}>
-                      {n.title}<small>{n.status === "live" ? "Доступно" : "Скоро"}</small>
-                    </a>
-                  ))}
+                <a href="/?page=beauty">Красота</a>
+                <a href="#">Производство</a>
+                <a href="#">Клиники</a>
+                <a href="#">Фитнес</a>
+                <a href="#">Хорека</a>
                 </div>
               )}
             </div>
