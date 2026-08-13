@@ -3,7 +3,6 @@ import { ArrowRight, Check, Menu, X, ChevronDown, Sparkles } from "lucide-react"
 import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
 import navDot from "./assets/nav-dot.svg";
-import { AssemblyDemo } from "./AssemblyDemo.jsx";
 import { ChatReveal } from "./ChatReveal.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
@@ -144,7 +143,6 @@ export function PlatformLanding() {
           title="Всё делается в чате"
           text="Вы говорите обычными словами — процесс собирается на глазах и сразу идёт в работу. Настраивать конструкторы и звать разработчиков не нужно."
         />
-        <AssemblyDemo />
 
       </section>
 
