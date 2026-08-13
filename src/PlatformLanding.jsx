@@ -60,7 +60,7 @@ export function PlatformLanding() {
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
       <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
-        <HeroField className="pf-hero-field" dotAlpha={0.16} mode="halftone" tone="light" />
+        <HeroField className="pf-hero-field" dotAlpha={0.16} mode="halftone" speed={1.6} tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header pf-header">

@@ -335,7 +335,7 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
           // размах волны по размеру точки: на светлом он был почти нулевой,
           // из-за этого купол выглядел неподвижным
           const fill = light
-            ? Math.min(Math.max(v * 0.16 + 0.74, 0), 1)
+            ? Math.min(Math.max(v * 0.34 + 0.6, 0), 1)
             : Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
           const r = maxR * Math.pow(fill, light ? 1.8 : 2.2) * shape;
           if (r < 0.28) continue;

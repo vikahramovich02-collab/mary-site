@@ -3351,7 +3351,8 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   z-index: 3;
   bottom: 0;
   left: 50%;
-  width: min(38vw, 560px);
+  /* кадр теперь портретный (420×475) — ширину держим меньше, чем у старого альбомного */
+  width: min(27vw, 400px);
   pointer-events: none;
   transform: translate(-50%, calc(var(--dog-hide) * 130%));
 }
