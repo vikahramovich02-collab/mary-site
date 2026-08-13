@@ -25,7 +25,7 @@ export function MaryDog() {
 
     const update = () => {
       frame = 0;
-      const hide = Math.min(Math.max(window.scrollY / (window.innerHeight * 0.5), 0), 1);
+      const hide = Math.min(Math.max(window.scrollY / (window.innerHeight * 0.16), 0), 1);
       dog.style.setProperty("--dog-hide", hide.toFixed(3));
 
       if (hide > 0.9) {

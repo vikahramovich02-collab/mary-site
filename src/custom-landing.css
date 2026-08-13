@@ -4226,7 +4226,8 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   --p: 0;
   position: relative;
   z-index: 4;
-  height: 260vh;
+  /* короткий пробег: секция заходит быстро, без длинного скролла */
+  height: 165vh;
   /* заходит на первый экран, поэтому и накрывает его анимацию */
   margin-top: -34svh;
 }
@@ -4241,15 +4242,15 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   pointer-events: none;
 }
 .pf-chat-frame {
-  width: calc(34% + 66% * var(--p));
-  /* к концу кадр выше экрана — так он занимает всю высоту без полей */
-  height: calc(40svh + 70svh * var(--p));
+  /* окно сразу почти во весь слайд — не растёт из маленького,
+     а просто натягивается на экран, выезжая снизу */
+  width: calc(92% + 8% * var(--p));
+  height: calc(96svh + 8svh * var(--p));
   margin: 0;
   overflow: hidden;
-  /* снизу вверх: чем дальше прогресс, тем ближе кадр к центру экрана */
-  transform: translateY(calc((1 - var(--p)) * 26svh));
+  transform: translateY(calc((1 - var(--p)) * 92svh));
   border: 1px solid var(--custom-line);
-  border-radius: calc(24px - 20px * var(--p));
+  border-radius: calc(24px - 18px * var(--p));
   background: #fff;
   box-shadow: 0 calc(30px + 40px * var(--p)) calc(60px + 60px * var(--p)) rgba(21, 22, 23, calc(.1 + .12 * var(--p)));
 }
