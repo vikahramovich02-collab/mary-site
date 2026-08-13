@@ -4,6 +4,7 @@ import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
 import navDot from "./assets/nav-dot.svg";
 import { ChatReveal } from "./ChatReveal.jsx";
+import { WorkflowCanvas } from "./WorkflowCanvas.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
@@ -145,6 +146,8 @@ export function PlatformLanding() {
         />
 
       </section>
+
+      <WorkflowCanvas />
 
       <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />
