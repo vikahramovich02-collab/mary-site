@@ -4015,18 +4015,14 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   margin-top: 56px;
   gap: 52px;
 }
+/* svg-карточки из Figma: у всех одинаковый бокс 146×66, знак уже посажен
+   как в макете — никаких индивидуальных подгонок больше не нужно */
 .pf-hero-logos img {
   width: auto;
-  height: 34px;
-  /* выше по файлу логотипы красились в серый (invert/brightness) —
-     здесь возвращаем цвет и выравниваем визуальный рост знаков */
+  height: 58px;
   filter: none !important;
   opacity: 1 !important;
 }
-.pf-hero-logos img:nth-child(1) { height: 38px; }
-.pf-hero-logos img:nth-child(2) { height: 28px; }
-.pf-hero-logos img:nth-child(3) { height: 32px; }
-.pf-hero-logos img:nth-child(4) { height: 38px; }
 /* у МТбанка и Space в png много прозрачных полей — бокс выше, знак тот же */
 .pf-hero-logos img:nth-child(2) { height: 48px; }
 .pf-hero-logos img:nth-child(4) { height: 46px; }
