@@ -141,14 +141,6 @@ export function PlatformLanding() {
 
       <ChatReveal />
 
-      <section className="custom-section pf-assembly-section" aria-label="Как Mary собирает процесс">
-        <SectionIntro
-          title="Всё делается в чате"
-          text="Вы говорите обычными словами — процесс собирается на глазах и сразу идёт в работу. Настраивать конструкторы и звать разработчиков не нужно."
-        />
-
-      </section>
-
       {/* Анимация из Figma Make (экспорт Вики): камера идёт по процессу,
           узлы и связи проявляются по хореографии макета */}
       <section className="custom-section wf-video-section" id="workflow">
