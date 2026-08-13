@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import {
-  ArrowDown,
   ArrowRight,
   ArrowUp,
   Cable,
   ChartPie,
   Clock,
+  Copy,
   Folder,
   LayoutGrid,
   MessageCircle,
@@ -18,9 +18,8 @@ import {
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 
-// Второй слайд по Figma 3:95958 → 3:96009: окно платформы (сайдбар + первый
-// вход в чат) выплывает снизу над точками героя и встаёт во весь экран.
-// Экран собран живой вёрсткой — масштаб макета 0.935 приведён к целым.
+// Второй слайд: окно платформы выплывает снизу и встаёт во весь экран.
+// Внутри — живой диалог с Mary (как в рабочем прототипе Вики), не первый вход.
 const menu = [
   [LayoutGrid, "Главная"],
   [Workflow, "Бизнес-процессы"],
@@ -30,10 +29,11 @@ const menu = [
   [ChartPie, "Аналитика"],
 ];
 
-const chips = ["С чего начать?", "Что ты умеешь?", "Знаю, что нужно"];
-const suggestions = [
-  "Я первый раз здесь — с чего мне начать?",
-  "Разбери мой бизнес и предложи, что упростить первым",
+const options = [
+  "С людьми (B2C) — салон, магазин, кафе, услуги",
+  "С компаниями (B2B) — опт, производство, услуги для бизнеса",
+  "Онлайн — школа, курсы, эксперт, digital",
+  "Смешанно / другое — расскажу словами",
 ];
 
 export function ChatReveal() {
@@ -72,7 +72,7 @@ export function ChatReveal() {
   }, []);
 
   return (
-    <section className="pf-chat-scene" ref={sceneRef} aria-label="Первый вход в чат Mary">
+    <section className="pf-chat-scene" ref={sceneRef} aria-label="Диалог с Mary">
       <div className="pf-chat-sticky">
         <figure className="pf-chat-frame">
           <div className="mchat" aria-hidden="true">
@@ -99,38 +99,49 @@ export function ChatReveal() {
               </div>
             </aside>
 
-            <div className="mchat-main">
-              <Clock size={15} className="mchat-history" />
+            <div className="mchat-main is-dialog">
+              <div className="mchat-top">
+                <strong>Чат с Mary</strong>
+                <span>
+                  <Clock size={15} />
+                  <Plus size={16} />
+                </span>
+              </div>
 
-              <div className="mchat-center">
-                <img className="mchat-dog" alt="" src="/media/mary-dog.webp" />
-                <h3>Привет! Я Mary —<br />помогу упростить твой бизнес</h3>
+              <div className="mchat-dialog">
+                <div className="mchat-bubble is-user">Я первый раз здесь — с чего мне начать?</div>
+                <Copy className="mchat-copy" size={13} />
 
-                <div className="mchat-input">
-                  <p>Опишите своими словами, что хотите</p>
-                  <div className="mchat-input-row">
-                    <button type="button" aria-hidden="true"><Plus size={16} /></button>
-                    <button type="button" aria-hidden="true"><Paperclip size={15} /></button>
-                    <i />
-                    <button type="button" aria-hidden="true"><Mic size={16} /></button>
-                    <button className="is-send" type="button" aria-hidden="true"><ArrowUp size={15} /></button>
+                <div className="mchat-mary">
+                  <div className="mchat-mary-name">
+                    <img alt="" src="/media/mary-dog.webp" />
+                    Mary
                   </div>
-                </div>
-
-                <div className="mchat-chips">
-                  {chips.map((chip, i) => (
-                    <span className={i === 0 ? "is-active" : ""} key={chip}>{chip}</span>
-                  ))}
-                </div>
-
-                <div className="mchat-suggest">
-                  {suggestions.map((text) => (
-                    <p key={text}><ArrowRight size={14} />{text}</p>
-                  ))}
+                  <p>
+                    Привет! 👋 Я Mary — помощник, который упрощает бизнес. Беру на себя рутину:
+                    переписку с клиентами, заявки, записи, напоминания — чтобы ты занимался делом,
+                    а не разгребал всё вручную. И собираю это прямо здесь, простым разговором — без
+                    сложных меню и настроек.
+                  </p>
+                  <p>
+                    Давай знакомиться — расскажи пару слов о своём деле, и я пойму, что можно
+                    упростить в первую очередь. С кем работаешь?
+                  </p>
+                  <div className="mchat-options">
+                    {options.map((text) => (
+                      <p key={text}><ArrowRight size={14} />{text}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <span className="mchat-down"><ArrowDown size={18} /></span>
+              <div className="mchat-ask">
+                <button type="button" aria-hidden="true"><Plus size={16} /></button>
+                <button type="button" aria-hidden="true"><Paperclip size={15} /></button>
+                <em>Спросить у Mary</em>
+                <button type="button" aria-hidden="true"><Mic size={16} /></button>
+                <button className="is-send" type="button" aria-hidden="true"><ArrowUp size={15} /></button>
+              </div>
             </div>
           </div>
         </figure>
