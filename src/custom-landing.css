@@ -2967,20 +2967,14 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   align-items: start;
 }
 .pf-screens-stage { max-width: 780px; }
-/* окно, в котором список едет вверх: видно активный пункт и соседей */
-.pf-screens-menu-window {
-  overflow: hidden;
-  height: min(52svh, 420px);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 72%, transparent 100%);
-}
+/* список виден целиком — ничего не уезжает и не обрезается */
+.pf-screens-menu-window { overflow: visible; }
 .pf-screens-menu {
   display: grid;
   gap: 4px;
   margin: 0;
-  padding: 22% 0 60%;
+  padding: 0;
   list-style: none;
-  /* позицию ведёт сам скролл, поэтому лишь лёгкое сглаживание */
-  transition: transform 140ms linear;
 }
 .pf-screens-menu button {
   display: block;
