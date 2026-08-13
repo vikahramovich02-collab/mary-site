@@ -3766,15 +3766,16 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 
 /* ===== Секция экранов на чёрном ===== */
 .pf-screens-section {
-  background: #000 !important;
+  /* фон и скругление живут на липком кадре: overflow на самой секции
+     ломал position: sticky (стики-скролл переставал работать) */
+  background: transparent !important;
   isolation: isolate;
-  /* секция заезжает внахлёст на предыдущий белый блок; белому ниже
-     добавлен такой же запас снизу, чтобы нахлёст накрывал пустое поле,
-     а не контент */
   z-index: 6;
   margin-top: -18svh;
+}
+.pf-screens-sticky {
   border-radius: 28px;
-  overflow: hidden;
+  background: #000;
 }
 #platform { padding-bottom: calc(clamp(104px, 10vw, 156px) + 18svh) !important; }
 .pf-screens-field {
