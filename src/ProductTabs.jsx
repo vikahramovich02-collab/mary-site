@@ -44,19 +44,26 @@ const tabs = [
 export function ProductTabs() {
   const sectionRef = useRef(null);
   const menuRef = useRef(null);
-  const [active, setActive] = useState(0);
+  // pos — дробный индекс: список едет плавно вместе со скроллом,
+  // а не прыгает по пунктам (как в референсе Higgsfield)
+  const [pos, setPos] = useState(0);
+  const active = Math.min(tabs.length - 1, Math.max(0, Math.round(pos)));
   const [lift, setLift] = useState(0);
   const current = tabs[active];
 
-  // список едет вверх так, чтобы активный пункт всегда стоял на одной высоте
+  // высота сдвига интерполируется между соседними пунктами
   useEffect(() => {
     const menu = menuRef.current;
     if (!menu) return;
-    const item = menu.children[active];
-    if (item) setLift(item.offsetTop);
-  }, [active]);
+    const i = Math.min(tabs.length - 1, Math.max(0, Math.floor(pos)));
+    const a = menu.children[i];
+    const b = menu.children[Math.min(i + 1, tabs.length - 1)];
+    if (!a) return;
+    const k = Math.min(Math.max(pos - i, 0), 1);
+    setLift(a.offsetTop + (b.offsetTop - a.offsetTop) * k);
+  }, [pos]);
 
-  // активный пункт выбирает скролл: секция залипает, а список идёт сверху вниз
+  // прогресс скролла напрямую двигает список; экран меняется на ближайшем пункте
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
@@ -66,8 +73,8 @@ export function ProductTabs() {
       frame = 0;
       const rect = section.getBoundingClientRect();
       const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const progress = Math.min(Math.max(-rect.top / travel, 0), 0.999);
-      setActive(Math.floor(progress * tabs.length));
+      const progress = Math.min(Math.max(-rect.top / travel, 0), 1);
+      setPos(progress * (tabs.length - 1));
     };
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
@@ -109,7 +116,7 @@ export function ProductTabs() {
                 <button
                   aria-current={index === active}
                   className={index === active ? "is-active" : ""}
-                  onClick={() => setActive(index)}
+                  onClick={() => setPos(index)}
                   type="button"
                 >
                   {item.tab}

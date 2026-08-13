@@ -2961,10 +2961,12 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
    справа сам экран и подпись под ним. */
 .pf-screens {
   display: grid;
-  grid-template-columns: minmax(240px, .82fr) minmax(0, 2fr);
+  /* экран уже, чем раньше: пропорции как в референсе на 1440 */
+  grid-template-columns: minmax(240px, .9fr) minmax(0, 1.55fr);
   gap: clamp(32px, 5vw, 80px);
   align-items: start;
 }
+.pf-screens-stage { max-width: 780px; }
 /* окно, в котором список едет вверх: видно активный пункт и соседей */
 .pf-screens-menu-window {
   overflow: hidden;
@@ -2977,7 +2979,8 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   margin: 0;
   padding: 22% 0 60%;
   list-style: none;
-  transition: transform 620ms cubic-bezier(.22, .8, .28, 1);
+  /* позицию ведёт сам скролл, поэтому лишь лёгкое сглаживание */
+  transition: transform 140ms linear;
 }
 .pf-screens-menu button {
   display: block;
@@ -3204,18 +3207,11 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   to   { opacity: 1; transform: none; }
 }
 .pf-screens-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-  gap: 24px;
-  align-items: baseline;
-  margin-top: 22px;
+  margin-top: 26px;
   animation: pf-screen-rise 560ms 90ms cubic-bezier(.22, .75, .3, 1) both;
 }
-.pf-screens-copy h3 { margin: 0; color: #262633; font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
-.pf-screens-copy p { max-width: 62ch; margin: 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
-@media (max-width: 900px) {
-  .pf-screens-copy { grid-template-columns: 1fr; gap: 10px; }
-}
+.pf-screens-copy h3 { margin: 0; color: #262633; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+.pf-screens-copy p { max-width: 56ch; margin: 10px 0 0; color: var(--custom-muted); font-size: 15px; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .pf-screens-shot img, .pf-screens-copy { animation: none; }
 }
