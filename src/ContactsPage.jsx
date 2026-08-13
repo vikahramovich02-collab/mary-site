@@ -1,4 +1,4 @@
-import { Instagram as InstagramIcon, Linkedin, Mail, MessageCircle, Phone, Send, Youtube } from "lucide-react";
+import { Mail, MessageCircle, Phone, Send } from "lucide-react";
 import { SiteHeader } from "./SiteHeader.jsx";
 import "./custom-landing.css";
 
@@ -10,11 +10,13 @@ const direct = [
   { label: "Телефон", value: "", href: "", icon: Phone },
 ];
 
+// Брендовых иконок в этой сборке lucide нет — берём настоящие логотипы,
+// те же, что в дорожках интеграций.
 const socials = [
-  { label: "Instagram", href: "", icon: InstagramIcon },
-  { label: "Telegram-канал", href: "", icon: Send },
-  { label: "LinkedIn", href: "", icon: Linkedin },
-  { label: "YouTube", href: "", icon: Youtube },
+  { label: "Instagram", href: "", logo: "instagram.svg" },
+  { label: "Telegram-канал", href: "", logo: "telegram.svg" },
+  { label: "TikTok", href: "", logo: "tiktok.svg" },
+  { label: "YouTube", href: "", logo: "youtube.svg" },
 ];
 
 const company = [
@@ -67,9 +69,9 @@ export function ContactsPage() {
             <div className="contacts-block">
               <h2>Соцсети</h2>
               <div className="contacts-socials">
-                {socialsFilled.map(({ label, href, icon: Icon }) => (
+                {socialsFilled.map(({ label, href, logo }) => (
                   <a aria-label={label} href={href} key={label} rel="noreferrer" target="_blank">
-                    <Icon size={20} aria-hidden="true" />
+                    <img alt="" src={`/media/logos/${logo}`} />
                   </a>
                 ))}
               </div>
