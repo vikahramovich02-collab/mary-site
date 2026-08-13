@@ -4,6 +4,7 @@ import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
 import navDot from "./assets/nav-dot.svg";
 import { ChatReveal } from "./ChatReveal.jsx";
+import { NicheStack } from "./NicheStack.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
@@ -187,6 +188,8 @@ export function PlatformLanding() {
           </article>
         </div>
       </section>
+
+      <NicheStack />
 
       <section className="custom-section beauty-ints-section" id="integrations">
         <h2 className="int-title">Встраивается в то, чем вы уже пользуетесь</h2>

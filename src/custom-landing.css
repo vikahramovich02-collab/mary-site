@@ -4630,3 +4630,81 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .pf-case.is-wide, .pf-case-pair .pf-case { min-height: 0; }
   .pf-case-pair { grid-template-columns: 1fr; }
 }
+
+/* ===== Ниши: липкий список слева, панели справа ===== */
+.ns {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.1fr);
+  gap: clamp(40px, 6vw, 96px);
+  padding: 0 max(24px, calc((100vw - 1272px) / 2)) 120px;
+}
+.ns-aside {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 40px 0;
+}
+.ns-aside h2 {
+  margin: 0 0 44px;
+  color: #151617;
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.08;
+}
+.ns-list { margin: 0; padding: 0; list-style: none; }
+.ns-list li { padding: 22px 0; border-top: 1px solid #ececee; }
+.ns-list li:last-child { border-bottom: 1px solid #ececee; }
+.ns-list button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #b4b4bb;
+  font: inherit;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  cursor: pointer;
+  transition: color 240ms ease;
+}
+.ns-list li.is-on button { color: #151617; }
+.ns-list button:hover { color: #6f6f6f; }
+.ns-list li.is-on button:hover { color: #151617; }
+.ns-list p {
+  max-width: 44ch;
+  margin: 12px 0 0;
+  color: var(--custom-muted);
+  font-size: 16px;
+  line-height: 1.55;
+  animation: ns-in 300ms ease both;
+}
+@keyframes ns-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.ns-foot { margin: 34px 0 0; color: #a4a4ac; font-size: 15px; }
+
+.ns-panels { display: grid; gap: 24px; padding: 40px 0; }
+.ns-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 28px;
+  border-radius: 24px;
+  background: #f6f6f7;
+}
+.ns-shot {
+  display: block;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  background: #ededee;
+}
+
+@media (max-width: 900px) {
+  .ns { grid-template-columns: 1fr; padding-bottom: 60px; }
+  .ns-aside { position: static; min-height: 0; }
+  .ns-panels { padding: 0; }
+  .ns-shot { aspect-ratio: 3 / 4; }
+}
+@media (prefers-reduced-motion: reduce) { .ns-list p { animation: none; } }
