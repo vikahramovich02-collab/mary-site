@@ -114,7 +114,6 @@ export function BlogPage() {
               role="tab"
               type="button"
             >
-              <MessageCircle size={14} aria-hidden="true" />
               {label}
             </button>
           ))}
