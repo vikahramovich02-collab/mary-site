@@ -4352,3 +4352,13 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .contacts-line.is-empty strong,
 .contacts-person.is-empty strong { color: #c2c2c8; font-weight: 400; }
 .contacts-socials .is-empty { opacity: .35; cursor: default; }
+
+/* вакансии занимают ровно экран: пустое состояние растягивается, кнопка внизу */
+.jobs-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-bottom: 56px;
+}
+.jobs-page .page-empty { flex: 1; min-height: 0; }
+.jobs-page .blog-cta { margin-top: 0; }

@@ -21,7 +21,7 @@ export function JobsPage() {
   const visible = area === "all" ? jobs : jobs.filter((job) => job.area === area);
 
   return (
-    <main className="custom-site beauty-light blog-page" id="top">
+    <main className="custom-site beauty-light blog-page jobs-page" id="top">
       <SiteHeader />
 
       <section className="blog-head">
@@ -55,8 +55,8 @@ export function JobsPage() {
         <section className="page-empty">
           <p>Пока нет</p>
           <p className="page-empty-hint">
-            Открытых позиций сейчас нет, но мы всегда рады сильным. Напишите — посмотрим,
-            где вы можете быть полезны.
+            Открытых позиций сейчас нет. Но если видите себя в Mary — напишите нам на почту
+            с предложением, мы посмотрим и ответим.
           </p>
         </section>
       )}
