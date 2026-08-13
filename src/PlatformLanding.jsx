@@ -141,19 +141,6 @@ export function PlatformLanding() {
 
       <ChatReveal />
 
-      {/* Анимация из Figma Make (экспорт Вики): камера идёт по процессу,
-          узлы и связи проявляются по хореографии макета */}
-      <section className="custom-section wf-video-section" id="workflow">
-        <h2 className="wf-video-title">Процесс собирается на глазах</h2>
-        <p className="wf-video-sub">
-          Вы описали задачу словами — дальше Mary ставит узлы один за другим: кто встречает
-          клиента, где развилка, где нужен человек.
-        </p>
-        <figure className="wf-video-frame">
-          <WorkflowAnim />
-        </figure>
-      </section>
-
       <section className="custom-section" id="platform">
         <SectionIntro title="Одна платформа собирает вашу компанию" />
         <PlatformPanels />
@@ -164,9 +151,12 @@ export function PlatformLanding() {
       <section className="custom-section pf-cases" id="cases">
         <h2 className="pf-cases-title">Когда нужна Mary</h2>
 
-        <article className="pf-case is-wide">
+        {/* Анимация из Figma Make (экспорт Вики): камера идёт по процессу,
+            узлы и связи проявляются по хореографии макета */}
+        <article className="pf-case is-wide" id="workflow">
           <h3>Собрать процесс с нуля</h3>
           <p>Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков, подключит каналы и запустит его в работу. Без ТЗ и без разработчиков.</p>
+          <WorkflowAnim />
         </article>
 
         <div className="pf-case-pair">

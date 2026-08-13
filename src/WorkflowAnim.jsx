@@ -15,14 +15,18 @@ const SECONDS = 27.3; // столько идёт один проход — ка�
 
 export function WorkflowAnim() {
   const boxRef = useRef(null);
-  const [scale, setScale] = useState(1);
+  const [fit, setFit] = useState({ scale: 1, offsetY: 0 });
   const [t, setT] = useState(FROM);
 
-  // вписываем сцену в ширину блока
+  // вписываем сцену в ширину блока и центрируем по высоте: если рамка ниже
+  // кадра, сцена ровно обрезается сверху и снизу
   useEffect(() => {
     const box = boxRef.current;
     if (!box) return undefined;
-    const measure = () => setScale(box.clientWidth / W);
+    const measure = () => {
+      const scale = box.clientWidth / W;
+      setFit({ scale, offsetY: (box.clientHeight - H * scale) / 2 });
+    };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(box);
@@ -73,7 +77,10 @@ export function WorkflowAnim() {
 
   return (
     <div className="wf-anim" ref={boxRef} aria-hidden="true">
-      <div className="wf-anim-stage" style={{ width: W, height: H, transform: `scale(${scale})` }}>
+      <div
+        className="wf-anim-stage"
+        style={{ width: W, height: H, transform: `translateY(${fit.offsetY}px) scale(${fit.scale})` }}
+      >
         <CompositionContext.Provider value={value}>
           <Piece opts={{ dotGrid: true, branchLabels: true, cardGlow: true }} />
         </CompositionContext.Provider>
