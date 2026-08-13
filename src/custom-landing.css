@@ -4585,3 +4585,48 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   height: auto;
   border-radius: 16px;
 }
+
+/* ===== Блок «Когда нужна Mary»: широкая карточка и две квадратные ===== */
+.pf-cases-title {
+  margin: 0 0 40px;
+  color: #151617;
+  font-size: clamp(28px, 3.1vw, 40px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  text-align: center;
+}
+.pf-case {
+  padding: 40px;
+  border: 1px solid #ececee;
+  border-radius: 24px;
+  background: #fff;
+}
+.pf-case h3 {
+  margin: 0;
+  color: #151617;
+  font-size: clamp(20px, 1.9vw, 26px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+}
+.pf-case p {
+  max-width: 52ch;
+  margin: 12px 0 0;
+  color: var(--custom-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.pf-case.is-wide { min-height: 340px; margin-bottom: 20px; }
+.pf-case-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.pf-case-pair .pf-case { min-height: 340px; }
+
+@media (max-width: 900px) {
+  .pf-case { padding: 28px; }
+  .pf-case.is-wide, .pf-case-pair .pf-case { min-height: 0; }
+  .pf-case-pair { grid-template-columns: 1fr; }
+}

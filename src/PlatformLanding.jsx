@@ -168,6 +168,26 @@ export function PlatformLanding() {
 
       <ProductTabs />
 
+      <section className="custom-section pf-cases" id="cases">
+        <h2 className="pf-cases-title">Когда нужна Mary</h2>
+
+        <article className="pf-case is-wide">
+          <h3>Собрать процесс с нуля</h3>
+          <p>Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков, подключит каналы и запустит его в работу. Без ТЗ и без разработчиков.</p>
+        </article>
+
+        <div className="pf-case-pair">
+          <article className="pf-case">
+            <h3>Завал в переписке</h3>
+            <p>Клиенты пишут в разные каналы, часть теряется в пиковые часы и по ночам. Mary встречает каждое обращение и доводит его до записи.</p>
+          </article>
+          <article className="pf-case">
+            <h3>Всё держится на одном человеке</h3>
+            <p>Логика процесса живёт в голове сотрудника. Mary переносит её в систему, где видно каждый шаг и где ничего не встанет из-за отпуска.</p>
+          </article>
+        </div>
+      </section>
+
       <section className="custom-section beauty-ints-section" id="integrations">
         <h2 className="int-title">Встраивается в то, чем вы уже пользуетесь</h2>
         <IntegrationsMarquee />
