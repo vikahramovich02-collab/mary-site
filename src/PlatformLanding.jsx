@@ -10,6 +10,7 @@ import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
 import { IntegrationsMarquee } from "./IntegrationsMarquee.jsx";
 import { ProductTabs } from "./ProductTabs.jsx";
+import { WorkflowAnim } from "./WorkflowAnim.jsx";
 import "./custom-landing.css";
 
 // Ниши в порядке готовности: сначала то, что уже работает на клиентах,
@@ -148,8 +149,8 @@ export function PlatformLanding() {
 
       </section>
 
-      {/* Ролик собран из самого макета: узлы проявляются по очереди,
-          в конце кадр сводится к оригиналу пиксель в пиксель */}
+      {/* Анимация из Figma Make (экспорт Вики): камера идёт по процессу,
+          узлы и связи проявляются по хореографии макета */}
       <section className="custom-section wf-video-section" id="workflow">
         <h2 className="wf-video-title">Процесс собирается на глазах</h2>
         <p className="wf-video-sub">
@@ -157,9 +158,7 @@ export function PlatformLanding() {
           клиента, где развилка, где нужен человек.
         </p>
         <figure className="wf-video-frame">
-          <video autoPlay loop muted playsInline poster="/media/workflow-poster.jpg" preload="metadata">
-            <source src="/media/workflow.mp4" type="video/mp4" />
-          </video>
+          <WorkflowAnim />
         </figure>
       </section>
 
