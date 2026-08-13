@@ -4346,3 +4346,9 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 @media (max-width: 900px) {
   .contacts { grid-template-columns: 1fr; padding: 40px 20px 80px; }
 }
+
+/* незаполненные контакты видны, но приглушены и не кликаются */
+.contacts-line.is-empty { cursor: default; }
+.contacts-line.is-empty strong,
+.contacts-person.is-empty strong { color: #c2c2c8; font-weight: 400; }
+.contacts-socials .is-empty { opacity: .35; cursor: default; }

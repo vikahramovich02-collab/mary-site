@@ -30,9 +30,8 @@ const people = [
 ];
 
 export function ContactsPage() {
-  const directFilled = direct.filter((item) => item.value);
-  const socialsFilled = socials.filter((item) => item.href);
-  const companyFilled = company.filter((item) => item.value);
+  // Блоки показываем всегда: пустые значения выглядят как «уточняется»
+  // и не кликаются, но структура страницы видна.
 
   return (
     <main className="custom-site beauty-light blog-page" id="top">
@@ -52,31 +51,40 @@ export function ContactsPage() {
         </div>
 
         <div className="contacts-cols">
-          {directFilled.length > 0 && (
-            <div className="contacts-block">
-              <h2>Связаться</h2>
-              {directFilled.map(({ label, value, href, icon: Icon }) => (
-                <a className="contacts-line" href={href} key={label}>
+          <div className="contacts-block">
+            <h2>Связаться</h2>
+            {direct.map(({ label, value, href, icon: Icon }) => {
+              const Tag = value && href ? "a" : "div";
+              return (
+                <Tag className={`contacts-line ${value ? "" : "is-empty"}`} href={value ? href : undefined} key={label}>
                   <Icon size={18} aria-hidden="true" />
                   <span>{label}</span>
-                  <strong>{value}</strong>
-                </a>
-              ))}
-            </div>
-          )}
+                  <strong>{value || "уточняется"}</strong>
+                </Tag>
+              );
+            })}
+          </div>
 
-          {socialsFilled.length > 0 && (
-            <div className="contacts-block">
-              <h2>Соцсети</h2>
-              <div className="contacts-socials">
-                {socialsFilled.map(({ label, href, logo }) => (
-                  <a aria-label={label} href={href} key={label} rel="noreferrer" target="_blank">
+          <div className="contacts-block">
+            <h2>Соцсети</h2>
+            <div className="contacts-socials">
+              {socials.map(({ label, href, logo }) => {
+                const Tag = href ? "a" : "span";
+                return (
+                  <Tag
+                    aria-label={label}
+                    className={href ? "" : "is-empty"}
+                    href={href || undefined}
+                    key={label}
+                    rel={href ? "noreferrer" : undefined}
+                    target={href ? "_blank" : undefined}
+                  >
                     <img alt="" src={`/media/logos/${logo}`} />
-                  </a>
-                ))}
-              </div>
+                  </Tag>
+                );
+              })}
             </div>
-          )}
+          </div>
 
           <div className="contacts-block">
             <h2>Команда</h2>
@@ -88,17 +96,15 @@ export function ContactsPage() {
             ))}
           </div>
 
-          {companyFilled.length > 0 && (
-            <div className="contacts-block">
-              <h2>Реквизиты</h2>
-              {companyFilled.map(({ label, value }) => (
-                <p className="contacts-person" key={label}>
-                  <span>{label}</span>
-                  <strong>{value}</strong>
-                </p>
-              ))}
-            </div>
-          )}
+          <div className="contacts-block">
+            <h2>Реквизиты</h2>
+            {company.map(({ label, value }) => (
+              <p className={`contacts-person ${value ? "" : "is-empty"}`} key={label}>
+                <span>{label}</span>
+                <strong>{value || "уточняется"}</strong>
+              </p>
+            ))}
+          </div>
         </div>
       </section>
     </main>
