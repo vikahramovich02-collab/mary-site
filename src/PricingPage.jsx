@@ -218,10 +218,10 @@ export function PricingPage() {
       <section className="pr-clients" aria-label="С нами работают">
         <h2>С нами работают команды, которым важен результат</h2>
         <div className="pf-hero-logos">
-          <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.svg" />
-          <img alt="МТБанк" src="/media/clients/mtbank.svg" />
-          <img alt="ПВТ Беларусь" src="/media/clients/htp.svg" />
-          <img alt="Space" src="/media/clients/space.svg" />
+          <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.png" />
+          <img alt="МТБанк" src="/media/clients/mtbank.png" />
+          <img alt="ПВТ Беларусь" src="/media/clients/htp.png" />
+          <img alt="Space" src="/media/clients/space.png" />
         </div>
       </section>
 

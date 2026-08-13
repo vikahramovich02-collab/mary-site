@@ -129,10 +129,10 @@ export function PlatformLanding() {
             </a>
           </div>
           <div className="pf-hero-logos" aria-label="С нами работают">
-            <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.svg" />
-            <img alt="МТБанк" src="/media/clients/mtbank.svg" />
-            <img alt="ПВТ Беларусь" src="/media/clients/htp.svg" />
-            <img alt="Space" src="/media/clients/space.svg" />
+            <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.png" />
+            <img alt="МТБанк" src="/media/clients/mtbank.png" />
+            <img alt="ПВТ Беларусь" src="/media/clients/htp.png" />
+            <img alt="Space" src="/media/clients/space.png" />
           </div>
         </div>
 
