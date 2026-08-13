@@ -4014,8 +4014,6 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 .pf-hero-logos img {
   width: auto;
   height: 34px;
-  filter: grayscale(1) brightness(1.35) contrast(.72);
-  opacity: .75;
 }
 /* у МТбанка и Space в png много прозрачных полей — бокс выше, знак тот же */
 .pf-hero-logos img:nth-child(2) { height: 48px; }
