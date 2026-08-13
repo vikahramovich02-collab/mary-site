@@ -158,21 +158,22 @@ export function PlatformLanding() {
         <IntegrationsMarquee />
       </section>
 
-      <section className="custom-section custom-faq" id="faq">
+      <section className="custom-section pf-faq" id="faq">
         <SectionIntro title="Коротко о платформе" />
-        <div className="custom-faq-chat">
-          <div className="custom-chat-message is-mary"><small>Mary</small><p>Расскажу, что за платформа и как она собирает систему под вашу компанию.</p></div>
-          <ol className="custom-faq-options" aria-label="Вопросы">
-            {faqs.map(([q], i) => (
-              <li key={q}><button type="button" onClick={() => setActiveFaq(i)}><span>{i + 1}</span>{q}</button></li>
-            ))}
-          </ol>
-          {activeFaq !== null && (
-            <div className="custom-chat-thread" aria-live="polite">
-              <div className="custom-chat-message is-user"><p>{faqs[activeFaq][0]}</p></div>
-              <div className="custom-chat-message is-mary"><small>Mary</small><p>{faqs[activeFaq][1]}</p></div>
+        <div className="pf-faq-list">
+          {faqs.map(([question, answer], i) => (
+            <div className={`pf-faq-item ${activeFaq === i ? "is-open" : ""}`} key={question}>
+              <button
+                aria-expanded={activeFaq === i}
+                onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                type="button"
+              >
+                {question}
+                <ChevronDown size={20} aria-hidden="true" />
+              </button>
+              {activeFaq === i && <p>{answer}</p>}
             </div>
-          )}
+          ))}
         </div>
       </section>
 

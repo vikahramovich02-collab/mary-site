@@ -4362,3 +4362,52 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 }
 .jobs-page .page-empty { flex: 1; min-height: 0; }
 .jobs-page .blog-cta { margin-top: 0; }
+
+/* ===== FAQ обычной гармошкой ===== */
+.pf-faq-list { border-top: 1px solid var(--custom-line); }
+.pf-faq-item { border-bottom: 1px solid var(--custom-line); }
+.pf-faq-item button {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 26px 0;
+  border: 0;
+  background: none;
+  color: #151617;
+  font: inherit;
+  font-size: clamp(17px, 1.5vw, 20px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  text-align: left;
+  cursor: pointer;
+}
+.pf-faq-item button svg { flex: 0 0 20px; color: #a4a4ac; transition: transform 240ms ease; }
+.pf-faq-item.is-open button svg { transform: rotate(180deg); }
+.pf-faq-item p {
+  max-width: 78ch;
+  margin: 0;
+  padding: 0 0 28px;
+  color: var(--custom-muted);
+  font-size: 16px;
+  line-height: 1.65;
+  animation: pf-faq-in 260ms ease both;
+}
+@keyframes pf-faq-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .pf-faq-item p { animation: none; } }
+
+/* ===== Переключатели: серая дорожка, активный — белая пилюля ===== */
+.blog-tabs {
+  gap: 0;
+  padding: 4px;
+  border: 0;
+  background: #ededed;
+}
+.blog-tabs button { color: #a7a7a7; }
+.blog-tabs button:hover { color: #6f6f6f; }
+.blog-tabs button.is-active {
+  background: #fff;
+  color: #151617;
+  box-shadow: 0 1px 3px rgba(21, 22, 23, .08);
+}
