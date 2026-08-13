@@ -27,6 +27,7 @@ const nodes = [
   { id: "fix", x: 1014, y: 1072, w: 158, h: 103, kind: "human", tag: "Сотрудник", title: "Решить ошибку записи", meta: "Виктория В." },
   { id: "check", x: 1435, y: 917, w: 158, h: 103, kind: "human", tag: "Сотрудник", title: "Проверить запись", meta: "Виктория В." },
   { id: "confirm", x: 783, y: 917, w: 158, h: 118, kind: "mary", tag: "Задача", title: "Отправить подтверждение клиенту", meta: "Mary" },
+  { id: "note", x: 391, y: 781, w: 160, h: 54, kind: "note", title: "Передать в другой процесс", meta: "Собрать с Mary" },
 ];
 
 const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
@@ -44,22 +45,24 @@ const edges = [
   { from: ["status", right], to: ["known", left] },
   { from: ["known", right], to: ["service", left], label: "Постоянный клиент" },
   { from: ["known", right], to: ["collect", left], label: "Первичный клиент" },
-  { from: ["collect", right], to: ["exactTime", left] },
+  { from: ["collect", top], to: ["service", bottom] },
   { from: ["service", right], to: ["exactTime", left] },
   { from: ["exactTime", right], to: ["checkDate", left], label: "Да" },
   { from: ["exactTime", right], to: ["findSlot", left], label: "Нет" },
   { from: ["checkDate", right], to: ["hasSlot", left] },
   { from: ["findSlot", right], to: ["hasSlot", left] },
   { from: ["hasSlot", bottom], to: ["human1", top], label: "Нет" },
-  { from: ["hasSlot", right], to: ["offer", top], label: "Да" },
   { from: ["human1", bottom], to: ["offer", top] },
+  { from: ["hasSlot", right], to: ["offer", top], label: "Да" },
   { from: ["offer", left], to: ["confirmed", right] },
   { from: ["confirmed", left], to: ["changes", right], label: "Нет" },
-  { from: ["confirmed", bottom], to: ["create", right], label: "Да" },
+  { from: ["changes", left], to: ["service", bottom] },
+  { from: ["confirmed", bottom], to: ["check", right], label: "Да" },
+  { from: ["check", left], to: ["create", right] },
   { from: ["create", left], to: ["created", right] },
+  { from: ["created", left], to: ["confirm", right], label: "Да" },
   { from: ["created", bottom], to: ["fix", top], label: "Нет" },
-  { from: ["created", left], to: ["confirm", right], label: "Готово" },
-  { from: ["create", bottom], to: ["check", top] },
+  { from: ["fix", right], to: ["create", bottom] },
 ];
 
 // Ортогональный маршрут: выходим из точки, идём коленом, входим в цель.
@@ -128,14 +131,30 @@ export function WorkflowCanvas() {
               const d = path(a, b);
               const share = i / edges.length;
               const drawn = Math.min(Math.max((progress - share * 0.86) / 0.06, 0), 1);
+              const key = `${edge.from[0]}-${edge.to[0]}-${i}`;
+              const mid = { x: a.x + (b.x - a.x) / 2, y: a.y + (b.y - a.y) / 2 };
+              const wide = edge.label && edge.label.length > 3;
               return (
-                <path
-                  className="wf-edge"
-                  d={d}
-                  key={`${edge.from[0]}-${edge.to[0]}-${i}`}
-                  pathLength={1}
-                  style={{ strokeDasharray: 1, strokeDashoffset: 1 - drawn }}
-                />
+                <g key={key}>
+                  <path
+                    className="wf-edge"
+                    d={d}
+                    pathLength={1}
+                    style={{ strokeDasharray: 1, strokeDashoffset: 1 - drawn }}
+                  />
+                  {edge.label && drawn > 0.75 && (
+                    <g className={`wf-label ${wide ? "is-wide" : ""}`}>
+                      <rect
+                        height="20"
+                        rx="10"
+                        width={wide ? 120 : 30}
+                        x={mid.x - (wide ? 60 : 15)}
+                        y={mid.y - 10}
+                      />
+                      <text x={mid.x} y={mid.y + 4}>{edge.label}</text>
+                    </g>
+                  )}
+                </g>
               );
             })}
           </svg>

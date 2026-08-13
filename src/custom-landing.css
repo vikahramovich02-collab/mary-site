@@ -4537,3 +4537,20 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 
 /* статьи и документы — та же колонка */
 .article { max-width: var(--content-narrow); }
+
+/* подписи на связях: тёмная пилюля для да/нет, светлая для длинных */
+.wf-label rect { fill: #262633; }
+.wf-label text {
+  fill: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  text-anchor: middle;
+}
+.wf-label.is-wide rect { fill: #f2f2f4; }
+.wf-label.is-wide text { fill: #5f6570; }
+.wf-node.is-note {
+  border-top: 1px solid #ececee;
+  background: #f6f6f7;
+  box-shadow: none;
+}
+.wf-node.is-note strong { color: #5f6570; }
