@@ -3765,7 +3765,15 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
 }
 
 /* ===== Секция экранов на чёрном ===== */
-.pf-screens-section { background: #000 !important; isolation: isolate; }
+.pf-screens-section {
+  background: #000 !important;
+  isolation: isolate;
+  /* секция заезжает внахлёст на предыдущий белый блок и перекрывает его */
+  z-index: 6;
+  margin-top: -16svh;
+  border-radius: 28px 28px 0 0;
+  overflow: hidden;
+}
 .pf-screens-field {
   position: absolute;
   z-index: 0;
