@@ -4708,3 +4708,233 @@ a.mary-nichecard:hover { transform: translateY(-3px); box-shadow: 0 18px 46px rg
   .ns-shot { aspect-ratio: 3 / 4; }
 }
 @media (prefers-reduced-motion: reduce) { .ns-list p { animation: none; } }
+
+/* ===== Тарифы: светлая версия структуры из референса ===== */
+.pricing-page { padding-bottom: 80px; }
+.pr-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px 24px 56px;
+  text-align: center;
+}
+.pr-hero h1 {
+  max-width: 14ch;
+  margin: 0;
+  color: #151617;
+  font-size: clamp(44px, 5.6vw, 80px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.pr-hero > p {
+  max-width: 58ch;
+  margin: 22px 0 0;
+  color: var(--custom-muted);
+  font-size: 17px;
+  line-height: 1.55;
+}
+.pr-switch {
+  display: flex;
+  gap: 4px;
+  margin-top: 34px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #ededed;
+}
+.pr-switch button {
+  height: 40px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #8b8b93;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+.pr-switch button.is-active { background: #fff; color: #151617; }
+.pr-save { margin: 18px 0 0; color: var(--custom-muted); font-size: 15px; }
+.pr-save b { color: #151617; font-weight: 500; }
+
+/* карточки тарифов */
+.pr-plans {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: min(100%, 1000px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.pr-plan {
+  padding: 32px;
+  border: 1px solid #ececee;
+  border-radius: 28px;
+  background: #fff;
+}
+.pr-plan.is-dark { border-color: transparent; background: #f6f6f7; }
+.pr-plan h2 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0;
+  color: #151617;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.pr-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #151617;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+.pr-audience { margin: 8px 0 0; color: var(--custom-muted); font-size: 15px; }
+.pr-price { display: flex; gap: 12px; align-items: baseline; margin-top: 28px; }
+.pr-price strong { color: #151617; font-size: 46px; font-weight: 600; letter-spacing: -.04em; }
+.pr-price small { color: var(--custom-muted); font-size: 13px; line-height: 1.3; }
+.pr-price.is-empty strong { color: #a4a4ac; font-size: 22px; font-weight: 500; letter-spacing: -.02em; }
+.pr-cta { width: 100%; height: 50px; margin-top: 26px; }
+.pr-features { margin: 26px 0 0; padding: 0; list-style: none; }
+.pr-features li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0;
+  color: #151617;
+  font-size: 15px;
+}
+.pr-features li svg { flex: 0 0 18px; color: #8b8b93; }
+
+/* два тонких блока под карточками */
+.pr-extras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  width: min(100%, 1000px);
+  margin: 0 auto;
+  padding: 72px 24px 0;
+  text-align: center;
+}
+.pr-extra svg { color: #151617; }
+.pr-extra h3 { margin: 12px 0 0; color: #151617; font-size: 20px; font-weight: 600; letter-spacing: -.03em; }
+.pr-extra p { max-width: 42ch; margin: 8px auto 0; color: var(--custom-muted); font-size: 15px; line-height: 1.55; }
+.pr-extra a { display: inline-block; margin-top: 12px; color: #151617; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
+
+/* клиенты */
+.pr-clients { padding: 96px 24px 0; text-align: center; }
+.pr-clients h2 {
+  max-width: 18ch;
+  margin: 0 auto;
+  color: #151617;
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+.pr-clients .pf-hero-logos { position: static; justify-content: center; margin-top: 44px; }
+
+/* дополнительный контур */
+.pr-addon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+  width: min(100%, 1160px);
+  margin: 0 auto;
+  padding: 110px 24px 0;
+}
+.pr-tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid #ececee;
+  border-radius: 999px;
+  color: var(--custom-muted);
+  font-size: 13px;
+}
+.pr-addon-copy h2 {
+  margin: 18px 0 0;
+  color: #151617;
+  font-size: clamp(32px, 3.6vw, 44px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+}
+.pr-addon-copy p { max-width: 48ch; margin: 18px 0 0; color: var(--custom-muted); font-size: 16px; line-height: 1.6; }
+.pr-addon-copy .pf-btn { margin-top: 26px; }
+.pr-addon-copy small { display: block; margin-top: 18px; color: #a4a4ac; font-size: 13px; }
+.pr-addon-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.pr-addon-tile {
+  display: grid;
+  gap: 12px;
+  place-items: center;
+  padding: 26px 12px;
+  border: 1px solid #ececee;
+  border-radius: 22px;
+}
+.pr-addon-tile img { width: 40px; height: 40px; object-fit: contain; }
+.pr-addon-tile span { color: var(--custom-muted); font-size: 14px; }
+
+/* таблица сравнения */
+.pr-compare { width: min(100%, 1160px); margin: 0 auto; padding: 120px 24px 0; }
+.pr-compare-head,
+.pr-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(120px, .7fr));
+  gap: 24px;
+  align-items: center;
+}
+.pr-compare-head { align-items: start; padding-bottom: 40px; }
+.pr-compare-head h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: #151617;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+}
+.pr-col strong {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #151617;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.pr-col span { display: block; margin-top: 6px; color: var(--custom-muted); font-size: 14px; }
+.pr-col .pf-btn { margin-top: 14px; }
+.pr-group h3 {
+  margin: 44px 0 12px;
+  color: #151617;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.pr-row { padding: 16px 0; border-bottom: 1px solid #ececee; }
+.pr-row-label { color: #151617; font-size: 15px; }
+.pr-cell { color: var(--custom-muted); font-size: 15px; }
+.pr-cell svg { color: #151617; }
+.pr-cell svg.is-off { color: #cfcfd4; }
+
+.pricing-page .pf-faq { margin-top: 80px; }
+.pr-more { margin: 34px auto 0; color: var(--custom-muted); font-size: 15px; text-align: center; }
+.pr-more a { color: #151617; text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 900px) {
+  .pr-plans,
+  .pr-extras,
+  .pr-addon { grid-template-columns: 1fr; }
+  .pr-addon { gap: 34px; padding-top: 72px; }
+  .pr-compare { padding-top: 72px; }
+  .pr-compare-head { grid-template-columns: 1fr; gap: 20px; }
+  .pr-compare-head .pr-col { display: none; }
+  .pr-row { grid-template-columns: 1fr auto auto; gap: 14px; }
+}

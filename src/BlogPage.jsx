@@ -78,6 +78,8 @@ export function BlogPage() {
         <nav className="pf-nav" aria-label="Навигация">
           <a href="/?page=blog"><img alt="" src={navDot} />Блог</a>
           <a href="/?page=jobs"><img alt="" src={navDot} />Вакансии</a>
+          <a href="/?page=pricing"><img alt="" src={navDot} />Тарифы</a>
+          <a href="/?page=contacts"><img alt="" src={navDot} />Контакты</a>
           <div className="mary-dd">
             <button type="button" onClick={() => setCompanies((v) => !v)} aria-expanded={companies}>
               <img alt="" src={navDot} />
