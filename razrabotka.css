@@ -1011,6 +1011,8 @@
   /* ── общая шапка секции ─────────────────────────────────── */
 
   #main section { padding: clamp(64px, 11vh, 130px) 0; }
+  /* «Расскажите задачу» должен идти прямо под FAQ */
+  #main section:last-of-type { padding-bottom: clamp(24px, 4vh, 40px); }
 
   .sec__head {
     display: grid;
@@ -2378,7 +2380,7 @@
     justify-content: space-between;
     isolation: isolate;
     min-height: 100svh;
-    padding-top: clamp(80px, 14vh, 150px);
+    padding-top: 0;
     overflow: hidden;
   }
 
@@ -2527,7 +2529,7 @@
     padding-bottom: clamp(20px, 3.4vh, 32px);
   }
 
-  .foot__row-cell.is-mid { text-align: center; }
+  .foot__row-cell.is-mid { text-align: left; }
 
   .foot__row-cell {
     margin: 0;
