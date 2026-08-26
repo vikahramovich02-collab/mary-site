@@ -551,32 +551,45 @@
 
 <div class="drawer" data-drawer hidden>
   <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
-    <button class="drawer__close" type="button" aria-label="Закрыть">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
-    </button>
+    <div class="drawer__head">
+      <p class="drawer__label">(заявка на проект)</p>
+      <button class="drawer__close" type="button">Закрыть</button>
+    </div>
 
-    <p class="sec__mark drawer__mark"><i></i>Заявка</p>
-    <h2 class="drawer__title" id="drawer-title">Расскажите задачу —<br />ответим в течение дня</h2>
+    <p class="drawer__intro" id="drawer-title">Чтобы начать, расскажите немного о задаче — так мы поймём, подходим ли друг другу. Разберём детали и вернёмся с ответом в течение рабочего дня.</p>
 
-    <form class="dev-form drawer__form" data-dev-form>
-      <div class="dev-form__row">
-        <label>Имя
-          <input name="name" type="text" placeholder="Как к вам обращаться" required autocomplete="name" />
-        </label>
-        <label>Телефон или телеграм
-          <input name="contact" type="text" placeholder="+375 29 000-00-00" required />
-        </label>
+    <form class="drawer__form" data-dev-form>
+      <div class="drawer__section">
+        <span>Ваши данные</span>
+        <span>(01/02)</span>
       </div>
 
-      <label class="dev-form__task">Что нужно сделать
+      <label class="drawer__field">Имя <i>*</i>
+        <input name="name" type="text" placeholder="Как к вам обращаться" required autocomplete="name" />
+      </label>
+      <label class="drawer__field">Телефон или телеграм <i>*</i>
+        <input name="contact" type="text" placeholder="+375 29 000-00-00" required />
+      </label>
+      <label class="drawer__field">Компания
+        <input name="company" type="text" placeholder="Необязательно" />
+      </label>
+
+      <div class="drawer__section">
+        <span>Задача</span>
+        <span>(02/02)</span>
+      </div>
+
+      <label class="drawer__field">Что нужно сделать
         <textarea name="task" rows="4" placeholder="Сайт, автоматизация, интеграция — своими словами, как есть"></textarea>
       </label>
 
-      <button class="btn" type="submit">Отправить заявку</button>
-      <p class="dev-form__terms">Нажимая кнопку, вы соглашаетесь с <a href="/mary-site/privacy.html">политикой обработки данных</a></p>
+      <div class="drawer__foot">
+        <p class="drawer__terms">Нажимая кнопку, вы соглашаетесь с <a href="/mary-site/privacy.html">политикой обработки данных</a></p>
+        <button class="drawer__submit" type="submit">Отправить →</button>
+      </div>
     </form>
 
-    <div class="dev-form__done drawer__done" role="status" hidden>
+    <div class="drawer__done" role="status" hidden>
       <b>Заявка отправлена</b>
       <p>Свяжемся в течение рабочего дня — по тому контакту, который вы оставили.</p>
     </div>
