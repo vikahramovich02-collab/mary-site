@@ -559,28 +559,39 @@
     <p class="drawer__intro" id="drawer-title">Чтобы начать, расскажите немного о задаче — так мы поймём, подходим ли друг другу. Разберём детали и вернёмся с ответом в течение рабочего дня.</p>
 
     <form class="drawer__form" data-dev-form>
-      <div class="drawer__section">
-        <span>Ваши данные</span>
-        <span>(01/02)</span>
-      </div>
-
-      <label class="drawer__field">Имя <i>*</i>
-        <input name="name" type="text" placeholder="Как к вам обращаться" required autocomplete="name" />
-      </label>
-      <label class="drawer__field">Телефон или телеграм <i>*</i>
-        <input name="contact" type="text" placeholder="+375 29 000-00-00" required />
-      </label>
-      <label class="drawer__field">Компания
-        <input name="company" type="text" placeholder="Необязательно" />
+      <label class="drawer__q">Как вас зовут?<i>*</i>
+        <input name="name" type="text" placeholder="Анна Иванова" required autocomplete="name" />
       </label>
 
-      <div class="drawer__section">
-        <span>Задача</span>
-        <span>(02/02)</span>
-      </div>
+      <label class="drawer__q">Как с вами связаться?<i>*</i>
+        <input name="contact" type="text" placeholder="+375 29 000-00-00 или @telegram" required />
+      </label>
 
-      <label class="drawer__field">Что нужно сделать
-        <textarea name="task" rows="4" placeholder="Сайт, автоматизация, интеграция — своими словами, как есть"></textarea>
+      <label class="drawer__q">Как называется компания?
+        <input name="company" type="text" placeholder="Фабрика Фотокниги" />
+      </label>
+
+      <fieldset class="drawer__q drawer__choice">
+        <legend>Что нужно сделать?<i>*</i><span>Можно выбрать несколько.</span></legend>
+        <label><input type="checkbox" name="service" value="Сайт или веб-сервис" /><span>Сайт или веб-сервис</span></label>
+        <label><input type="checkbox" name="service" value="Автоматизация процессов" /><span>Автоматизация процессов</span></label>
+        <label><input type="checkbox" name="service" value="ИИ-агент или чат-бот" /><span>ИИ-агент или чат-бот</span></label>
+        <label><input type="checkbox" name="service" value="Интеграция систем" /><span>Интеграция систем</span></label>
+        <label><input type="checkbox" name="service" value="Внутренний сервис" /><span>Внутренний сервис</span></label>
+        <label><input type="checkbox" name="service" value="Доработка чужого кода" /><span>Доработка чужого кода</span></label>
+      </fieldset>
+
+      <fieldset class="drawer__q drawer__choice">
+        <legend>Какой бюджет?<span>Чтобы сразу понимать, в одной ли мы лиге.</span></legend>
+        <label><input type="radio" name="budget" value="до 3 000 $" /><span>до 3 000 $</span></label>
+        <label><input type="radio" name="budget" value="3 000 – 7 000 $" /><span>3 000 – 7 000 $</span></label>
+        <label><input type="radio" name="budget" value="7 000 – 15 000 $" /><span>7 000 – 15 000 $</span></label>
+        <label><input type="radio" name="budget" value="15 000 $ и больше" /><span>15 000 $ и больше</span></label>
+        <label><input type="radio" name="budget" value="пока не знаю" /><span>Пока не знаю</span></label>
+      </fieldset>
+
+      <label class="drawer__q">Расскажите о задаче
+        <textarea name="task" rows="4" placeholder="Добрый день, нам нужно…"></textarea>
       </label>
 
       <div class="drawer__foot">
