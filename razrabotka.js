@@ -181,7 +181,6 @@
     function frame(now) {
       var t = now * 0.001;
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#4E8CFF";                     // --accent
       var half = STEP / 2;
 
       for (var c = 0; c < cols; c++) {
@@ -196,7 +195,13 @@
           var k = 1 - d * d;                         // 1 на гребне → 0 у края
           var rad = half * k * 0.95;
           if (rad < 0.3) continue;
-          ctx.globalAlpha = 0.35 + k * 0.65;
+          // примесь: у края глубокий синий, к гребню — голубой, на самом
+          // гребне подмешивается белый (как блик на референсе)
+          var g = 90 + k * 60;                      // 90 → 150 (--accent 140)
+          var rr = 30 + k * 60;                     // 30 → 90  (--accent 78)
+          var bb = 200 + k * 55;                    // 200 → 255
+          ctx.fillStyle = "rgb(" + (rr | 0) + "," + (g | 0) + "," + (bb | 0) + ")";
+          ctx.globalAlpha = 0.45 + k * 0.55;
           ctx.beginPath();
           ctx.arc(x, y, rad, 0, Math.PI * 2);
           ctx.fill();

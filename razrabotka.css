@@ -2535,11 +2535,15 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--ink);
+    /* серый, как в шапке главной: знак белый, гасим целиком */
+    color: var(--soft);
+    opacity: .78;
+    transition: opacity .18s ease;
     font: 500 16px/1 var(--font);
     text-decoration: none;
   }
 
+  .foot__stripe-mark:hover { opacity: 1; }
   .foot__stripe-mark img { width: 22px; height: 22px; }
 
   .foot__stripe-line {
