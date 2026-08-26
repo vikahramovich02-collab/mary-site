@@ -2473,7 +2473,12 @@
       grid-template-columns: minmax(0, 1fr) min(62%, 760px);
       align-items: start;
     }
-    .foot__top .sec__mark { grid-column: 1; grid-row: 1; margin: 14px 0 0; }
+    /* метка — у края экрана, как «Навигация» ниже; заголовок остаётся
+       в .wrap на линии вопросов FAQ. Отступ .wrap компенсируем сдвигом. */
+    .foot__top .sec__mark {
+      grid-column: 1; grid-row: 1; margin: 14px 0 0;
+      transform: translateX(calc(-1 * max(0px, (100vw - 1440px) / 2)));
+    }
     .foot__head { grid-column: 2; grid-row: 1; }
   }
 
