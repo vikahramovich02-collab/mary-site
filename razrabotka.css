@@ -2398,11 +2398,12 @@
   .foot__nav { display: flex; flex-direction: column; }
 
   .foot__nav a {
-    padding: clamp(12px, 2vh, 20px) 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
     color: var(--ink);
-    font: 500 clamp(32px, 4.2vw, 56px)/1 var(--font);
-    letter-spacing: -.035em;
+    /* тот же кегль, что у «Telegram ↗» в соседнем столбце */
+    font: 500 clamp(18px, 1.6vw, 22px)/1.2 var(--font);
+    letter-spacing: -.02em;
     text-decoration: none;
     transition: opacity .18s ease;
   }
