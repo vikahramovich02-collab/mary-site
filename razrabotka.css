@@ -2460,6 +2460,11 @@
     padding: 0 0 clamp(56px, 10vh, 130px);
   }
 
+  /* Заголовок стоит на той же правой линии, что вопросы FAQ выше. */
+  @media (min-width: 901px) {
+    .foot__head { width: min(62%, 760px); margin-left: auto; }
+  }
+
   .foot__head h2 {
     margin: 0;
     max-width: 18ch;
