@@ -2513,14 +2513,14 @@
 
   /* Строка перед волной: реквизиты, «наверх», копирайт — три колонки,
      текст мелкий и белый, как в референсе. */
+  /* К самым краям экрана, вне .wrap — реквизиты слева, «наверх» справа. */
   .foot__row {
     position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 24px;
-    padding-top: clamp(40px, 7vh, 90px);
-    padding-bottom: clamp(20px, 3.4vh, 32px);
+    padding: clamp(40px, 7vh, 90px) clamp(20px, 3.5vw, 50px) clamp(20px, 3.4vh, 32px);
   }
 
   .foot__row-cell {
