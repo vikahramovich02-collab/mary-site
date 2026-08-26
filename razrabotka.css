@@ -2401,20 +2401,24 @@
      разделителями, справа два столбца с подписями в скобках. */
   /* Навигация слева; «(реквизиты)» начинаются на той же правой линии, что
      вопросы FAQ и заголовок выше; «(связь)» — во второй половине. */
-  .foot__grid {
-    position: relative;
-    display: grid;
-    /* правая пара колонок вместе = min(62%, 760px), как линия FAQ */
-    grid-template-columns: minmax(0, 1fr) min(62%, 760px);
-    align-items: start;
-    column-gap: 0;
-  }
+  /* Навигация — у края экрана; реквизиты и связь — в .wrap, на той же
+     правой линии, что вопросы FAQ и заголовок выше. */
+  .foot__grid { position: relative; }
 
-  /* правая половина делится на реквизиты и связь */
+  .foot__navcol { position: absolute; top: 0; left: 0; }
+
+  /* Та же сетка, что у FAQ: слева пусто (там навигация), справа
+     min(62%, 760px). Внутри правой части — реквизиты и связь пополам. */
   .foot__right {
     display: grid;
+    grid-template-columns: minmax(0, 1fr) min(62%, 760px);
+  }
+
+  .foot__right > .foot__col:first-child {
+    grid-column: 2;
+    display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(24px, 4vw, 64px);
+    column-gap: clamp(24px, 4vw, 64px);
   }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(36px, 6vh, 72px); }
