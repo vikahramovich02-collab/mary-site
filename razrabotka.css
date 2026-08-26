@@ -2506,12 +2506,15 @@
     .foot__label { margin-bottom: 20px; }
   }
 
-  /* Шапка уезжает вверх, когда в экран входит футер (класс ставит js). */
-  .nav-bar { transition: transform .45s cubic-bezier(.32, .72, .3, 1); }
-  .nav-bar.is-away { transform: translateY(-140%); pointer-events: none; }
+  /* Шапка и бегущая строка уезжают вверх, когда в экран входит футер
+     (класс ставит js). */
+  .nav-bar,
+  .topbar { transition: transform .45s cubic-bezier(.32, .72, .3, 1); }
+  .nav-bar.is-away,
+  .topbar.is-away { transform: translateY(-140%); pointer-events: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    .nav-bar { transition: none; }
+    .nav-bar, .topbar { transition: none; }
   }
 
   /* ── полоса внизу футера: тёмная, по ней плывёт голубая волна

@@ -229,12 +229,12 @@
   // Шапка прячется, пока в экране футер: там она лишняя, и блендинг
   // поверх волны выглядел бы грязно.
   (function () {
-    var bar = document.querySelector(".nav-bar");
+    var bars = document.querySelectorAll(".nav-bar, .topbar");
     var foot = document.querySelector(".foot");
-    if (!bar || !foot || !window.IntersectionObserver) return;
+    if (!bars.length || !foot || !window.IntersectionObserver) return;
 
     new IntersectionObserver(function (e) {
-      bar.classList.toggle("is-away", e[0].isIntersecting);
+      bars.forEach(function (b) { b.classList.toggle("is-away", e[0].isIntersecting); });
     }, { threshold: 0, rootMargin: "-10% 0px 0px 0px" }).observe(foot);
   })();
 
