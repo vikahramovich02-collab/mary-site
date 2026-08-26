@@ -20,6 +20,16 @@ npx vite build --base="$BASE"
 # любому «`/» нельзя, под раздачу попадают куски регулярок вроде `/$`.
 perl -pi -e 's{`/(?=media/|\?page=|#|blog/|platform|beauty|custom|onboarding|contacts|pricing|clients|cases)}{`'"$BASE"'}g; s{`/`}{`'"$BASE"'`}g' dist/client/assets/*.js
 
+# Хэш в имени файла vite считает до нашей правки, поэтому после неё имя бы не
+# изменилось — и CDN Pages продолжил бы отдавать старый бандл. Переименовываем
+# сами и правим ссылку в index.html.
+for js in dist/client/assets/*.js; do
+  sum="$(md5 -q "$js" | cut -c1-8)"
+  new="$(dirname "$js")/$(basename "$js" .js)-$sum.js"
+  mv "$js" "$new"
+  perl -pi -e "s{\Q$(basename "$js")\E}{$(basename "$new")}g" dist/client/index.html
+done
+
 # Без .nojekyll Pages прячет всё, что начинается с подчёркивания.
 touch dist/client/.nojekyll
 
