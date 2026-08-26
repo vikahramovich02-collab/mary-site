@@ -357,7 +357,7 @@
     document.addEventListener("pointerleave", function () { dot.classList.remove("is-on"); });
 
     // над карточками и плашками точка вырастает в кружок с подписью
-    var BIG = ".hero__case, .flow__card, .b-case, .rows li, .post, .demo";
+    var BIG = ".hero__case, .flow__card, .b-case, .case__visual, .rows li, .post, .demo";
 
     var label = dot.querySelector("i");
 
