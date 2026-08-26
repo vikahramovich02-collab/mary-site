@@ -2620,17 +2620,18 @@
     padding-bottom: 16px;
   }
 
+  /* Тот же текст, что в строке над волной: белый, 14px, без разрядки. */
   .foot__bar,
   .foot__bar a {
-    color: var(--faint);
-    font: 500 11px/1 var(--font);
-    letter-spacing: .04em;
+    color: var(--ink);
+    font: 500 14px/1.4 var(--font);
+    letter-spacing: -.01em;
     text-decoration: none;
   }
 
   .foot__bar-links { display: flex; gap: 24px; }
-  .foot__bar a { transition: color .18s ease; }
-  .foot__bar a:hover { color: var(--ink); }
+  .foot__bar a { transition: opacity .18s ease; }
+  .foot__bar a:hover { opacity: .6; }
 
   @media (max-width: 640px) {
     .foot__bar-row { flex-direction: column; align-items: flex-start; gap: 10px; }
