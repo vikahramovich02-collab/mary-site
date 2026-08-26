@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href="https://maryrose.by/case-photoprint.html" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maryrose.by/case-photoprint.html" />
+<meta property="og:title" content="Кейс «ФФ»" />
+<meta property="og:description" content="Аудит CRM и первый цикл автоматизации «ФФ» с Mary." />
+<meta property="og:image" content="https://maryrose.by/media/case/deco.webp" />
+<meta property="og:site_name" content="Mary" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Кейс «ФФ»" />
+<meta name="twitter:description" content="Аудит CRM и первый цикл автоматизации «ФФ» с Mary." />
+<meta name="twitter:image" content="https://maryrose.by/media/case/deco.webp" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"От 7 490 ручных задач — к ответу за минуту","description":"Аудит CRM «ФФ» и первый цикл автоматизации с Mary.","datePublished":"2026-08-24","author":{"@type":"Organization","name":"Mary"},"publisher":{"@type":"Organization","name":"Mary","logo":{"@type":"ImageObject","url":"https://maryrose.by/favicon-512.png"}},"mainEntityOfPage":"https://maryrose.by/case-photoprint.html"}</script>
+<link rel="icon" href="/mary-site/favicon.ico" sizes="any" />
+<link rel="icon" href="/mary-site/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/mary-site/favicon-512.png" type="image/png" sizes="512x512" />
+<link rel="icon" href="/mary-site/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/mary-site/apple-touch-icon.png" />
+<title>Кейс «ФФ»</title>
+<meta name="description" content="Аудит CRM и первый цикл автоматизации «ФФ» с Mary." />
+<style>
+  /* Страница оферты. Собрана отдельной статикой, поэтому шапка и футер
+     повторены разметкой — числа и цвета те же, что в блоках лендинга. */
+
+  :root {
+    --page: #F4F4F5;
+    --soft-bg: #FAFAFA;
+    --card: #FFF;
+    --ink: #151617;
+    --heading: #323538;
+    --secondary: #494F5C;
+    --tertiary: #6F6F6F;
+    --line: #E7E7E9;
+    --soft: #F0F0F0;
+    --radius-sheet: 40px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "SF Pro", "Inter Variable", "Inter", "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; background: var(--card); }
+
+  body {
+    margin: 0;
+    color: var(--secondary);
+    background: var(--card);
+    font: 400 16px/1.6 var(--font);
+    /* На лендинге это стоит в base.css. Без него тот же вес 500 в шапке
+       рендерится subpixel-ом и выглядит заметно жирнее. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: var(--ink); }
+
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 50px); }
+
+  /* ── шапка ─────────────────────────────────────────────── */
+
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-height: 76px;
+  }
+
+  .nav__links { display: flex; gap: 28px; justify-self: start; }
+  .nav__actions { display: flex; align-items: center; gap: 28px; justify-self: end; }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    justify-self: center;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav__brand span { font-weight: 600; font-size: 19.4px; line-height: 1; letter-spacing: -.09em; }
+  .nav__brand img { width: 20px; height: 20px; }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--heading);
+    font: 500 14px/1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+    transition: opacity .18s ease;
+  }
+
+  .nav__link:hover { opacity: .6; }
+
+  .nav__button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 40px;
+    color: var(--tertiary);
+    background: var(--soft);
+    font: 600 12px/1 var(--font);
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .18s ease;
+  }
+
+  .nav__button:hover { background: var(--line); }
+  .nav__button img { width: 16px; height: 16px; }
+
+  @media (max-width: 1080px) {
+    .nav { grid-template-columns: auto 1fr; }
+    .nav__links, .nav__actions .nav__link { display: none; }
+    .nav__brand { justify-self: start; }
+  }
+
+  /* ── текст оферты ──────────────────────────────────────── */
+
+  .doc {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(32px, 6vh, 64px) 0 clamp(64px, 12vh, 120px);
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -.03em;
+  }
+
+  .updated { margin-top: 14px; color: var(--tertiary); font-size: 15px; }
+
+  .lead { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+
+  h2 {
+    margin: 52px 0 18px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    scroll-margin-top: 24px;
+  }
+
+  h3 { margin: 32px 0 12px; color: var(--heading); font-weight: 500; font-size: 17px; }
+
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  b, strong { color: var(--heading); font-weight: 500; }
+
+  .toc {
+    margin-top: 36px;
+    padding: 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .toc h2 { margin: 0 0 14px; font-size: 15px; color: var(--tertiary); font-weight: 400; }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  .toc li { margin-bottom: 7px; }
+  .toc a { color: var(--secondary); text-decoration: none; }
+  .toc a:hover { color: var(--ink); text-decoration: underline; }
+
+  @media (max-width: 620px) { .toc ol { columns: 1; } }
+
+  .todo {
+    margin: 28px 0;
+    padding: 18px 22px;
+    border-left: 3px solid #0064FF;
+    border-radius: 14px;
+    background: #EEF4FF;
+    color: var(--heading);
+    font-size: 15px;
+  }
+
+  .todo b { color: #0050CC; }
+
+  mark {
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: #DEE9FF;
+    color: #0050CC;
+    font-weight: 500;
+  }
+
+  .req { margin-top: 8px; color: var(--heading); }
+  .req span { display: block; }
+
+
+  /* ── страница кейса ────────────────────────────────────── */
+
+  /* Отступы держит сама статья. Без них верхний отступ блока с призывом
+     «схлопывается» наружу, контейнер оказывается короче содержимого,
+     и футер наезжает на карточку. */
+  .case {
+    padding: clamp(24px, 4vh, 40px) 0 clamp(64px, 12vh, 120px);
+  }
+
+  .crumbs {
+    margin: clamp(28px, 5vh, 48px) 0 0;
+    color: var(--tertiary);
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .crumbs a { color: inherit; text-decoration: none; }
+  .crumbs a:hover { color: var(--ink); }
+
+  .case-h1 {
+    /* перенос задан вручную — заголовок должен читаться в две строки */
+    max-width: 24ch;
+    margin: 22px auto 0;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(34px, 5.4vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    text-align: center;
+  }
+
+  /* на узком экране ручной перенос только мешает */
+  @media (max-width: 620px) {
+    .case-h1 br { display: none; }
+    .case-h1 { max-width: 18ch; text-wrap: balance; }
+  }
+
+  .case-sub {
+    max-width: 60ch;
+    margin: 22px auto 0;
+    color: var(--secondary);
+    font-size: 17px;
+    text-align: center;
+  }
+
+  /* цифры */
+
+  .figures-label {
+    margin: clamp(40px, 6vh, 64px) auto -14px;
+    color: var(--tertiary);
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .figures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: 26px auto 0;
+    max-width: 1000px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .figures div {
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .figures div + div { border-left: 1px solid var(--line); }
+
+  .figures b {
+    display: block;
+    color: var(--ink);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1;
+    letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .figures span {
+    display: block;
+    margin-top: 12px;
+    color: var(--tertiary);
+    font-size: 15px;
+  }
+
+  @media (max-width: 700px) {
+    .figures div + div { border-left: 0; border-top: 1px solid var(--line); }
+  }
+
+  /* две колонки: текст и карточка компании */
+
+  .case-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+    gap: clamp(32px, 5vw, 72px);
+    max-width: 1100px;
+    margin: clamp(48px, 8vh, 88px) auto 0;
+  }
+
+  @media (max-width: 900px) {
+    .case-body { grid-template-columns: 1fr; }
+  }
+
+  .case-text h2 {
+    margin: 48px 0 16px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -.025em;
+  }
+
+  .case-text h2:first-child { margin-top: 0; }
+
+  .case-text h3 {
+    margin: 32px 0 10px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -.01em;
+  }
+
+  /* пункты решения — со стрелкой: список шагов, а не просто подзаголовки */
+  .case-text h3.step {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+  }
+
+  .case-text h3.step::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    background: #0064FF;
+    -webkit-mask: var(--arrow) center / contain no-repeat;
+    mask: var(--arrow) center / contain no-repeat;
+  }
+
+  :root {
+    --arrow: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5"/></svg>');
+  }
+
+  .case-text p { margin: 0 0 14px; }
+  .case-text ul { margin: 0 0 16px; padding-left: 20px; }
+  .case-text li { margin-bottom: 8px; }
+
+  blockquote {
+    margin: 26px 0;
+    padding: 2px 0 2px 22px;
+    border-left: 3px solid #0064FF;
+    color: var(--ink);
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: -.01em;
+  }
+
+  /* карточка компании справа */
+
+  .side {
+    position: sticky;
+    top: 24px;
+    padding: 26px 24px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+
+  @media (max-width: 900px) { .side { position: static; } }
+
+  .side img { width: 132px; height: auto; opacity: .9; }
+
+  .side dt {
+    margin: 22px 0 6px;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .side dd { margin: 0; color: var(--tertiary); font-size: 15px; }
+
+  /* ссылка на сайт клиента — часть карточки-справки, а не акцент:
+     спокойная серая, темнеет при наведении */
+  .side dd a {
+    color: var(--tertiary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: color .18s ease, border-color .18s ease;
+  }
+
+  .side dd a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--rule-strong, #C9CFD8);
+  }
+  .side dl { margin: 0; }
+
+  /* этапы плана */
+
+  .steps { margin: 20px 0 0; padding: 0; list-style: none; }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 4px 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .steps li:last-child { border-bottom: 1px solid var(--line); }
+
+  .steps time {
+    color: var(--tertiary);
+    font-size: 14px;
+    letter-spacing: .02em;
+  }
+
+  .steps b { color: var(--ink); font-weight: 500; }
+  .steps p { grid-column: 2; margin: 4px 0 0; font-size: 15px; }
+
+  @media (max-width: 560px) {
+    .steps li { grid-template-columns: 1fr; }
+    .steps p { grid-column: 1; }
+  }
+
+  .cta {
+    max-width: 1100px;
+    margin: clamp(56px, 9vh, 96px) auto 0;
+    padding: clamp(32px, 4vw, 48px);
+    border-radius: 30px;
+    background: #F3F7FF;
+    text-align: center;
+  }
+
+  .cta h2 {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(22px, 2.6vw, 30px);
+    letter-spacing: -.025em;
+  }
+
+  .cta p { margin: 12px auto 24px; max-width: 52ch; }
+
+  .cta a {
+    display: inline-flex;
+    align-items: center;
+    padding: 13px 22px;
+    border-radius: 40px;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+
+  /* ── график ────────────────────────────────────────────── */
+
+  .chart {
+    margin: 30px 0 26px;
+    padding: 8px 4px 0;
+    border-radius: 20px;
+    background: var(--soft-bg);
+  }
+
+  .chart figcaption {
+    padding: 18px 22px 4px;
+    color: var(--tertiary);
+    font-size: 15px;
+  }
+
+  .chart svg { display: block; width: 100%; height: auto; }
+
+  .chart line { stroke: #E2E5EA; stroke-width: 1; }
+
+  .chart .line {
+    fill: none;
+    stroke: #0064FF;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .chart circle { fill: #fff; stroke: #0064FF; stroke-width: 3; }
+
+  .chart text { font-family: var(--font); }
+
+  .chart .ax { fill: #A0A6B0; font-size: 15px; text-anchor: end; }
+  .chart .wk { fill: #8A9099; font-size: 15px; text-anchor: middle; }
+
+  .chart .val {
+    fill: var(--ink);
+    font-size: 19px;
+    font-weight: 500;
+    text-anchor: middle;
+  }
+
+  @media (max-width: 700px) {
+    .chart .ax, .chart .wk { font-size: 20px; }
+    .chart .val { font-size: 24px; }
+  }
+
+  /* ── футер ─────────────────────────────────────────────── */
+
+  .page {
+    position: relative;
+    z-index: 1;
+    border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+    background: var(--card);
+  }
+
+  /* под скруглениями — цвет футера, иначе в углах просвечивает белое */
+  .page::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--radius-sheet);
+    background: var(--soft-bg);
+  }
+
+  .foot { background: var(--soft-bg); color: var(--heading); }
+
+  .foot__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vh, 96px) clamp(20px, 3.5vw, 50px) clamp(28px, 4vh, 40px);
+  }
+
+  .foot__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .foot__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font: 500 clamp(22px, 2vw, 28px)/1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+  }
+
+  .foot__mark img { width: 32px; height: 32px; }
+
+  .foot__tagline { margin: 14px 0 0; color: var(--secondary); font-size: 16px; }
+
+  .foot__support { display: flex; flex-direction: column; gap: 12px; }
+
+  .foot__label { margin: 0; color: var(--tertiary); font: 400 14px/1.3 var(--font); }
+
+  .foot__mail {
+    color: var(--ink);
+    font: 500 clamp(26px, 3.4vw, 46px)/1.05 var(--font);
+    letter-spacing: -.035em;
+    text-decoration: none;
+  }
+
+  .foot__columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 48px);
+    margin-top: clamp(48px, 7vh, 84px);
+  }
+
+  .foot__col ul { margin: 18px 0 0; padding: 0; list-style: none; }
+  .foot__col li + li { margin-top: 12px; }
+
+  .foot__col a {
+    color: var(--ink);
+    font: 400 16px/1.35 var(--font);
+    text-decoration: none;
+  }
+
+  .foot__col a:hover { color: var(--secondary); }
+
+  .foot__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: clamp(56px, 10vh, 120px);
+    color: var(--tertiary);
+    font-size: 14px;
+  }
+
+  .foot__legal { display: flex; flex-wrap: wrap; gap: clamp(16px, 2vw, 32px); }
+  .foot__legal a { color: inherit; text-decoration: none; }
+  .foot__legal a:hover { color: var(--ink); }
+
+  @media (max-width: 860px) { .foot__columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  @media (max-width: 520px) {
+    .foot__columns { grid-template-columns: 1fr; }
+    .foot__bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="wrap">
+    <header class="nav">
+      <nav class="nav__links" aria-label="Основная навигация">
+        <a class="nav__link" href="/mary-site/blog.html">Блог</a>
+        <a class="nav__link" href="/mary-site/cases.html">Кейсы</a>
+        <a class="nav__link" href="/mary-site/#contacts">Контакты</a>
+        <a class="nav__link" href="/mary-site/#niches">Для компаний</a>
+      </nav>
+
+      <a class="nav__brand" href="/mary-site/" aria-label="Mary — на главную">
+        <img loading="lazy" decoding="async" src="/mary-site/mary-mark.svg" alt="" />
+        <span>mary</span>
+      </a>
+
+      <div class="nav__actions">
+        <a class="nav__link" href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noopener">Для инвесторов</a>
+        <a class="nav__link" href="/mary-site/#custom">Заказать разработку</a>
+        <a class="nav__button" href="/mary-site/#app">Войти в Mary<img loading="lazy" decoding="async" src="/mary-site/arrow-up-right.svg" alt="" /></a>
+      </div>
+    </header>
+  </div>
+
+  <main class="wrap">
+    <article class="case">
+
+<p class="crumbs"><a href="/mary-site/cases.html">Кейсы</a> / ФФ</p>
+
+<h1 class="case-h1">От 7 490 ручных задач —<br />к ответу за минуту</h1>
+
+<p class="case-sub">Mary подключилась к боевому Битриксу «ФФ», показала, сколько
+работы в CRM делается руками, — и забрала половину обращений на себя.</p>
+
+<p class="figures-label">Что изменилось после запуска</p>
+<div class="figures">
+  <div><b>52 %</b><span>обращений закрывается без менеджера</span></div>
+  <div><b>1 мин</b><span>среднее время ответа клиенту</span></div>
+  <div><b>~600</b><span>обращений в неделю в одном процессе</span></div>
+</div>
+
+<div class="case-body">
+  <div class="case-text">
+
+    <blockquote>«Мы не думали, что начнётся с аудита. Mary просто посмотрела нашу CRM
+    и показала цифры, которые мы сами не видели: сколько сделок висит без движения
+    и сколько раз менеджеры вручную ставят себе задачу «связаться с клиентом».
+    После этого стало понятно, с чего начинать.»</blockquote>
+
+    <h2>О компании</h2>
+    <p>«ФФ» — производитель печатной продукции: фотокниги, портфолио,
+    полиграфия под заказ. Работает через сайт fabrika-fotoknigi.com, клиенты пишут в чаты,
+    на почту и через формы. Учёт клиентов ведётся в Битрикс24, исполнение заказа —
+    в ERP и на производстве.</p>
+    <p>Внутри компании два контура: МИУ ведёт продажи и развитие клиента,
+    ЦПК разбирает вопросы по сайту, макету, браку и доставке. Для клиента это
+    один «Фотопринт» — он не выбирает отдел.</p>
+
+    <h2>Задача</h2>
+    <p>Процессы в компании были — и довольно подробные. Сложность появлялась
+    не там, где процесса нет, а на стыках: один клиент одновременно живёт
+    в продажах, поддержке и заказах, у обращения по дороге меняются ответственные,
+    а данные заказа разложены между Битриксом и ERP.</p>
+    <p>Прежде чем что-то автоматизировать, нужно было увидеть картину в цифрах.
+    Mary подключилась к рабочему Битриксу и разобрала маршрут клиента от первого
+    сообщения до повторного заказа.</p>
+
+    <h3>Что показал аудит</h3>
+    <ul>
+      <li><b>Единый вход не означает единый учёт.</b> Одинаковое сообщение в разных
+      открытых линиях настроено по-разному: где-то создаёт лид, где-то сразу открывает
+      сделку, где-то остаётся только в чате.</li>
+      <li><b>CRM накапливает мёртвые сделки.</b> 87,7% числятся «в работе», но месяцами
+      не двигаются — их никто не закрывает, потому что закрытие никто не делает руками.</li>
+      <li><b>Рутина видна в числах.</b> Задача «связаться с клиентом» поставлена вручную
+      7 490 раз. Это ровно тот тип работы, который выполняет агент.</li>
+      <li><b>Половина сделок без источника.</b> 53% не имеют отметки, откуда пришёл клиент,
+      поэтому нельзя сказать, какая реклама приносит деньги.</li>
+    </ul>
+    <p>Отдельным результатом аудита стало то, чего увидеть <em>не удалось</em>: задачи
+    и проекты, роботы, операции производства и точная оргструктура требовали
+    дополнительных доступов. Пробел в данных мы зафиксировали как пробел, а не
+    достроили догадками.</p>
+
+    <h2>Решение</h2>
+    <p>Mary строится не как ещё одна доска, а как один слой поверх существующих
+    систем — там, где сегодня теряется контекст при передаче работы дальше.</p>
+
+    <h3 class="step">Единая очередь входящих</h3>
+    <p>Чаты, почта и формы попадают в общий inbox, и каждое сообщение становится одной
+    задачей независимо от канала. Если канал или модель временно недоступны, сообщение
+    ждёт в очереди и не теряется.</p>
+
+    <h3 class="step">Mary узнаёт клиента до ответа</h3>
+    <p>По телефону, почте или username Mary ищет совпадение в базе и открывает карточку
+    с историей, заказами и прошлыми вопросами. Если совпадений несколько — просит проверку
+    и не склеивает людей наугад. Если клиента нет — заводит карточку один раз,
+    с проверкой дублей.</p>
+
+    <h3 class="step">Тема, риск и приоритет</h3>
+    <p>До первого ответа определяются тема обращения, возможный ущерб и следующий шаг.
+    Брак, потеря груза, срыв срока и резкий негатив поднимаются наверх очереди —
+    важное обращение больше не ждёт только потому, что пришло позже.</p>
+
+    <h3 class="step">Автоответы там, где есть подтверждённый источник</h3>
+    <p>Сначала Mary предлагает ответ менеджеру. Самостоятельная отправка включается
+    только для пяти–десяти согласованных сценариев и только если ответ опирается
+    на утверждённую базу знаний. Нет источника — нет уверенного автоответа:
+    вопрос уходит человеку, а пробел в базе отмечается.</p>
+
+    <h3 class="step">Сложный случай сразу у человека</h3>
+    <p>Низкая уверенность, критичный риск или нестандартное решение всегда передаются
+    специалисту — вместе с историей, заказом и предложенным шагом. Человек начинает
+    с решения, а не с раскопок переписки.</p>
+
+    <h3 class="step">Персональные данные очищаются до модели</h3>
+    <p>Перед обращением к внешней модели сообщение проходит локальные правила: телефоны,
+    документы и реквизиты маскируются внутри инфраструктуры. Качество маскирования
+    проверяется на тестовом наборе — сколько нашли, сколько скрыли лишнего и сколько
+    заняла обработка.</p>
+
+    <h2>План и результаты</h2>
+    <p>Работа разбита на четыре контрольные даты, и у каждой — результат, который
+    можно открыть и показать сотрудникам.</p>
+
+    <ol class="steps">
+      <li>
+        <time>к 1 августа</time>
+        <b>Единая очередь входящих</b>
+        <p>Поиск клиента по базе, создание новой карточки с проверкой дублей.</p>
+      </li>
+      <li>
+        <time>к 15 августа</time>
+        <b>Тема и срочность обращения</b>
+        <p>Критичное поднимается наверх и передаётся человеку вместе с контекстом.</p>
+      </li>
+      <li>
+        <time>к 31 августа</time>
+        <b>Рабочий пилот на сотрудниках</b>
+        <p>5–10 автоответов по подтверждённой базе знаний, фильтр персональных данных
+        на сервере «Фотопринта», метрики скорости и стабильности.</p>
+      </li>
+      <li>
+        <time>к 15 сентября</time>
+        <b>Владелец клиента и сегменты</b>
+        <p>Основной менеджер и сменщик, три портфеля клиентов, очередь супервайзера.</p>
+      </li>
+    </ol>
+
+    <p>К концу цикла сообщение проходит весь путь: попало в inbox, клиент найден
+    или создан, определены тема и приоритет, отправлен ответ или подключён человек.
+    Этот маршрут измеряется и повторяется — следующий объём выбирается по метрикам
+    пилота, а не по желанию расширяться.</p>
+
+    <h2>Результат</h2>
+    <p>Половина обращений — <b>52%</b> — закрывается без участия менеджера: Mary отвечает
+    сама там, где есть подтверждённый источник в базе знаний. Остальное уходит человеку
+    вместе с историей и предложенным шагом.</p>
+    <p>Среднее время ответа клиенту — <b>около минуты</b>. Раньше оно зависело от того,
+    в каком канале написал клиент и когда менеджер до него дошёл.</p>
+<figure class="chart">
+  <figcaption>Доля обращений, закрытых без менеджера, по неделям</figcaption>
+  <svg viewBox="0 0 1160 420" role="img" aria-label="Рост доли автоматических ответов с 7,5% до 51,8% за пять недель">
+    <line x1="80" y1="340.0" x2="1140" y2="340.0" />
+    <text class="ax" x="66" y="344.0">0%</text>
+    <line x1="80" y1="272.0" x2="1140" y2="272.0" />
+    <text class="ax" x="66" y="276.0">25%</text>
+    <line x1="80" y1="204.0" x2="1140" y2="204.0" />
+    <text class="ax" x="66" y="208.0">50%</text>
+    <line x1="80" y1="136.0" x2="1140" y2="136.0" />
+    <text class="ax" x="66" y="140.0">75%</text>
+    <line x1="80" y1="68.0" x2="1140" y2="68.0" />
+    <text class="ax" x="66" y="72.0">100%</text>
+    <polyline class="line" points="80.0,319.6 332.5,324.5 585.0,270.9 837.5,241.3 1090.0,199.1" />
+    <circle cx="80.0" cy="319.6" r="7" />
+    <text class="val" x="80.0" y="299.6">7,5%</text>
+    <circle cx="332.5" cy="324.5" r="7" />
+    <text class="val" x="332.5" y="304.5">5,7%</text>
+    <circle cx="585.0" cy="270.9" r="7" />
+    <text class="val" x="585.0" y="250.9">25,4%</text>
+    <circle cx="837.5" cy="241.3" r="7" />
+    <text class="val" x="837.5" y="221.3">36,3%</text>
+    <circle cx="1090.0" cy="199.1" r="7" />
+    <text class="val" x="1090.0" y="179.1">51,8%</text>
+    <text class="wk" x="80.0" y="386">13–19.07</text>
+    <text class="wk" x="332.5" y="386">20–26.07</text>
+    <text class="wk" x="585.0" y="386">27.07–02.08</text>
+    <text class="wk" x="837.5" y="386">03–09.08</text>
+    <text class="wk" x="1090.0" y="386">10–16.08</text>
+  </svg>
+</figure>
+
+    <p>Через один процесс проходит <b>порядка 600 обращений в неделю</b>. Для сравнения:
+    задача «связаться с клиентом» ставилась вручную 7 490 раз — именно этот объём рутины
+    и был первым кандидатом на автоматизацию.</p>
+
+    <h2>Что дальше</h2>
+    <p>После первого цикла Mary постепенно переходит от помощника к основному оператору:
+    сначала ведёт безопасные темы, затем выбранный портфель клиентов, потом весь
+    клиентский путь. Люди остаются на критичных решениях, контроле качества
+    и изменении правил.</p>
+
+  </div>
+
+  <aside class="side">
+    <img loading="lazy" decoding="async" src="/mary-site/media/case/logo-fabrika.webp" alt="ФФ" />
+    <dl>
+      <dt>Сайт</dt>
+      <dd><a href="https://fabrika-fotoknigi.com" target="_blank" rel="noreferrer noopener">fabrika-fotoknigi.com</a></dd>
+
+      <dt>Индустрия</dt>
+      <dd>Производство печатной продукции: фотокниги, портфолио, полиграфия</dd>
+
+      <dt>Системы</dt>
+      <dd>Битрикс24, ERP, производство, доставка</dd>
+
+      <dt>Сценарий использования</dt>
+      <dd>Аудит CRM, единая очередь входящих, распознавание клиента, классификация
+      и приоритет обращений, автоответы по базе знаний, маскирование персональных данных</dd>
+    </dl>
+  </aside>
+</div>
+
+<div class="cta">
+  <h2>Посмотреть, что найдётся в вашей CRM</h2>
+  <p>Аудит начинается с подключения к тому, что у вас уже работает.
+  Mary покажет цифры, которых не видно изнутри.</p>
+  <a href="/mary-site/#app">Обсудить аудит</a>
+</div>
+
+</article>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__top">
+      <div>
+        <a class="foot__mark" href="/mary-site/" aria-label="Наверх">
+          <img loading="lazy" decoding="async" src="/mary-site/mary-mark-full.svg" alt="" />
+          <span>Mary</span>
+        </a>
+        <p class="foot__tagline">Платформа автоматизации бизнеса.</p>
+      </div>
+
+      <div class="foot__support">
+        <span class="foot__label">Техническая поддержка</span>
+        <a class="foot__mail" href="mailto:hello@mary.team">hello@mary.team</a>
+      </div>
+    </div>
+
+    <nav class="foot__columns" aria-label="Разделы сайта">
+      <div class="foot__col">
+        <h3 class="foot__label">Продукт</h3>
+        <ul>
+          <li><a href="/mary-site/#platform">Платформа</a></li>
+          <li><a href="/mary-site/#how">Как работает</a></li>
+          <li><a href="/mary-site/#assembly">Отделы и агенты</a></li>
+          <li><a href="/mary-site/#integrations">Интеграции</a></li>
+          <li><a href="/mary-site/#screens">Экраны</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Решения</h3>
+        <ul>
+          <li><a href="/mary-site/#niches">Ниши</a></li>
+          <li><a href="/mary-site/#niches">Салоны красоты</a></li>
+          <li><a href="/mary-site/#niches">Клиники</a></li>
+          <li><a href="/mary-site/#niches">Ритейл</a></li>
+          <li><a href="/mary-site/#niches">Услуги</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Ресурсы</h3>
+        <ul>
+          <li><a href="/mary-site/blog.html">Блог</a></li>
+          <li><a href="/mary-site/#faq">Вопросы и ответы</a></li>
+          <li><a href="/mary-site/#pains">Что решает Mary</a></li>
+          <li><a href="/mary-site/#compare">Сравнение</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Компания</h3>
+        <ul>
+          <li><a href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noreferrer">Для инвесторов</a></li>
+          <li><a href="/mary-site/#contacts">Telegram-канал</a></li>
+          <li><a href="/mary-site/#contacts">Стать партнёром</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="foot__bottom">
+      <span>© Mary, 2026</span>
+      <div class="foot__legal">
+        <a href="/mary-site/privacy.html">Политика конфиденциальности</a>
+        <a href="/mary-site/terms.html">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

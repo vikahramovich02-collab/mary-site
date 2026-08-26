@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# служебное в индекс не пускаем
+Disallow: /media/docs/
+
+Sitemap: https://maryrose.by/sitemap.xml

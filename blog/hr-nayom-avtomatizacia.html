@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="canonical" href="https://maryrose.by/blog/hr-nayom-avtomatizacia.html" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://maryrose.by/blog/hr-nayom-avtomatizacia.html" />
+<meta property="og:title" content="Автоматизация салона красоты" />
+<meta property="og:description" content="Разбор по всему пути клиента салона: что реально можно снять с администратора, а что нельзя отдавать роботу." />
+<meta property="og:image" content="https://maryrose.by/media/blog/11-hiring.webp" />
+<meta property="og:site_name" content="Mary" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Автоматизация салона красоты" />
+<meta name="twitter:description" content="Разбор по всему пути клиента салона: что реально можно снять с администратора, а что нельзя отдавать роботу." />
+<meta name="twitter:image" content="https://maryrose.by/media/blog/11-hiring.webp" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Как мы наняли CTO за неделю: HR-процесс, собранный на агентах","description":"30 кандидатов, два дня созвонов и один найм. Разбор процесса по шагам: что здесь делает агент, что человек и почему отсев стоит переносить в конец.","datePublished":"2026-08-25","author":{"@type":"Person","name":"Александр Лукашевич"},"publisher":{"@type":"Organization","name":"Mary","logo":{"@type":"ImageObject","url":"https://maryrose.by/favicon-512.png"}},"mainEntityOfPage":"https://maryrose.by/blog/hr-nayom-avtomatizacia.html"}</script>
+<link rel="icon" href="/mary-site/favicon.ico" sizes="any" />
+<link rel="icon" href="/mary-site/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/mary-site/favicon-512.png" type="image/png" sizes="512x512" />
+<link rel="icon" href="/mary-site/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/mary-site/apple-touch-icon.png" />
+<title>Как мы наняли CTO за неделю</title>
+<meta name="description" content="30 кандидатов, два дня созвонов и один найм. Разбор HR-процесса по шагам: что делает агент, что остаётся человеку и почему отсев стоит переносить в конец." />
+<style>
+  /* Страница оферты. Собрана отдельной статикой, поэтому шапка и футер
+     повторены разметкой — числа и цвета те же, что в блоках лендинга. */
+
+  :root {
+    --page: #F4F4F5;
+    --soft-bg: #FAFAFA;
+    --card: #FFF;
+    --ink: #151617;
+    --heading: #323538;
+    --secondary: #494F5C;
+    --tertiary: #6F6F6F;
+    --line: #E7E7E9;
+    --soft: #F0F0F0;
+    --radius-sheet: 40px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "SF Pro", "Inter Variable", "Inter", "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; background: var(--card); }
+
+  body {
+    margin: 0;
+    color: var(--secondary);
+    background: var(--card);
+    font: 400 16px/1.6 var(--font);
+    /* На лендинге это стоит в base.css. Без него тот же вес 500 в шапке
+       рендерится subpixel-ом и выглядит заметно жирнее. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: var(--ink); }
+
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3.5vw, 50px); }
+
+  /* ── шапка ─────────────────────────────────────────────── */
+
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-height: 76px;
+  }
+
+  .nav__links { display: flex; gap: 28px; justify-self: start; }
+  .nav__actions { display: flex; align-items: center; gap: 28px; justify-self: end; }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    justify-self: center;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav__brand span { font-weight: 600; font-size: 19.4px; line-height: 1; letter-spacing: -.09em; }
+  .nav__brand img { width: 20px; height: 20px; }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--heading);
+    font: 500 14px/1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+    transition: opacity .18s ease;
+  }
+
+  .nav__link:hover { opacity: .6; }
+
+  .nav__button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 40px;
+    color: var(--tertiary);
+    background: var(--soft);
+    font: 600 12px/1 var(--font);
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .18s ease;
+  }
+
+  .nav__button:hover { background: var(--line); }
+  .nav__button img { width: 16px; height: 16px; }
+
+  @media (max-width: 1080px) {
+    .nav { grid-template-columns: auto 1fr; }
+    .nav__links, .nav__actions .nav__link { display: none; }
+    .nav__brand { justify-self: start; }
+  }
+
+  /* ── текст оферты ──────────────────────────────────────── */
+
+  .doc {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(32px, 6vh, 64px) 0 clamp(64px, 12vh, 120px);
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -.03em;
+  }
+
+  .updated { margin-top: 14px; color: var(--tertiary); font-size: 15px; }
+
+  .lead { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+
+  h2 {
+    margin: 52px 0 18px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    scroll-margin-top: 24px;
+  }
+
+  h3 { margin: 32px 0 12px; color: var(--heading); font-weight: 500; font-size: 17px; }
+
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  b, strong { color: var(--heading); font-weight: 500; }
+
+  .toc {
+    margin-top: 36px;
+    padding: 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .toc h2 { margin: 0 0 14px; font-size: 15px; color: var(--tertiary); font-weight: 400; }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  .toc li { margin-bottom: 7px; }
+  .toc a { color: var(--secondary); text-decoration: none; }
+  .toc a:hover { color: var(--ink); text-decoration: underline; }
+
+  @media (max-width: 620px) { .toc ol { columns: 1; } }
+
+  .todo {
+    margin: 28px 0;
+    padding: 18px 22px;
+    border-left: 3px solid #0064FF;
+    border-radius: 14px;
+    background: #EEF4FF;
+    color: var(--heading);
+    font-size: 15px;
+  }
+
+  .todo b { color: #0050CC; }
+
+  mark {
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: #DEE9FF;
+    color: #0050CC;
+    font-weight: 500;
+  }
+
+  .req { margin-top: 8px; color: var(--heading); }
+  .req span { display: block; }
+
+
+  /* ── статья ────────────────────────────────────────────── */
+
+  .post {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr) 280px;
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vh, 44px) 0 clamp(64px, 12vh, 120px);
+  }
+
+  @media (max-width: 1180px) {
+    .post { grid-template-columns: 240px minmax(0, 1fr); }
+    .post .promo { display: none; }
+  }
+
+  @media (max-width: 900px) {
+    .post { grid-template-columns: 1fr; }
+    .post .toc { position: static; order: -1; }
+  }
+
+  .toc { position: sticky; top: 24px; }
+
+  .toc h2 {
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--tertiary);
+    font: 500 12px/1 var(--font);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .toc ol { margin: 0; padding: 0; list-style: none; }
+  .toc li { margin-bottom: 12px; }
+
+  .toc a {
+    color: var(--tertiary);
+    font-size: 15px;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color .18s ease;
+  }
+
+  .toc a:hover { color: var(--ink); }
+
+  .promo {
+    position: sticky;
+    top: 24px;
+    padding: 22px 22px 24px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .promo b { display: block; color: var(--ink); font-weight: 500; font-size: 17px; line-height: 1.3; }
+  .promo p { margin: 10px 0 16px; font-size: 15px; }
+
+  .promo a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #0064FF;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .body h1 {
+    margin: 10px 0 0;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(30px, 3.8vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    text-wrap: balance;
+  }
+
+  .kicker { margin: 0; color: var(--tertiary); font-size: 15px; }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 34px 0 0;
+    padding-bottom: 0;
+    color: var(--tertiary);
+    font-size: 15px;
+  }
+
+  .meta img {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill, 999px);
+    object-fit: cover;
+  }
+
+  .meta b { color: var(--ink); font-weight: 500; }
+
+  .hero {
+    display: grid;
+    align-content: end;
+    min-height: clamp(220px, 26vw, 340px);
+    margin: 28px 0 32px;
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: 22px;
+    background: linear-gradient(150deg, #0B3FD6, #0064FF 60%, #3D86FF);
+    color: #fff;
+  }
+
+  .hero span {
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    color: rgba(255, 255, 255, .92);
+  }
+
+  .body h2 {
+    margin: 46px 0 14px;
+    color: var(--ink);
+    font-weight: 500;
+    font-size: clamp(23px, 2.8vw, 30px);
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    scroll-margin-top: 20px;
+  }
+
+  .body h3 { margin: 30px 0 10px; color: var(--ink); font-weight: 500; font-size: 18px; }
+
+  .body p { margin: 0 0 15px; }
+  .body ul, .body ol { margin: 0 0 18px; padding-left: 22px; }
+  .body li { margin-bottom: 9px; }
+  .body b { color: var(--ink); font-weight: 500; }
+
+  .body figure { margin: 26px 0; }
+  .body figure img { display: block; width: 100%; height: auto; border-radius: 18px; }
+  .body figcaption { margin-top: 10px; color: var(--tertiary); font-size: 14px; }
+
+  /* Второй экран-цитата в статье светлый: два синих подряд перебивали бы
+     друг друга и спорили с иллюстрациями. */
+  .hero.is-quote {
+    min-height: 0;
+    background: var(--soft-bg);
+    color: var(--ink);
+  }
+
+  .hero.is-quote span {
+    font-size: clamp(22px, 2.8vw, 34px);
+    color: var(--heading);
+  }
+
+  /* Врезка с оговоркой: не совет, а честное «здесь я бы сделал иначе». */
+  .note {
+    margin: 28px 0;
+    padding: 22px 24px;
+    border: 1px solid var(--soft);
+    border-radius: 18px;
+    background: var(--soft-bg);
+  }
+
+  /* ── макеты экранов ─────────────────────────────────────
+     Собраны вёрсткой, а не скриншотами: настоящие карточки кандидатов
+     содержат имена, компании и зарплатные ожидания живых людей —
+     публиковать их нельзя. Здесь та же структура на выдуманных данных. */
+
+  /* Макет — серая панель с белыми карточками, как сцены на страницах
+     ниш. Подпись живёт под панелью, а не внутри неё. */
+  .shot { margin: 30px 0; }
+
+  .shot__chat,
+  .shot__panel {
+    padding: 22px;
+    border-radius: 20px;
+    background: var(--soft-bg);
+  }
+
+  /* таблица шире колонки статьи — прокручиваем её внутри панели */
+  .shot__panel { overflow-x: auto; }
+  .shot__table { min-width: 560px; }
+
+  .shot figcaption {
+    margin-top: 14px;
+    color: var(--tertiary);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .shot__chat { display: flex; flex-direction: column; gap: 10px; }
+
+  .shot__msg {
+    max-width: 82%;
+    padding: 11px 15px;
+    border-radius: 16px 16px 16px 4px;
+    background: #fff;
+    color: var(--secondary);
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .shot__msg.is-out {
+    align-self: flex-end;
+    border-radius: 16px 16px 4px 16px;
+    background: #EAF0FB;
+    color: var(--ink);
+  }
+
+  .shot__slots { display: flex; flex-wrap: wrap; gap: 8px; align-self: flex-end; }
+
+  .shot__slot {
+    padding: 8px 13px;
+    border-radius: 40px;
+    background: #fff;
+    color: #0064FF;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .shot__card { padding: 22px; border-radius: 16px; background: #fff; }
+  .shot__panel > .shot__table { min-width: 560px; }
+
+  .shot__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--soft);
+  }
+
+  .shot__who { color: var(--ink); font-weight: 500; font-size: 16px; }
+  .shot__time { margin-left: auto; color: var(--tertiary); font-size: 14px; }
+
+  .shot__grade {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--page);
+    color: var(--secondary);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .shot__sum { margin: 14px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.5; }
+
+  .shot__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 18px; }
+  .shot__cols h4 { margin: 0 0 10px; font-size: 13px; font-weight: 500; letter-spacing: 0; }
+  .shot__cols ul { margin: 0; padding: 0; list-style: none; font-size: 14px; line-height: 1.5; }
+  .shot__cols li { position: relative; padding-left: 16px; }
+  .shot__cols li + li { margin-top: 7px; }
+  .shot__cols li::before {
+    content: "";
+    position: absolute;
+    top: .62em;
+    left: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--line);
+  }
+  .shot__cols .is-good h4 { color: #1F7A45; }
+  .shot__cols .is-risk h4 { color: #B45309; }
+
+  .shot__plan { margin-top: 20px; }
+  .shot__row:first-child { border-top: 0; }
+
+  .shot__row {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--soft);
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .shot__row b { color: var(--tertiary); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+  .shot__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .shot__table th { padding: 0 10px 10px; color: var(--tertiary); font-weight: 400; font-size: 13px; text-align: left; }
+  .shot__table td { padding: 11px 10px; border-top: 1px solid var(--soft); color: var(--secondary); }
+  .shot__table td:first-child { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .shot__verdict { padding: 4px 10px; border-radius: 40px; font-size: 13px; white-space: nowrap; }
+  .shot__verdict.is-yes { background: #E4F5EA; color: #1F7A45; }
+  .shot__verdict.is-maybe { background: #FDF3DC; color: #8A6100; }
+  .shot__verdict.is-no { background: #FBE9E7; color: #B23B2B; }
+
+  @media (max-width: 620px) {
+    .shot { padding: 14px; }
+    .shot__table th:nth-child(n+4), .shot__table td:nth-child(n+4) { display: none; }
+  }
+
+  .note b { display: block; margin-bottom: 8px; color: var(--ink); font-weight: 500; }
+  .note p { margin: 0; }
+
+  .pull {
+    margin: 26px 0;
+    padding: 2px 0 2px 22px;
+    border-left: 3px solid #0064FF;
+    color: var(--ink);
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: -.01em;
+  }
+
+  .nums {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    margin: 26px 0;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .nums div { padding: 20px 18px; background: var(--card); }
+
+  .nums b {
+    display: block;
+    color: var(--ink);
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nums span { display: block; margin-top: 8px; color: var(--tertiary); font-size: 14px; line-height: 1.35; }
+
+  .inline-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 32px 0;
+    padding: 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .inline-cta b { display: block; color: var(--ink); font-weight: 500; font-size: 17px; }
+  .inline-cta p { margin: 8px 0 0; font-size: 15px; max-width: 46ch; }
+
+  .inline-cta a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 40px;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .faq h3 { margin: 26px 0 8px; font-size: 19px; }
+
+
+  /* Класс .toc есть и в оферте — там это карточка в две колонки.
+     Здесь гасим её и делаем простой список. */
+  .post .toc {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  /* без заголовка список начинается с той же линии, что и текст статьи */
+  .post .toc ol { margin-top: 0; }
+  .post .toc li:first-child { margin-top: 0; }
+
+  .post .toc ol { columns: auto; }
+
+  .post .toc li { position: relative; }
+
+  .post .toc a {
+    display: block;
+    padding-left: 18px;
+  }
+
+  /* стрелка появляется у раздела, который сейчас на экране */
+  .post .toc a::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #0064FF;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .post .toc a.is-current {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .post .toc a.is-current::before { opacity: 1; transform: none; }
+
+
+  /* подчёркивание появляется только на наведении */
+  .meta .author {
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .18s ease;
+  }
+
+  .meta .author:hover { border-bottom-color: var(--ink); }
+
+  .share {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .share__btn {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill, 999px);
+    background: none;
+    color: var(--tertiary);
+    cursor: pointer;
+    transition: color .18s ease, background .18s ease;
+  }
+
+  .share__btn:hover { color: var(--ink); background: var(--soft-bg); }
+
+  .share__btn svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* короткое подтверждение вместо всплывашки */
+  .share__btn.is-copied { color: #0064FF; }
+
+  /* ── футер ─────────────────────────────────────────────── */
+
+  .page {
+    position: relative;
+    z-index: 1;
+    border-radius: 0 0 var(--radius-sheet) var(--radius-sheet);
+    background: var(--card);
+  }
+
+  /* под скруглениями — цвет футера, иначе в углах просвечивает белое */
+  .page::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--radius-sheet);
+    background: var(--soft-bg);
+  }
+
+  .foot { background: var(--soft-bg); color: var(--heading); }
+
+  .foot__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vh, 96px) clamp(20px, 3.5vw, 50px) clamp(28px, 4vh, 40px);
+  }
+
+  .foot__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .foot__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font: 500 clamp(22px, 2vw, 28px)/1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+  }
+
+  .foot__mark img { width: 32px; height: 32px; }
+
+  .foot__tagline { margin: 14px 0 0; color: var(--secondary); font-size: 16px; }
+
+  .foot__support { display: flex; flex-direction: column; gap: 12px; }
+
+  .foot__label { margin: 0; color: var(--tertiary); font: 400 14px/1.3 var(--font); }
+
+  .foot__mail {
+    color: var(--ink);
+    font: 500 clamp(26px, 3.4vw, 46px)/1.05 var(--font);
+    letter-spacing: -.035em;
+    text-decoration: none;
+  }
+
+  .foot__columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 48px);
+    margin-top: clamp(48px, 7vh, 84px);
+  }
+
+  .foot__col ul { margin: 18px 0 0; padding: 0; list-style: none; }
+  .foot__col li + li { margin-top: 12px; }
+
+  .foot__col a {
+    color: var(--ink);
+    font: 400 16px/1.35 var(--font);
+    text-decoration: none;
+  }
+
+  .foot__col a:hover { color: var(--secondary); }
+
+  .foot__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: clamp(56px, 10vh, 120px);
+    color: var(--tertiary);
+    font-size: 14px;
+  }
+
+  .foot__legal { display: flex; flex-wrap: wrap; gap: clamp(16px, 2vw, 32px); }
+  .foot__legal a { color: inherit; text-decoration: none; }
+  .foot__legal a:hover { color: var(--ink); }
+
+  @media (max-width: 860px) { .foot__columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  @media (max-width: 520px) {
+    .foot__columns { grid-template-columns: 1fr; }
+    .foot__bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="wrap">
+    <header class="nav">
+      <nav class="nav__links" aria-label="Основная навигация">
+        <a class="nav__link" href="/mary-site/blog.html">Блог</a>
+        <a class="nav__link" href="/mary-site/cases.html">Кейсы</a>
+        <a class="nav__link" href="/mary-site/#contacts">Контакты</a>
+        <a class="nav__link" href="/mary-site/#niches">Для компаний</a>
+      </nav>
+
+      <a class="nav__brand" href="/mary-site/" aria-label="Mary — на главную">
+        <img loading="lazy" decoding="async" src="/mary-site/mary-mark.svg" alt="" />
+        <span>mary</span>
+      </a>
+
+      <div class="nav__actions">
+        <a class="nav__link" href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noopener">Для инвесторов</a>
+        <a class="nav__link" href="/mary-site/#custom">Заказать разработку</a>
+        <a class="nav__button" href="/mary-site/#app">Войти в Mary<img loading="lazy" decoding="async" src="/mary-site/arrow-up-right.svg" alt="" /></a>
+      </div>
+    </header>
+  </div>
+
+  <main class="wrap">
+    <div class="post">
+
+  <nav class="toc" aria-label="Содержание">
+    <ol>
+      <li><a href="#where">Где на самом деле горит время</a></li>
+      <li><a href="#leads">Шаг 1. Откуда пришли кандидаты</a></li>
+      <li><a href="#contact">Шаг 2. Переписка и расписание</a></li>
+      <li><a href="#dossier">Шаг 3. Досье до звонка</a></li>
+      <li><a href="#calls">Шаг 4. Сами разговоры</a></li>
+      <li><a href="#filter">Шаг 5. Отсев — в конце, а не в начале</a></li>
+      <li><a href="#offer">Шаг 6. Второй круг и оффер</a></li>
+      <li><a href="#bonus">Побочный улов</a></li>
+      <li><a href="#mass">Что из этого работает на массовом найме</a></li>
+      <li><a href="#never">Что нельзя отдавать агенту</a></li>
+      <li><a href="#start">С чего начать</a></li>
+      <li><a href="#faq">Вопросы и ответы</a></li>
+    </ol>
+  </nav>
+
+  <article class="body">
+    <p class="kicker">HR и найм</p>
+    <h1>Как мы наняли CTO за неделю: HR-процесс, собранный на агентах</h1>
+
+    <div class="meta">
+      <img loading="lazy" decoding="async" src="/mary-site/media/blog/author.webp" alt="" />
+      <span>
+        <a class="author" href="https://t.me/l_aleksashka_l" target="_blank" rel="noreferrer noopener">Александр Лукашевич</a>
+        · 25 августа 2026
+      </span>
+
+      <div class="share">
+        <button type="button" class="share__btn" data-copy aria-label="Скопировать ссылку">
+          <svg viewBox="0 0 20 20"><path d="M8.5 11.5a3.5 3.5 0 0 0 5 0l2.5-2.5a3.54 3.54 0 0 0-5-5l-1 1M11.5 8.5a3.5 3.5 0 0 0-5 0L4 11a3.54 3.54 0 0 0 5 5l1-1"/></svg>
+        </button>
+        <a class="share__btn" data-tg href="https://t.me/share/url?url=https%3A%2F%2Fmaryrose.by%2Fblog%2Fhr-nayom-avtomatizacia.html&amp;text=%D0%9A%D0%B0%D0%BA%20%D0%BC%D1%8B%20%D0%BD%D0%B0%D0%BD%D1%8F%D0%BB%D0%B8%20CTO%20%D0%B7%D0%B0%20%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8E" target="_blank" rel="noreferrer noopener" aria-label="Поделиться в Telegram">
+          <svg viewBox="0 0 20 20"><path d="M17.5 3.5 2.8 9.2c-.7.3-.7.7-.1.9l3.7 1.1 1.4 4.2c.2.5.4.6.8.2l2-1.9 3.8 2.8c.7.4 1.1.2 1.3-.6l2.4-11c.2-.9-.3-1.3-1-1z"/><path d="m6.4 11.2 8.3-5.1-6.6 6.1"/></svg>
+        </a>
+        <a class="share__btn" data-li href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmaryrose.by%2Fblog%2Fhr-nayom-avtomatizacia.html" target="_blank" rel="noreferrer noopener" aria-label="Поделиться в LinkedIn">
+          <svg viewBox="0 0 20 20"><rect x="2.5" y="2.5" width="15" height="15" rx="3"/><path d="M6 8.5v5M6 6v.01M9.5 13.5v-5M9.5 10.2c0-1 .8-1.7 1.8-1.7s1.7.7 1.7 1.7v3.3"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero"><span>30 кандидатов, два дня созвонов,<br />один найм.</span></div>
+
+    <p>Мне нужен был технический директор. Не «поискать пару месяцев», а закрыть
+    позицию быстро — продукт ждать не мог. В итоге весь цикл занял неделю: три дня
+    на сбор кандидатов, два дня на разговоры, два — на решение.</p>
+
+    <p>Дальше — как это было устроено по шагам. Не про волшебную кнопку: почти
+    вся ручная работа осталась ручной, но она перестала быть моей.</p>
+
+    <h2 id="where">Где на самом деле горит время</h2>
+
+    <p>Когда говорят «нанимать долго», обычно имеют в виду поиск. На практике время
+    съедают три вещи, и поиск среди них не самая жадная.</p>
+
+    <p><b>Первая — переписка.</b> Списаться с тридцатью людьми, забрать у каждого
+    резюме, согласовать время, напомнить, перенести. Каждое сообщение — минута,
+    но сообщений сотни.</p>
+
+    <p><b>Вторая — подготовка к разговору.</b> Прочитать резюме, понять, кто перед
+    тобой, придумать вопросы именно под него. Пятнадцать минут на кандидата,
+    и это ещё быстро.</p>
+
+    <p><b>Третья — память.</b> После десятого созвона за день кандидаты сливаются.
+    Кто говорил про on-prem, а кто про метрики? Через сутки уже не вспомнишь.</p>
+
+    <p class="pull">Все три части — механика. Именно их и стоит отдавать агенту,
+    а не выбор человека.</p>
+
+    <h2 id="leads">Шаг 1. Откуда пришли кандидаты</h2>
+
+    <p>Сработали два канала: пост в LinkedIn и обход собственной сети — я просто
+    прошёл по знакомым и попросил порекомендовать. За три дня набралось больше
+    тридцати откликов на позицию CTO.</p>
+
+    <p>Здесь автоматизации почти нет, и это нормально. На старших позициях канал
+    решает больше, чем воронка: сильные люди приходят по рекомендации, а не по
+    объявлению. Агент подключается там, где начинается объём.</p>
+
+    <h2 id="contact">Шаг 2. Переписка и расписание</h2>
+
+    <p>Тридцать человек нужно было обработать за пару дней. Я подключил агента
+    к своему Telegram и дал ему одну задачу: собрать со всех резюме и договориться
+    о получасовом скрининге на ближайшие два дня.</p>
+
+    <p>Агент вёл переписку сам: здоровался, просил CV, предлагал слоты, фиксировал
+    договорённости. Два дня оказались забиты плотно — по двенадцать часов созвонов
+    подряд.</p>
+
+    <div class="note">
+      <b>Здесь я бы поменял одну вещь.</b>
+      <p>Кандидаты не знали, что переписываются с ассистентом. Формально ничего
+      страшного не произошло, но правильнее — сразу писать, что первичную
+      переписку ведёт ассистент, а на созвоне будет человек. Это ничего не ломает
+      в скорости и снимает неприятный сюрприз, если кто-то догадается сам.
+      В процессах, которые мы собираем клиентам, мы этот дисклеймер ставим
+      по умолчанию.</p>
+    </div>
+
+    <figure class="shot">
+      <div class="shot__chat">
+        <span class="shot__msg is-out">Здравствуйте! Пишу по вашему отклику на позицию CTO.
+        Первичную переписку веду я, ассистент, — на созвоне будет основатель. Пришлёте резюме?</span>
+        <span class="shot__msg">Добрый день, вот CV</span>
+        <span class="shot__msg is-out">Спасибо. Предлагаю получасовой разговор, выберите удобное время:</span>
+        <span class="shot__slots">
+          <span class="shot__slot">Чт 11:00</span>
+          <span class="shot__slot">Чт 15:30</span>
+          <span class="shot__slot">Пт 10:00</span>
+        </span>
+        <span class="shot__msg">Давайте четверг в 15:30</span>
+        <span class="shot__msg is-out">Записал. Напомню за час до начала</span>
+      </div>
+      <figcaption>Шаг 2: агент забирает резюме и согласовывает время.
+      Дисклеймер про ассистента — в первом же сообщении</figcaption>
+    </figure>
+
+    <h2 id="dossier">Шаг 3. Досье до звонка</h2>
+
+    <p>Дальше — то, что и сделало всю историю рабочей. Я завёл отдельный чат
+    «Собесы» и попросил агента складывать туда карточку на каждого кандидата,
+    <b>в порядке созвонов</b>. Не списком в конце дня, а по мере приближения слота.</p>
+
+    <p>Карточка состояла из четырёх вещей:</p>
+
+    <ul>
+      <li><b>Грейд</b> — A, B или C, с пометкой «спорный», если данные противоречивые.</li>
+      <li><b>Микро-суть</b> — три-четыре строки: кто это, чем силён, где риск.</li>
+      <li><b>Ссылка на человека</b> и время созвона.</li>
+      <li><b>Файл с вопросами на 30 минут</b>, разбитый по таймингам.</li>
+    </ul>
+
+    <p>Последнее оказалось важнее всего. Вопросы были не общие, а под конкретного
+    человека: если у кандидата много коротких проектов — вопрос про то, что он
+    доводил до масштаба; если сильная инфраструктура и слабый продукт — вопрос
+    про продуктовые решения.</p>
+
+    <figure class="shot">
+      <div class="shot__panel">
+        <div class="shot__card">
+        <div class="shot__head">
+          <span class="shot__who">Кандидат №4</span>
+          <span class="shot__grade">B · спорный</span>
+          <span class="shot__time">Созвон сегодня, 15:30</span>
+        </div>
+
+        <p class="shot__sum">Шесть лет в разработке, три года тимлидом. Много коротких
+        проектов, мало доведённого до масштаба. Сильная инженерная часть, продуктовая —
+        под вопросом.</p>
+
+        <div class="shot__cols">
+          <div class="is-good">
+            <h4>Чем хорош</h4>
+            <ul>
+              <li>Собирал команду с нуля</li>
+              <li>Реальный опыт с нашим стеком</li>
+              <li>Готов брать ответственность</li>
+            </ul>
+          </div>
+          <div class="is-risk">
+            <h4>Что может не подойти</h4>
+            <ul>
+              <li>Проекты по 3–6 месяцев</li>
+              <li>Ведёт свой проект параллельно</li>
+              <li>Команды больше десяти не было</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="shot__plan">
+          <div class="shot__row"><b>0–10</b><span>Что делал руками, а что отдавал команде</span></div>
+          <div class="shot__row"><b>10–17</b><span>С чего начал бы у нас в первые две недели</span></div>
+          <div class="shot__row"><b>17–24</b><span>Сколько часов реально сможет давать и как совместит</span></div>
+          <div class="shot__row"><b>24–30</b><span>Что должно случиться за два месяца, чтобы он сам сказал «справился»</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Шаг 3: карточка приходит в чат до созвона — грейд, суть, риски
+      и вопросы под конкретного человека по таймингам</figcaption>
+    </figure>
+
+    <div class="hero is-quote"><span>Изучение кандидата и сборка структуры<br />занимали не пятнадцать минут, а полторы.</span></div>
+
+    <h2 id="calls">Шаг 4. Сами разговоры</h2>
+
+    <p>Каждый созвон я записывал голосовым прямо в тот же чат и прикладывал скриншот
+    со звонка — на лица память у меня лучше, чем на имена. Благодаря готовой
+    структуре ни разу не выбился из получаса.</p>
+
+    <p>Двенадцать часов разговоров подряд — плохая идея, и повторять я её не советую.
+    К вечеру качество вопросов падает, а вместе с ним и качество решения. Если бы
+    делал заново, растянул бы на три дня по шесть часов.</p>
+
+    <h2 id="filter">Шаг 5. Отсев — в конце, а не в начале</h2>
+
+    <p>Обычно рекрутер отсеивает половину на этапе резюме — чтобы не тратить время.
+    Я сознательно перенёс отсев в самый конец, и это оказалось главным решением
+    всего процесса.</p>
+
+    <p>После всех созвонов агент расшифровал голосовые и собрал две сводки:
+    таблицу по всем кандидатам с баллами по критериям и подробную карточку
+    на каждого — с сильными сторонами, рисками, цитатами и дисквалификаторами.</p>
+
+    <p>И вот что вылезло. Среди тех, кого стандартный процесс отсеял бы по резюме,
+    нашлись сильнейшие: люди с реальными продуктовыми пайплайнами, которые просто
+    не умеют писать CV. И наоборот — красиво оформленные резюме, за которыми
+    на разговоре не оказалось ничего.</p>
+
+    <p class="pull">Понимал ли я это прямо на созвонах? Скорее да.
+    Вспомнил бы через два дня? Точно нет.</p>
+
+    <figure class="shot">
+      <div class="shot__panel">
+        <table class="shot__table">
+        <thead>
+          <tr>
+            <th>Балл</th><th>Вердикт</th><th>Скорость</th>
+            <th>Продукт</th><th>Агенты в проде</th><th>Мотивация</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>93</td>
+            <td><span class="shot__verdict is-yes">брать</span></td>
+            <td>5</td><td>5</td><td>5</td><td>4</td>
+          </tr>
+          <tr>
+            <td>87</td>
+            <td><span class="shot__verdict is-yes">брать</span></td>
+            <td>5</td><td>4</td><td>5</td><td>3</td>
+          </tr>
+          <tr>
+            <td>81</td>
+            <td><span class="shot__verdict is-yes">брать</span></td>
+            <td>4</td><td>5</td><td>4</td><td>4</td>
+          </tr>
+          <tr>
+            <td>73</td>
+            <td><span class="shot__verdict is-maybe">второй собес</span></td>
+            <td>4</td><td>4</td><td>3</td><td>4</td>
+          </tr>
+          <tr>
+            <td>64</td>
+            <td><span class="shot__verdict is-maybe">второй собес</span></td>
+            <td>3</td><td>4</td><td>3</td><td>3</td>
+          </tr>
+          <tr>
+            <td>52</td>
+            <td><span class="shot__verdict is-no">нет</span></td>
+            <td>3</td><td>2</td><td>2</td><td>3</td>
+          </tr>
+          <tr>
+            <td>45</td>
+            <td><span class="shot__verdict is-no">нет</span></td>
+            <td>2</td><td>2</td><td>1</td><td>2</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      <figcaption>Шаг 5: сводка после всех разговоров. Балл не решает за вас —
+      он ставит кандидатов в очередь на второй круг</figcaption>
+    </figure>
+
+    <p>Критерии в таблице были взвешенные: скорость, готовность взять продукт,
+    опыт с AI-агентами в проде, мотивация, работа с командой, стек, доступность.
+    Часть — с двойным весом, потому что для нас они критичнее остальных.
+    Балл не выбирал за меня — он расставлял кандидатов в очередь на второй разговор.</p>
+
+    <h2 id="offer">Шаг 6. Второй круг и оффер</h2>
+
+    <p>Из тридцати осталось пять. С каждым — повторный созвон, уже глубже,
+    и тот же цикл: досье, структура, запись, сводка. С человеком, которого выбрал
+    в итоге, работаем до сих пор.</p>
+
+    <h2 id="bonus">Побочный улов</h2>
+
+    <p>Кроме сводок агент собрал мне два файла, о которых я сначала не думал.</p>
+
+    <p><b>Первый — что кандидаты говорили про Mary.</b> Тридцать технических людей
+    посмотрели на продукт свежим взглядом и назвали слабые места. Бесплатное
+    исследование, которое обычно заказывают отдельно.</p>
+
+    <p><b>Второй — разбор меня как интервьюера.</b> Где я задавал наводящие вопросы,
+    где говорил больше кандидата, где не дожал. Неприятно читать, полезно применять.</p>
+
+    <h2 id="mass">Что из этого работает на массовом найме</h2>
+
+    <p>История про CTO — штучная. Но три четверти механики переносятся на линейные
+    позиции почти без изменений, а там объём в разы больше.</p>
+
+    <ul>
+      <li><b>Первичная переписка и слоты.</b> На потоке в пятьдесят откликов
+      в неделю это освобождает рекрутеру несколько часов.</li>
+      <li><b>Карточка кандидата до созвона.</b> Резюме + вакансия + вопросы под роль.</li>
+      <li><b>Расшифровка и сводка после.</b> Особенно если решение принимает
+      не тот, кто проводил разговор.</li>
+      <li><b>Единая таблица по критериям.</b> Она же снимает вечный спор «мне
+      показалось, что он сильнее».</li>
+    </ul>
+
+    <p>Отдельно — то, что редко считают: <b>кандидаты перестают ждать</b>.
+    Сильные разбираются на рынке за дни, и ответ через неделю означает, что вы
+    уже проиграли. Скорость ответа здесь — не про удобство, а про доступ к людям.</p>
+
+    <h2 id="never">Что нельзя отдавать агенту</h2>
+
+    <p><b>Решение.</b> Балл — это очередь, а не вердикт. Человека нанимает человек.</p>
+
+    <p><b>Оценку личности по резюме.</b> Ровно от этого мы и ушли, перенеся отсев
+    в конец. Автоматический отказ по формальному признаку — самый дорогой вид
+    экономии: вы никогда не узнаете, кого потеряли.</p>
+
+    <p><b>Разговор.</b> Скрининг голосом — всё ещё работа человека, потому что
+    половина сигнала не в словах.</p>
+
+    <p><b>Персональные данные без порядка.</b> Резюме, записи разговоров
+    и расшифровки — это данные живых людей. У них должно быть место хранения,
+    срок и ответственный. Наличие агента этого не отменяет, а делает острее:
+    данных становится больше и появляются они быстрее.</p>
+
+    <h2 id="start">С чего начать</h2>
+
+    <p>Порядок, который я бы повторил:</p>
+
+    <ol>
+      <li><b>Снимите с себя переписку.</b> Сбор резюме и согласование времени —
+      первое, что уходит, и уходит целиком.</li>
+      <li><b>Сделайте карточку кандидата до созвона.</b> Даже без баллов: суть
+      и пять вопросов под человека уже меняют разговор.</li>
+      <li><b>Записывайте разговоры и расшифровывайте.</b> Без этого пятый этап
+      невозможен.</li>
+      <li><b>Соберите одну таблицу с критериями и весами.</b> Решать всё равно вам,
+      но перед глазами будут все, а не последние трое.</li>
+      <li><b>Отсевайте в конце.</b> Если позволяет объём — говорите со всеми.</li>
+    </ol>
+
+    <p>И замерьте до старта три числа: сколько откликов приходит на вакансию,
+    сколько времени проходит от отклика до первого ответа и сколько позиция
+    висит открытой. Через месяц эти же три числа покажут, изменилось ли что-нибудь.</p>
+
+    <div class="inline-cta">
+      <div>
+        <b>Посмотреть, что можно снять с вашего найма</b>
+        <p>Подключимся к вашей переписке и посчитаем, сколько времени уходит
+        на согласование, подготовку и сводки.</p>
+      </div>
+      <a href="/mary-site/#app">Обсудить аудит</a>
+    </div>
+
+    <div class="faq">
+      <h2 id="faq">Вопросы и ответы</h2>
+
+      <h3>Кандидатам говорить, что пишет агент?</h3>
+      <p>Да. Одной строкой в первом сообщении: первичную переписку ведёт ассистент,
+      на созвоне будет человек. На скорость это не влияет, а доверие сохраняет.
+      Обратная ситуация — когда человек узнаёт сам — работает против вас.</p>
+
+      <h3>Агент может сам отсеивать по резюме?</h3>
+      <p>Технически да. Мы советуем этого не делать — по крайней мере пока поток
+      позволяет говорить со всеми. Сортировка в очередь и отказ — разные вещи:
+      первое экономит время, второе теряет людей.</p>
+
+      <h3>Что делать с записями разговоров?</h3>
+      <p>Предупреждать о записи, хранить в одном месте с ограниченным доступом
+      и удалять по сроку. Расшифровка — такие же персональные данные, как
+      и сама запись.</p>
+
+      <h3>Сколько времени это освобождает?</h3>
+      <p>Зависит от объёма. На нашей истории переписка с тридцатью кандидатами
+      и подготовка к тридцати созвонам — это примерно два полных рабочих дня,
+      которые я не потратил. На потоке линейных вакансий счёт идёт на часы
+      в неделю, но точную цифру даст только замер до старта.</p>
+
+      <h3>Это работает без CRM и HR-системы?</h3>
+      <p>Да, у нас всё жило в Telegram: чат с кандидатом, отдельный чат с досье,
+      файлы со сводками. Система нужна, когда вакансий много и наём идёт постоянно.
+      Для одной позиции достаточно чата и порядка в нём.</p>
+    </div>
+  </article>
+
+  <aside class="promo">
+    <b>Аудит процессов</b>
+    <p>Подключаемся к вашей переписке и показываем, сколько работы делается руками.</p>
+    <a href="/mary-site/#app">Обсудить →</a>
+  </aside>
+
+</div>
+
+<script>
+  (function () {
+    var url = location.href, title = document.title;
+    var tg = document.querySelector("[data-tg]");
+    if (tg) tg.href = "https://t.me/share/url?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(title);
+    var li = document.querySelector("[data-li]");
+    if (li) li.href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
+    var copy = document.querySelector("[data-copy]");
+    if (copy) copy.addEventListener("click", function () {
+      navigator.clipboard.writeText(url).then(function () {
+        copy.classList.add("is-copied");
+        setTimeout(function () { copy.classList.remove("is-copied"); }, 1600);
+      });
+    });
+  })();
+
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+    var heads = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); }).filter(Boolean);
+    if (!heads.length) return;
+    function update() {
+      var best = 0;
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].getBoundingClientRect().top - 90 <= 0) best = i;
+      }
+      links.forEach(function (a, i) { a.classList.toggle("is-current", i === best); });
+    }
+    var waiting = false;
+    window.addEventListener("scroll", function () {
+      if (waiting) return;
+      waiting = true;
+      requestAnimationFrame(function () { waiting = false; update(); });
+    }, { passive: true });
+    update();
+  })();
+</script>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__top">
+      <div>
+        <a class="foot__mark" href="/mary-site/" aria-label="Наверх">
+          <img loading="lazy" decoding="async" src="/mary-site/mary-mark-full.svg" alt="" />
+          <span>Mary</span>
+        </a>
+        <p class="foot__tagline">Платформа автоматизации бизнеса.</p>
+      </div>
+
+      <div class="foot__support">
+        <span class="foot__label">Техническая поддержка</span>
+        <a class="foot__mail" href="mailto:hello@mary.team">hello@mary.team</a>
+      </div>
+    </div>
+
+    <nav class="foot__columns" aria-label="Разделы сайта">
+      <div class="foot__col">
+        <h3 class="foot__label">Продукт</h3>
+        <ul>
+          <li><a href="/mary-site/#platform">Платформа</a></li>
+          <li><a href="/mary-site/#how">Как работает</a></li>
+          <li><a href="/mary-site/#assembly">Отделы и агенты</a></li>
+          <li><a href="/mary-site/#integrations">Интеграции</a></li>
+          <li><a href="/mary-site/#screens">Экраны</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Решения</h3>
+        <ul>
+          <li><a href="/mary-site/#niches">Ниши</a></li>
+          <li><a href="/mary-site/#niches">Салоны красоты</a></li>
+          <li><a href="/mary-site/#niches">Клиники</a></li>
+          <li><a href="/mary-site/#niches">Ритейл</a></li>
+          <li><a href="/mary-site/#niches">Услуги</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Ресурсы</h3>
+        <ul>
+          <li><a href="/mary-site/blog.html">Блог</a></li>
+          <li><a href="/mary-site/#faq">Вопросы и ответы</a></li>
+          <li><a href="/mary-site/#pains">Что решает Mary</a></li>
+          <li><a href="/mary-site/#compare">Сравнение</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3 class="foot__label">Компания</h3>
+        <ul>
+          <li><a href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noreferrer">Для инвесторов</a></li>
+          <li><a href="/mary-site/#contacts">Telegram-канал</a></li>
+          <li><a href="/mary-site/#contacts">Стать партнёром</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="foot__bottom">
+      <span>© Mary, 2026</span>
+      <div class="foot__legal">
+        <a href="/mary-site/privacy.html">Политика конфиденциальности</a>
+        <a href="/mary-site/terms.html">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
