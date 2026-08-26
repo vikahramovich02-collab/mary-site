@@ -2415,11 +2415,13 @@
 
   .foot__col { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 
+  /* Как «(АВТОМАТИЗАЦИЯ ПРОЦЕССОВ)» в кейсе, только серым. */
   .foot__label {
     margin: 0 0 clamp(36px, 6vh, 72px);
     color: var(--faint);
-    font: 500 13px/1 var(--font);
-    letter-spacing: .02em;
+    font: 600 11px/1 var(--font);
+    letter-spacing: .03em;
+    text-transform: uppercase;
   }
 
   .foot__mail {
@@ -2477,7 +2479,6 @@
 
   .foot__head h2 {
     margin: 0;
-    max-width: 18ch;
     color: var(--ink);
     font-weight: 500;
     font-size: clamp(28px, 3.6vw, 46px);
