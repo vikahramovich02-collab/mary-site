@@ -2373,6 +2373,7 @@
   /* Футер — отдельный экран: контакты сверху, свечение внизу. */
   .foot {
     position: relative;
+    background: var(--bg);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -2461,7 +2462,7 @@
   .foot__grid {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, .4fr) minmax(0, .4fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, .45fr) minmax(0, .7fr);
     align-items: start;
     gap: 24px;
     padding: clamp(48px, 9vh, 120px) 0 clamp(28px, 5vh, 56px);
@@ -2508,7 +2509,7 @@
     position: relative;
     min-height: clamp(260px, 38vh, 420px);
     overflow: hidden;
-    background: #0B0C0E;
+    background: var(--bg);
   }
 
   .foot__stripe-wave {
@@ -2556,7 +2557,7 @@
   .foot__bar {
     position: relative;
     z-index: 1;
-    background: #0B0C0E;
+    background: var(--bg);
   }
 
   .foot__bar-row {
