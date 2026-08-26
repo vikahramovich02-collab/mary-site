@@ -1012,7 +1012,7 @@
 
   #main section { padding: clamp(64px, 11vh, 130px) 0; }
   /* «Расскажите задачу» должен идти прямо под FAQ */
-  #main section:last-of-type { padding-bottom: clamp(24px, 4vh, 40px); }
+  #main section:last-of-type { padding-bottom: clamp(40px, 7vh, 72px); }
 
   .sec__head {
     display: grid;
@@ -2486,7 +2486,8 @@
     margin: 0;
     color: var(--ink);
     font-weight: 500;
-    font-size: clamp(28px, 3.6vw, 46px);
+    /* чуть мельче, чем в шапках секций — иначе «задачу —» не влезает в колонку */
+    font-size: clamp(26px, 3vw, 40px);
     line-height: 1.08;
     letter-spacing: -.035em;
   }
