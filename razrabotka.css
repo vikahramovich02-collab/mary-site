@@ -2429,12 +2429,6 @@
 
   .foot__mail:hover { text-decoration-color: var(--ink); }
 
-  .foot__legal {
-    margin: 10px 0 0;
-    color: var(--faint);
-    font: 400 14px/1.5 var(--font);
-  }
-
   .foot__out {
     display: inline-flex;
     align-items: center;
@@ -2515,6 +2509,44 @@
 
   @media (prefers-reduced-motion: reduce) {
     .nav-bar, .topbar { transition: none; }
+  }
+
+  /* Строка перед волной: реквизиты, «наверх», копирайт — три колонки,
+     текст мелкий и белый, как в референсе. */
+  .foot__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 24px;
+    padding-top: clamp(40px, 7vh, 90px);
+    padding-bottom: clamp(20px, 3.4vh, 32px);
+  }
+
+  .foot__row-cell {
+    margin: 0;
+    color: var(--ink);
+    font: 500 14px/1.4 var(--font);
+    letter-spacing: -.01em;
+  }
+
+  .foot__row-cell.is-end { text-align: right; }
+
+  .foot__row-cell button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: opacity .18s ease;
+  }
+
+  .foot__row-cell button:hover { opacity: .6; }
+
+  @media (max-width: 860px) {
+    .foot__row { grid-template-columns: 1fr; align-items: start; }
+    .foot__row-cell.is-end { text-align: left; }
   }
 
   /* ── полоса внизу футера: тёмная, по ней плывёт голубая волна
@@ -2599,20 +2631,6 @@
   .foot__bar-links { display: flex; gap: 24px; }
   .foot__bar a { transition: color .18s ease; }
   .foot__bar a:hover { color: var(--ink); }
-
-  .foot__bar button {
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--faint);
-    font: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    cursor: pointer;
-    transition: color .18s ease;
-  }
-
-  .foot__bar button:hover { color: var(--ink); }
 
   @media (max-width: 640px) {
     .foot__bar-row { flex-direction: column; align-items: flex-start; gap: 10px; }
