@@ -1055,7 +1055,6 @@
 
   @media (min-width: 861px) {
     /* заголовок раздела встаёт по линии правой колонки страницы */
-    .flow .sec__head h2 { margin-left: 38%; }
   }
 
   .sec__head.is-mark-left .sec__mark { grid-column: 1; order: 0; margin: 0; padding-top: .15em; }
@@ -2516,12 +2515,10 @@
      текст мелкий и белый, как в референсе. */
   .foot__row {
     position: relative;
-    display: grid;
-    /* та же сетка, что у .foot__grid: «Наверх» встаёт на линию среднего
-       столбца, как «Back to top» в референсе */
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, .6fr) minmax(0, .4fr);
-    align-items: end;
-    gap: clamp(24px, 4vw, 64px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
     padding-top: clamp(40px, 7vh, 90px);
     padding-bottom: clamp(20px, 3.4vh, 32px);
   }
@@ -2533,7 +2530,7 @@
     letter-spacing: -.01em;
   }
 
-  .foot__row-cell.is-end { text-align: left; }
+  .foot__row-cell.is-end { text-align: right; }
 
   .foot__row-cell button {
     padding: 0;
@@ -2548,7 +2545,7 @@
   .foot__row-cell button:hover { opacity: .6; }
 
   @media (max-width: 860px) {
-    .foot__row { grid-template-columns: 1fr; align-items: start; }
+    .foot__row { flex-direction: column; align-items: flex-start; }
     .foot__row-cell.is-end { text-align: left; }
   }
 

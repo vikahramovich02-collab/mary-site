@@ -229,6 +229,18 @@
     if (calm.matches) frame(0);                      // без анимации — один кадр
   })();
 
+  // Шапка и бегущая строка прячутся, пока в экране футер: там они
+  // лишние, и блендинг поверх волны выглядел бы грязно.
+  (function () {
+    var bars = document.querySelectorAll(".nav-bar, .topbar");
+    var foot = document.querySelector(".foot");
+    if (!bars.length || !foot || !window.IntersectionObserver) return;
+
+    new IntersectionObserver(function (e) {
+      bars.forEach(function (b) { b.classList.toggle("is-away", e[0].isIntersecting); });
+    }, { threshold: 0, rootMargin: "-10% 0px 0px 0px" }).observe(foot);
+  })();
+
   // Кнопка «наверх» в нижней полоске футера.
   (function () {
     var up = document.querySelector("[data-scroll-top]");
