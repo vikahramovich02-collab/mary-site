@@ -2116,7 +2116,7 @@
   }
 
   @media (min-width: 901px) {
-    /* заголовок встаёт над колонкой с цифрами */
+    /* заголовок встаёт над картинкой слева, текст — над цифрами справа */
     #case .sec__head {
       display: grid;
       grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
@@ -2125,9 +2125,9 @@
     }
 
     #case .sec__mark { grid-column: 1; grid-row: 1; margin: 0; }
-    #case .sec__head h2 { grid-column: 2; grid-row: 1; margin: 14px 0 0; }
-    #case .case__tag { grid-column: 2; grid-row: 2; }
-    #case .case__lead { grid-column: 2; grid-row: 3; }
+    #case .sec__head h2 { grid-column: 1; grid-row: 2; margin: 14px 0 0; }
+    #case .case__tag { grid-column: 2; grid-row: 1; }
+    #case .case__lead { grid-column: 2; grid-row: 2; }
 
     /* визуал слева, цифры справа */
     .case { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); }
