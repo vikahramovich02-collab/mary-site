@@ -376,12 +376,14 @@
   /* Пункты шапки перекручиваются лесенкой, как подпись на кнопке. */
   .nav-roll {
     display: inline-block;
-    height: 1em;
+    /* высота — по строке, а не по 1em: иначе у ссылок с line-height > 1
+       режутся нижние выносные («у», «р», «щ») */
+    height: 1lh;
     overflow: hidden;
-    vertical-align: -.15em;
+    vertical-align: top;
   }
 
-  .nav-roll span { display: flex; height: 1em; }
+  .nav-roll span { display: flex; height: 1lh; }
 
   .nav-roll b {
     display: inline-block;
@@ -2483,7 +2485,7 @@
   /* Под сеткой — заголовок и ссылка с подчёркиванием. */
   .foot__top {
     position: relative;
-    padding: 0 0 clamp(56px, 10vh, 130px);
+    padding: clamp(48px, 8vh, 96px) 0 clamp(80px, 14vh, 170px);
   }
 
   /* Метка «Оставить заявку» — у края экрана, как «Навигация» ниже.
