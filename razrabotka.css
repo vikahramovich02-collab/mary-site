@@ -2461,22 +2461,14 @@
     padding: 0 0 clamp(56px, 10vh, 130px);
   }
 
-  /* Как шапка FAQ: слева метка, справа заголовок на линии вопросов. */
-  .foot__top .sec__mark { margin: 0 0 20px; }
+  /* Метка «Оставить заявку» — у края экрана, как «Навигация» ниже.
+     Заголовок — в .wrap, на той же правой линии, что вопросы FAQ. */
+  .foot__top { position: relative; }
+  .foot__top-mark { margin: 0 0 20px; }
 
   @media (min-width: 901px) {
-    .foot__top {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) min(62%, 760px);
-      align-items: start;
-    }
-    /* метка — у края экрана, как «Навигация» ниже; заголовок остаётся
-       в .wrap на линии вопросов FAQ. Отступ .wrap компенсируем сдвигом. */
-    .foot__top .sec__mark {
-      grid-column: 1; grid-row: 1; margin: 14px 0 0;
-      transform: translateX(calc(-1 * max(0px, (100vw - 1440px) / 2)));
-    }
-    .foot__head { grid-column: 2; grid-row: 1; }
+    .foot__top-mark { position: absolute; top: 14px; left: 0; margin: 0; }
+    .foot__head { width: min(62%, 760px); margin-left: auto; }
   }
 
   .foot__head h2 {
