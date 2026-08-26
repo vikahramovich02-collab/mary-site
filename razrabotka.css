@@ -2244,8 +2244,9 @@
     width: 100%;
     aspect-ratio: 441 / 305;
     border-radius: 18px;
-    background: #fff;
-    object-fit: cover;
+    /* иллюстрации на прозрачном — светлая плашка, как в карточках блога */
+    background: #F2F2F0;
+    object-fit: contain;
     transition: transform .25s cubic-bezier(.32, .72, .3, 1);
   }
 
@@ -2386,12 +2387,14 @@
 
   /* Сетка футера по референсу: слева метка и крупная навигация с
      разделителями, справа два столбца с подписями в скобках. */
+  /* Навигация слева; «(реквизиты)» начинаются на той же правой линии, что
+     вопросы FAQ и заголовок выше; «(связь)» — во второй половине. */
   .foot__grid {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, .6fr) minmax(0, .4fr);
+    grid-template-columns: minmax(0, 1fr) repeat(2, calc(min(62%, 760px) / 2));
     align-items: start;
-    gap: clamp(24px, 4vw, 64px);
+    column-gap: 0;
   }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(36px, 6vh, 72px); }
