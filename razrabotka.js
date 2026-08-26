@@ -1,0 +1,642 @@
+// Скрипты страницы разработки: сфера из точек, курсор, анимации.
+// Подключается из razrabotka.html с defer — выполняется после разбора
+// страницы, поэтому весь DOM уже на месте.
+
+// Сфера из точек на первом экране: точки живут на поверхности шара,
+  // ближние крупнее и ярче. Считается на canvas, картинок не требует.
+  (function () {
+    var cv = document.getElementById("dev-globe");
+    if (!cv || !cv.getContext) return;
+
+    var ctx = cv.getContext("2d");
+    var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var N = 1900;
+    var pts = [];
+    for (var i = 0; i < N; i++) {
+      // равномерно по сфере: иначе точки собьются в кучу у полюсов
+      var y = 1 - (i / (N - 1)) * 2;
+      var r = Math.sqrt(Math.max(0, 1 - y * y));
+      var phi = i * Math.PI * (3 - Math.sqrt(5));
+
+      // три калибра: россыпь мелких, средние и десятая часть — крупные белые
+      var roll = Math.random();
+      var tier = roll < 0.1 ? 2 : (roll < 0.4 ? 1 : 0);
+      var base = tier === 2 ? 1.5 : (tier === 1 ? 0.95 : 0.55);
+
+      pts.push({
+        x: Math.cos(phi) * r, y: y, z: Math.sin(phi) * r,
+        s: base * (0.85 + Math.random() * 0.3),
+        hot: tier === 2
+      });
+    }
+
+    var w = 0, h = 0, R = 0, dpr = 1;
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      R = Math.min(w, h) * 0.46;
+    }
+
+    // Курсор продавливает сферу: точки рядом уходят вглубь и гаснут.
+    var mx = -1e4, my = -1e4, press = 0, want = 0;
+    var DENT = 150;                                  // радиус влияния, px
+
+    if (window.matchMedia("(hover: hover)").matches) {
+      cv.parentNode.addEventListener("pointermove", function (e) {
+        var r = cv.getBoundingClientRect();
+        mx = e.clientX - r.left; my = e.clientY - r.top; want = 1;
+      });
+      cv.parentNode.addEventListener("pointerleave", function () { want = 0; });
+    }
+
+    // Кнопка работает магнитом: точки, проходящие рядом, подтягиваются
+    // к ней и разгораются, а уйдя за радиус — возвращаются на свою орбиту.
+    var cta = document.querySelector(".hero__cta");
+    var PULL = 130;
+    var bx = 0, by = 0, bw = 0, bh = 0, hasCta = false;
+
+    function measureCta() {
+      if (!cta) { hasCta = false; return; }
+      var r = cta.getBoundingClientRect();
+      var c = cv.getBoundingClientRect();
+      if (!r.width) { hasCta = false; return; }
+      bx = r.left + r.width / 2 - c.left;
+      by = r.top + r.height / 2 - c.top;
+      bw = r.width / 2;
+      bh = r.height / 2;
+      hasCta = true;
+    }
+
+    var raf = 0;
+    function frame(now) {
+      measureCta();
+      var a = now * 0.00012;
+      var sa = Math.sin(a), ca = Math.cos(a);
+      var tilt = -0.35, st = Math.sin(tilt), ct = Math.cos(tilt);
+      ctx.clearRect(0, 0, w, h);
+
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        var x = p.x * ca - p.z * sa;
+        var z = p.x * sa + p.z * ca;
+        var y = p.y * ct - z * st;
+        var zz = p.y * st + z * ct;
+
+        var depth = (zz + 1) / 2;                 // 0 — дальняя сторона, 1 — ближняя
+        var size = p.s * (0.3 + depth * 0.95);
+        var px = w / 2 + x * R;
+        var py = h / 2 + y * R;
+
+        // магнит кнопки: тянем к её середине по расстоянию до края капсулы
+        if (hasCta) {
+          var qx = Math.max(bx - bw, Math.min(px, bx + bw));
+          var qy = Math.max(by - bh, Math.min(py, by + bh));
+          var ddx = px - qx, ddy = py - qy;
+          var dd = Math.sqrt(ddx * ddx + ddy * ddy);
+          if (dd < PULL) {
+            var g = 1 - dd / PULL;
+            g = g * g * 0.55;
+            px += (bx - px) * g;
+            py += (by - py) * g;
+            size *= 1 + g * 0.5;
+            depth = Math.min(1, depth + g * 0.4);
+          }
+        }
+
+        // вмятина: чем ближе точка к курсору, тем сильнее её тянет к центру
+        if (press > 0.01) {
+          var dx = px - mx, dy = py - my;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < DENT) {
+            var k = (1 - d / DENT);
+            k = k * k * press;                      // мягкий край воронки
+            px -= (px - w / 2) * k * 0.22;
+            py -= (py - h / 2) * k * 0.22;
+            size *= 1 - k * 0.55;
+            depth *= 1 - k * 0.5;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(size, 0.15), 0, Math.PI * 2);
+        // крупные светятся белым, остальные держатся в сером
+        ctx.fillStyle = p.hot
+          ? "rgba(255, 255, 255, " + (0.2 + depth * 0.7) + ")"
+          : "rgba(194, 194, 198, " + (0.06 + depth * 0.38) + ")";
+        ctx.fill();
+      }
+
+      press += (want - press) * 0.12;               // вмятина набирается и отпускает плавно
+      raf = window.requestAnimationFrame(frame);
+    }
+
+    size();
+    window.addEventListener("resize", size);
+
+    var run = function (on) {
+      if (on && !raf && !calm.matches) raf = window.requestAnimationFrame(frame);
+      if (!on && raf) { window.cancelAnimationFrame(raf); raf = 0; }
+    };
+
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (e) { run(e[0].isIntersecting); }).observe(cv);
+    } else { run(true); }
+
+    if (calm.matches) frame(0);
+  })();
+
+  // Бегущая строка: сдвигается по мере прокрутки секции, а не сама по себе —
+  // движение привязано к жесту человека, поэтому не отвлекает.
+  (function () {
+    var line = document.querySelector("[data-tape]");
+    if (!line) return;
+
+    var sec = line.closest(".tape");
+    var arcs = sec ? sec.querySelector(".tape__arcs") : null;
+    var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var frame = 0;
+
+    function update() {
+      frame = 0;
+      var box = sec.getBoundingClientRect();
+      var span = window.innerHeight + box.height;
+      var passed = (window.innerHeight - box.top) / span;      // 0 → 1 за проход
+      var travel = Math.max(0, line.scrollWidth - window.innerWidth);
+      line.style.transform = "translate3d(" + (-passed * travel) + "px, 0, 0)";
+
+      // кольцо поворачивается тем же жестом: полный оборот за проход секции
+      if (arcs) {
+        arcs.style.transform = "translate(-50%, -50%) rotate(" + (passed * 360 - 40) + "deg)";
+      }
+    }
+
+    function onScroll() { if (!frame) frame = window.requestAnimationFrame(update); }
+
+    if (calm.matches) return;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  })();
+
+  // Этапы: карточка раскрывается, когда доходит до середины экрана.
+  (function () {
+    var items = document.querySelectorAll("[data-flow]");
+    if (!items.length || !window.IntersectionObserver) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle("is-in", e.isIntersecting); });
+    }, { threshold: 0, rootMargin: "0px 0px -4% 0px" });
+
+    items.forEach(function (el) { io.observe(el); });
+
+    var frame = 0;
+
+    function sweep() {
+      frame = 0;
+      var h = window.innerHeight;
+      items.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < h * .96 && r.bottom > 0) el.classList.add("is-in");
+      });
+    }
+
+    window.addEventListener("scroll", function () {
+      if (!frame) frame = window.requestAnimationFrame(sweep);
+    }, { passive: true });
+
+    window.addEventListener("resize", sweep);
+    sweep();
+  })();
+
+  // Кнопка под этапами загорается, когда ось этапов пройдена до конца.
+  (function () {
+    var track = document.querySelector(".flow__track");
+    var cta = document.querySelector("#flow .flow__cta");
+    if (!track || !cta) return;
+
+    var frame = 0;
+
+    function update() {
+      frame = 0;
+      // бегунок висит на середине экрана — конец оси считаем по той же линии
+      cta.classList.toggle("is-lit", track.getBoundingClientRect().bottom <= window.innerHeight * .5);
+    }
+
+    function onScroll() { if (!frame) frame = window.requestAnimationFrame(update); }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  })();
+
+  // Предпросмотр строки: показываем визуал у курсора, пока мышь на строке.
+  (function () {
+    var peek = document.querySelector(".rows__peek");
+    var list = document.querySelector(".rows");
+    if (!peek || !list || !window.matchMedia("(hover: hover)").matches) return;
+
+    var img = peek.querySelector("img");
+    var frame = 0, x = 0, y = 0;
+
+    function move() {
+      frame = 0;
+      peek.style.top = y + "px";
+      peek.style.left = x + "px";
+    }
+
+    list.addEventListener("pointermove", function (e) {
+      x = e.clientX; y = e.clientY;
+      if (!frame) frame = window.requestAnimationFrame(move);
+    });
+
+    list.querySelectorAll("li").forEach(function (li) {
+      li.addEventListener("pointermove", function () {
+        var src = li.dataset.shot;
+        if (!src) return;
+        if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+        peek.classList.add("is-on");
+        list.classList.add("is-peek");
+      });
+    });
+
+    list.addEventListener("pointerleave", function () {
+      peek.classList.remove("is-on");
+      list.classList.remove("is-peek");
+    });
+  })();
+
+  // Обновление страницы всегда открывает её сверху: браузер иначе
+  // возвращает прежнюю прокрутку, и человек попадает в середину.
+  // Перезагрузка оставляет человека на том же месте. Сами держим позицию:
+  // браузер восстанавливает её слишком рано — до того, как скрипты досчитают
+  // высоту секций, и страница уезжает на блок ниже.
+  (function () {
+    var KEY = "dev-scroll";
+    var saved = 0;
+    try { saved = parseFloat(sessionStorage.getItem(KEY)) || 0; } catch (e) {}
+
+    var store = function () {
+      try { sessionStorage.setItem(KEY, String(window.scrollY)); } catch (e) {}
+    };
+
+    var tick = 0;
+    window.addEventListener("scroll", function () {
+      if (tick) return;
+      tick = window.setTimeout(function () { tick = 0; store(); }, 150);
+    }, { passive: true });
+
+    window.addEventListener("pagehide", store);
+    window.addEventListener("beforeunload", store);
+
+    if (window.location.hash || !saved) return;
+
+    // высоту секций скрипты досчитывают уже после load — возвращаемся
+    // на место несколько раз, пока раскладка не устоялась
+    var back = function () { window.scrollTo(0, saved); };
+    back();
+    document.addEventListener("DOMContentLoaded", back);
+    window.addEventListener("load", function () {
+      back();
+      window.requestAnimationFrame(back);
+      window.setTimeout(back, 120);
+      window.setTimeout(back, 400);
+    });
+  })();
+
+  // Подписи в шапке собираем из букв — иначе прокрутка лесенкой
+  // потребовала бы вручную размечать каждый пункт.
+  (function () {
+    var links = document.querySelectorAll(".nav__links a, .nav__actions a, .flow__cta");
+    if (!links.length) return;
+
+    links.forEach(function (a) {
+      var node = null;
+      for (var i = 0; i < a.childNodes.length; i++) {
+        var n = a.childNodes[i];
+        if (n.nodeType === 3 && n.textContent.trim()) { node = n; break; }
+      }
+      if (!node) return;
+
+      var text = node.textContent.trim();
+      var row = function () {
+        return text.split("").map(function (ch, i) {
+          return '<b style="--i:' + i + '">' + (ch === " " ? "&nbsp;" : ch) + "</b>";
+        }).join("");
+      };
+
+      var roll = document.createElement("span");
+      roll.className = "nav-roll";
+      roll.innerHTML = "<span>" + row() + "</span><span>" + row() + "</span>";
+      roll.setAttribute("aria-label", text);
+      a.replaceChild(roll, node);
+    });
+  })();
+
+  // Курсор-точка на первом экране.
+  (function () {
+    var dot = document.querySelector(".dot-cursor");
+    if (!dot || !window.matchMedia("(hover: hover)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var x = 0, y = 0, frame = 0;
+
+    function move() {
+      frame = 0;
+      // центрируем сам элемент, чтобы размер можно было менять на лету
+      dot.style.transform = "translate(" + x + "px," + y + "px) translate(-50%, -50%)";
+    }
+
+    document.addEventListener("pointermove", function (e) {
+      x = e.clientX; y = e.clientY;
+      dot.classList.add("is-on");
+      if (!frame) frame = window.requestAnimationFrame(move);
+    });
+
+    document.addEventListener("pointerleave", function () { dot.classList.remove("is-on"); });
+
+    // над карточками и плашками точка вырастает в кружок с подписью
+    var BIG = ".hero__case, .flow__card, .b-case, .rows li, .post, .demo";
+
+    var label = dot.querySelector("i");
+
+    function say(box) {
+      if (!label) return;
+      var text = box.getAttribute("data-cursor") || "Смотреть";
+      label.innerHTML = text.replace(" ", "<br />");
+      dot.classList.toggle("is-wide", text.indexOf(" ") > -1);
+      dot.classList.add("is-big");
+    }
+
+    document.addEventListener("pointerover", function (e) {
+      var box = e.target.closest && e.target.closest(BIG);
+      if (box) say(box);
+    });
+
+    document.addEventListener("pointerout", function (e) {
+      if (e.target.closest && e.target.closest(BIG) && !e.relatedTarget) {
+        dot.classList.remove("is-big", "is-wide");
+      }
+    });
+
+    document.querySelectorAll(BIG).forEach(function (box) {
+      box.addEventListener("pointerenter", function () { say(box); });
+      box.addEventListener("pointerleave", function () {
+        dot.classList.remove("is-big", "is-wide");
+      });
+    });
+
+  })();
+
+  // Заливка плитки расходится из точки касания курсора.
+  (function () {
+    var tiles = document.querySelectorAll(".quote__links a, .hero__cta");
+    if (!tiles.length || !window.matchMedia("(hover: hover)").matches) return;
+
+    var dot = document.querySelector(".dot-cursor");
+
+    tiles.forEach(function (a) {
+      a.addEventListener("pointerenter", function (e) {
+        var r = a.getBoundingClientRect();
+        a.style.setProperty("--x", (e.clientX - r.left) + "px");
+        a.style.setProperty("--y", (e.clientY - r.top) + "px");
+        if (dot) dot.classList.add("is-plain");
+      });
+
+      a.addEventListener("pointerleave", function () {
+        if (dot) dot.classList.remove("is-plain");
+      });
+    });
+  })();
+
+  // Вопросы: плавное раскрытие, открытый закрывается при клике по другому.
+  (function () {
+    var items = document.querySelectorAll(".faq__item");
+    if (!items.length) return;
+
+    items.forEach(function (item) {
+      var btn = item.querySelector(".faq__q");
+      btn.addEventListener("click", function () {
+        var open = !item.classList.contains("is-open");
+        items.forEach(function (other) {
+          other.classList.remove("is-open");
+          other.querySelector(".faq__q").setAttribute("aria-expanded", "false");
+        });
+        if (open) {
+          item.classList.add("is-open");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+  })();
+
+  // Списки шагов в карточках: раскрываются плавно, по одному клику.
+  (function () {
+    function toggle(box) {
+      var btn = box.querySelector(".flow__more");
+      var open = box.classList.toggle("is-open");
+      if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    document.querySelectorAll(".flow__more").forEach(function (btn) {
+      btn.addEventListener("click", function () { toggle(btn.closest(".flow__det")); });
+    });
+
+    // клик по всей карточке тоже раскрывает список — плюс лишь подсказка
+    document.querySelectorAll(".flow__card").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        if (e.target.closest(".flow__more")) return;
+        var box = card.querySelector(".flow__det");
+        if (box) toggle(box);
+      });
+    });
+  })();
+
+  // Видео-обзор: разворачивается из угла превью и гаснет обратно.
+  (function () {
+    var btn = document.querySelector("[data-demo]");
+    var modal = document.querySelector("[data-vmodal]");
+    if (!btn || !modal) return;
+
+    var box = modal.querySelector(".vmodal__box");
+    var close = modal.querySelector(".vmodal__close");
+
+    function open() {
+      var r = btn.getBoundingClientRect();
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+
+      // растём из левого нижнего угла превью — точка отсчёта берётся
+      // относительно самого окна видео, а не экрана
+      window.requestAnimationFrame(function () {
+        var b = box.getBoundingClientRect();
+        box.style.setProperty("--ox", (r.left - b.left) + "px");
+        box.style.setProperty("--oy", (r.bottom - b.top) + "px");
+        window.requestAnimationFrame(function () { modal.classList.add("is-open"); });
+      });
+    }
+
+    function hide() {
+      modal.classList.remove("is-open");
+      document.body.style.overflow = "";
+      window.setTimeout(function () { modal.hidden = true; }, 320);
+    }
+
+    btn.addEventListener("click", open);
+    close.addEventListener("click", hide);
+    modal.addEventListener("click", function (e) { if (e.target === modal) hide(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) hide();
+    });
+  })();
+
+  // Метки разделов: подпись выезжает из-под точки при заходе на блок.
+  (function () {
+    var marks = document.querySelectorAll(".sec__mark");
+    if (!marks.length || !window.IntersectionObserver) return;
+
+    marks.forEach(function (m) {
+      for (var i = 0; i < m.childNodes.length; i++) {
+        var n = m.childNodes[i];
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          var em = document.createElement("em");
+          em.textContent = n.textContent;
+          m.replaceChild(em, n);
+          break;
+        }
+      }
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle("is-live", e.isIntersecting); });
+    }, { threshold: .6 });
+
+    marks.forEach(function (m) { io.observe(m); });
+  })();
+
+  // Цитата: слова загораются по мере прокрутки секции.
+  (function () {
+    var box = document.querySelector("[data-quote]");
+    if (!box) return;
+
+    var words = box.querySelectorAll("p span");
+    var sec = box.closest("section");
+    var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var frame = 0;
+
+    if (calm.matches) {
+      words.forEach(function (w) { w.classList.add("is-lit"); });
+      return;
+    }
+
+    function update() {
+      frame = 0;
+      var box2 = sec.getBoundingClientRect();
+      var span = window.innerHeight * .55;
+      // 0 — секция ещё внизу, 1 — прошла середину экрана
+      var passed = (window.innerHeight - box2.top - span) / (box2.height * .6);
+      var lit = Math.round(Math.min(Math.max(passed, 0), 1) * words.length);
+      words.forEach(function (w, i) { w.classList.toggle("is-lit", i < lit); });
+    }
+
+    function onScroll() { if (!frame) frame = window.requestAnimationFrame(update); }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  })();
+
+  // Меню ниш в шапке: наведение открывает, клик мимо и Esc закрывают.
+  (function () {
+    var drop = document.getElementById("nav-drop");
+    if (!drop) return;
+
+    var btn = drop.querySelector("[data-drop-btn]");
+    var menu = drop.querySelector(".nav__menu");
+
+    var set = function (on) {
+      menu.classList.toggle("is-open", on);
+      btn.setAttribute("aria-expanded", String(on));
+    };
+
+    // Меню закрывается с задержкой: увести мышь по диагонали к промо-карточке
+    // быстрее, чем срабатывает mouseleave, — и список исчезал под курсором.
+    var timer = 0;
+    var pinned = false;
+
+    var later = function () {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () { if (!pinned) set(false); }, 420);
+    };
+
+    drop.addEventListener("mouseenter", function () { window.clearTimeout(timer); set(true); });
+    drop.addEventListener("mouseleave", later);
+
+    // клик закрепляет меню открытым, пока не кликнут мимо или не нажмут Esc
+    btn.addEventListener("click", function () {
+      window.clearTimeout(timer);
+      pinned = !menu.classList.contains("is-open") || !pinned;
+      set(pinned || !menu.classList.contains("is-open"));
+      if (!menu.classList.contains("is-open")) pinned = false;
+    });
+
+    document.addEventListener("pointerdown", function (e) {
+      if (!drop.contains(e.target)) { pinned = false; set(false); }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { pinned = false; set(false); }
+    });
+  })();
+
+  // Проявление: наблюдатель не отключается, поэтому анимация играет
+  // каждый раз, когда блок снова попадает в экран.
+  (function () {
+    var targets = document.querySelectorAll("[data-reveal]");
+    if (!targets.length || !window.IntersectionObserver) return;
+
+    document.documentElement.classList.add("has-reveal");
+    var rescue = setTimeout(function () {
+      targets.forEach(function (el) { el.classList.add("is-in"); });
+    }, 3000);
+
+    var io = new IntersectionObserver(function (entries) {
+      clearTimeout(rescue);
+      entries.forEach(function (e) { e.target.classList.toggle("is-in", e.isIntersecting); });
+    }, { threshold: 0, rootMargin: "0px 0px -4% 0px" });
+
+    targets.forEach(function (el) { io.observe(el); });
+
+    // Подстраховка на быструю прокрутку: наблюдатель успевает не всегда,
+    // поэтому раз в кадр досматриваем, что реально попало в экран.
+    var frame = 0;
+
+    function sweep() {
+      frame = 0;
+      var h = window.innerHeight;
+      targets.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < h * .96 && r.bottom > 0) el.classList.add("is-in");
+      });
+    }
+
+    window.addEventListener("scroll", function () {
+      if (!frame) frame = window.requestAnimationFrame(sweep);
+    }, { passive: true });
+
+    window.addEventListener("resize", sweep);
+    sweep();
+  })();
+
+  // Заявка: отправки пока нет, показываем подтверждение.
+  (function () {
+    var form = document.querySelector("[data-req-form]");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // TODO: адрес приёма заявок — общий с формой на главной.
+      form.hidden = true;
+      form.parentNode.querySelector(".dev-form__done").hidden = false;
+    });
+  })();
