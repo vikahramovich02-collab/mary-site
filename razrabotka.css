@@ -2405,9 +2405,18 @@
      вопросы FAQ и заголовок выше; «(связь)» — во второй половине. */
   /* Навигация — у края экрана; реквизиты и связь — в .wrap, на той же
      правой линии, что вопросы FAQ и заголовок выше. */
-  .foot__grid { position: relative; }
+  /* Навигация и правая часть — один грид: навигация в потоке (даёт
+     высоту), правая часть сверху накладывается той же строкой. */
+  .foot__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 
-  .foot__navcol { position: absolute; top: 0; left: 0; }
+  .foot__navcol,
+  .foot__right { grid-column: 1; grid-row: 1; }
+
+  .foot__navcol { position: relative; z-index: 1; width: max-content; }
 
   /* Та же сетка, что у FAQ: слева пусто (там навигация), справа
      min(62%, 760px). Внутри правой части — реквизиты и связь пополам. */
