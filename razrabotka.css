@@ -2460,9 +2460,17 @@
     padding: 0 0 clamp(56px, 10vh, 130px);
   }
 
-  /* Заголовок стоит на той же правой линии, что вопросы FAQ выше. */
+  /* Как шапка FAQ: слева метка, справа заголовок на линии вопросов. */
+  .foot__top .sec__mark { margin: 0 0 20px; }
+
   @media (min-width: 901px) {
-    .foot__head { width: min(62%, 760px); margin-left: auto; }
+    .foot__top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) min(62%, 760px);
+      align-items: start;
+    }
+    .foot__top .sec__mark { grid-column: 1; grid-row: 1; margin: 14px 0 0; }
+    .foot__head { grid-column: 2; grid-row: 1; }
   }
 
   .foot__head h2 {
