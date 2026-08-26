@@ -226,6 +226,18 @@
     if (calm.matches) frame(0);                      // без анимации — один кадр
   })();
 
+  // Шапка прячется, пока в экране футер: там она лишняя, и блендинг
+  // поверх волны выглядел бы грязно.
+  (function () {
+    var bar = document.querySelector(".nav-bar");
+    var foot = document.querySelector(".foot");
+    if (!bar || !foot || !window.IntersectionObserver) return;
+
+    new IntersectionObserver(function (e) {
+      bar.classList.toggle("is-away", e[0].isIntersecting);
+    }, { threshold: 0, rootMargin: "-10% 0px 0px 0px" }).observe(foot);
+  })();
+
   // Кнопка «наверх» в нижней полоске футера.
   (function () {
     var up = document.querySelector("[data-scroll-top]");
