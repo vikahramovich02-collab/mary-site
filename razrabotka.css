@@ -2503,7 +2503,8 @@
   .foot__top-mark { margin: 0 0 20px; }
 
   @media (min-width: 901px) {
-    .foot__top-mark { position: absolute; top: 14px; left: 0; margin: 0; }
+    /* та же высота, что верхний отступ блока, + 14px до линии заголовка */
+    .foot__top-mark { position: absolute; top: calc(clamp(48px, 8vh, 96px) + 14px); left: 0; margin: 0; }
     .foot__head { width: min(62%, 760px); margin-left: auto; }
   }
 
