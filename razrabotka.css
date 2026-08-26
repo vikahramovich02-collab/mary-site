@@ -2127,7 +2127,7 @@
     #case .sec__head h2 { grid-column: 1; grid-row: 2; margin: 14px 0 0; padding-right: clamp(16px, 2vw, 28px); }
     /* верхняя подпись — на одной линии с меткой «Кейс» (15px против 11px:
        ужимаем margin-top, чтобы совпали базовые линии, а не верхние края) */
-    #case .case__tag { grid-column: 2; grid-row: 1; margin: 3px 0 0; align-self: start; }
+    #case .case__tag { grid-column: 2; grid-row: 1; margin: 5px 0 0; align-self: start; }
     #case .case__lead { grid-column: 2; grid-row: 2; }
 
     /* визуал слева, цифры справа */
