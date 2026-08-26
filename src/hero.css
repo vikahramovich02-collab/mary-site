@@ -1,0 +1,232 @@
+/* ============================================================
+   Первый экран Mary — собран по макету (Figma, MARY FINAL, блок «1»).
+   Всё на токенах из tokens.css, ни одного хардкоженого цвета.
+
+   Почему отдельный файл со своим скоупом `.hero-2026`:
+   в custom-landing.css `.custom-hero` переопределяется шестью слоями
+   (строки 24, 546, 805, секция beauty-light, секция «по макету»).
+   Точечная правка там непредсказуема — какой слой победит, зависит
+   от порядка сборки. Здесь один слой, выше по специфичности,
+   и правится ровно то, что видно.
+
+   Числа взяты из макета 1440×832:
+   H1 60/-3%/100% #323538 · copy 16 #494F5C 50% · CTA 155×44 r40 #151617
+   nav 76 · зазоры H1→copy 22, copy→CTA 57
+   ============================================================ */
+
+.hero-2026.custom-hero {
+  position: relative;
+  width: 100%;
+  min-height: max(760px, 100svh);
+  margin: 0;
+  padding: 0 clamp(24px, 3.5vw, 50px) 0;
+  border: 0 !important;
+  border-radius: 0;
+  background: var(--surface-page) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+/* точечное поле — фон, всё остальное над ним */
+.hero-2026.custom-hero .pf-hero-field { z-index: 0; }
+.hero-2026.custom-hero .custom-hero-shade { display: none; }
+
+/* ── шапка: пункты слева, знак по центру, действия справа ────────── */
+
+.hero-2026.custom-hero .pf-header {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  max-width: 1340px;
+  min-height: 76px;
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-2026.custom-hero .pf-nav {
+  justify-self: start;
+  gap: var(--space-24);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-2026.custom-hero .pf-nav > a,
+.hero-2026.custom-hero .pf-nav .mary-dd > button {
+  color: var(--text-primary);
+  font: 400 var(--font-14)/1 var(--font-family);
+  letter-spacing: -.03em;
+}
+
+.hero-2026.custom-hero .pf-nav > a:hover,
+.hero-2026.custom-hero .pf-nav .mary-dd > button:hover {
+  color: var(--text-heading);
+  background: transparent;
+}
+
+.hero-2026.custom-hero .custom-brand {
+  justify-self: center;
+  color: var(--button-dark);
+  font-weight: 600;
+  font-size: 19.4px;
+  letter-spacing: -.09em;
+}
+
+.hero-2026.custom-hero .custom-header-actions {
+  justify-self: end;
+  gap: var(--space-24);
+}
+
+.hero-2026.custom-hero .pf-link {
+  color: var(--text-primary);
+  font: 400 var(--font-14)/1 var(--font-family);
+  letter-spacing: -.03em;
+}
+
+/* кнопка в шапке — светлая пилюля */
+.hero-2026.custom-hero .pf-btn.is-soft {
+  min-height: 36px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--radius-2xl);
+  color: var(--text-primary);
+  background: var(--button-soft);
+  font: 500 var(--font-12)/1 var(--font-family);
+  letter-spacing: -.03em;
+}
+
+.hero-2026.custom-hero .pf-btn.is-soft:hover { background: var(--border-default); }
+
+/* ── центральный блок ────────────────────────────────────────────── */
+
+.hero-2026.custom-hero .custom-hero-content {
+  position: relative;
+  z-index: 4;
+  top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: clamp(60px, 12.4vh, 103px); /* 179 − 76 в макете */
+  text-align: center;
+}
+
+.hero-2026.custom-hero .custom-hero-content h1 {
+  max-width: 12ch;
+  margin: 0 auto;
+  color: var(--text-heading);
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: clamp(38px, 4.2vw, 60px);
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+
+.hero-2026.custom-hero .custom-hero-copy {
+  max-width: none;
+  margin: var(--space-24) auto 0;
+  color: color-mix(in srgb, var(--text-secondary) 50%, transparent);
+  font: 400 var(--font-16)/1 var(--font-family);
+  letter-spacing: -.03em;
+}
+
+/* ── главный CTA ─────────────────────────────────────────────────── */
+
+.hero-2026.custom-hero .custom-hero-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(32px, 6.9vh, 57px);
+}
+
+.hero-2026.custom-hero .pf-btn.is-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: var(--radius-2xl);
+  color: var(--text-inverse);
+  background: var(--button-dark);
+  font: 500 var(--font-16)/1 var(--font-family);
+  letter-spacing: -.03em;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.hero-2026.custom-hero .pf-btn.is-dark:hover {
+  background: var(--button-dark-hover);
+  transform: translateY(-1px);
+}
+
+.hero-2026.custom-hero .pf-btn.is-dark img {
+  width: 16px;
+  height: 16px;
+  filter: invert(1);
+}
+
+/* ── логотипы клиентов ───────────────────────────────────────────── */
+
+.hero-2026.custom-hero .pf-hero-logos {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 2.6vw, 36px);
+  margin-top: clamp(28px, 4.6vh, 38px);
+}
+
+.hero-2026.custom-hero .pf-hero-logos-label {
+  width: 100%;
+  color: var(--text-disabled);
+  font: 400 var(--font-12)/1 var(--font-family);
+  letter-spacing: -.02em;
+}
+
+.hero-2026.custom-hero .pf-hero-logos img {
+  width: auto;
+  height: 26px;
+  filter: grayscale(1);
+  opacity: .38;
+  transition: opacity .2s ease;
+}
+
+.hero-2026.custom-hero .pf-hero-logos img:hover { opacity: .7; }
+
+/* ── маскот ──────────────────────────────────────────────────────── */
+
+.hero-2026.custom-hero .mary-dog {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── адаптив ─────────────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+  .hero-2026.custom-hero .pf-header { grid-template-columns: auto 1fr; }
+  .hero-2026.custom-hero .pf-nav,
+  .hero-2026.custom-hero .pf-link { display: none; }
+  .hero-2026.custom-hero .custom-brand { justify-self: start; }
+}
+
+@media (max-width: 760px) {
+  .hero-2026.custom-hero { padding-inline: var(--space-20); }
+  .hero-2026.custom-hero .custom-hero-content { padding-top: var(--space-48); }
+  .hero-2026.custom-hero .custom-hero-content h1 { max-width: 100%; font-size: clamp(32px, 8.6vw, 40px); }
+  .hero-2026.custom-hero .custom-hero-copy { font-size: var(--font-14); }
+  .hero-2026.custom-hero .pf-hero-logos img { height: 20px; }
+}

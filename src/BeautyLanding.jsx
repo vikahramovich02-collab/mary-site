@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight, Check, Menu, X, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import { HeroField } from "./HeroField.jsx";
+import { SiteHeader } from "./SiteHeader.jsx";
 import "./custom-landing.css";
 
 // Пары «триггер → потеря» и их зеркальные ответы — из питчдека для BEAUTYCON
@@ -105,22 +106,7 @@ export function BeautyLanding() {
         />
         <div className="custom-hero-shade" aria-hidden="true" />
 
-        <header className="custom-header">
-          <Brand />
-          <nav className="custom-nav" aria-label="Навигация по странице">
-            <a href="#problems">Проблемы</a>
-            <a href="#features">Возможности</a>
-            <a href="#how">Как работает</a>
-            <a href="#faq">FAQ</a>
-          </nav>
-          <div className="custom-header-actions">
-            <a className="custom-language" href="/#companies" aria-label="Все отрасли">Отрасли</a>
-            <a className="custom-button custom-button-light custom-button-small" href="#contact">Подключить салон</a>
-            <button className="custom-menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню">
-              <Menu size={21} />
-            </button>
-          </div>
-        </header>
+        <SiteHeader />
 
         {menuOpen && (
           <div className="custom-mobile-menu" role="dialog" aria-modal="true" aria-label="Меню">

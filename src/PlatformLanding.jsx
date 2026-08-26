@@ -1,17 +1,25 @@
 import { useState } from "react";
-import { ArrowRight, Check, Menu, X, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Menu, X, ChevronDown, Plus, Sparkles } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
-import navDot from "./assets/nav-dot.svg";
 import { ChatReveal } from "./ChatReveal.jsx";
+import { PainTriggers } from "./PainTriggers.jsx";
 import { NicheStack } from "./NicheStack.jsx";
 import { HeroField } from "./HeroField.jsx";
 import { MaryDog } from "./MaryDog.jsx";
 import { PlatformPanels } from "./PlatformPanels.jsx";
+import { PlatformGather } from "./PlatformGather.jsx";
 import { IntegrationsMarquee } from "./IntegrationsMarquee.jsx";
-import { ProductTabs } from "./ProductTabs.jsx";
+import { KeyScreens } from "./KeyScreens.jsx";
+import { HowItWorks } from "./HowItWorks.jsx";
+import { MaryVs, MaryControl } from "./MaryVs.jsx";
+import { TrustBlock } from "./TrustBlock.jsx";
+import { BlogTeaser } from "./BlogTeaser.jsx";
+import { FooterFinal } from "./FooterFinal.jsx";
+import { FloatingCta } from "./FloatingCta.jsx";
 import { WorkflowAnim } from "./WorkflowAnim.jsx";
 import "./custom-landing.css";
+import "./hero.css";
 
 // Ниши в порядке готовности: сначала то, что уже работает на клиентах,
 // потом соседние (тот же кор + пара интеграций), в конце — другой стек.
@@ -25,11 +33,16 @@ const niches = [
 ];
 
 const faqs = [
-  ["Чем Mary отличается от конструктора агентов?", "Внутри уже есть готовые блоки — CRM, агенты, процессы, интеграции. Вы не начинаете с пустого холста, а описываете задачу словами, и Mary собирает систему под вашу компанию."],
-  ["Нужно ли программировать или писать ТЗ?", "Нет. Вы объясняете задачу обычным языком, а Mary собирает процесс из готовых блоков и показывает его целиком. Настройка идёт через чат."],
-  ["Mary заменяет людей?", "Нет. Mary держит рутину и приносит человеку только решения — спор о цене, жалобу, нестандарт. Контроль и важные действия остаются за вами."],
+  // Список пересобран 18.08 по FAQ конкурента: оставлены вопросы, которые
+  // подходят Mary. Ответ про данные — каркас, факты хостинга подтвердить.
+  ["Чем Mary отличается от обычного чата с ИИ?", "Обычный чат советует — делать всё равно вам. Mary живёт в вашей компании: знает прайсы и правила из базы знаний, сама пишет клиентам, ведёт запись и процессы. Ответ не нужно никуда переносить — он уже работа."],
+  ["Нужно ли уметь программировать?", "Нет. Вы описываете задачу обычными словами, Mary собирает процесс из готовых блоков и показывает его целиком. Правки — тоже сообщением в чате."],
+  ["Mary заменяет людей?", "Нет. Mary забирает рутину, а человеку отдаёт спорное: скидку, жалобу, нестандарт. Контроль и важные решения остаются за вами."],
+  ["Может ли Mary что-то сделать без спроса?", "Нет. Mary работает в рамках прав, которые вы ей выдали, а критичные действия можно поставить на подтверждение. Каждый шаг виден в истории процесса."],
+  ["Что будет, если Mary ошибётся?", "Спорные ситуации Mary сама передаёт сотруднику, а не решает наугад. Ошибка видна в истории и правится одним сообщением — правило сохраняется в базе знаний."],
   ["С какими системами работает?", "Мессенджеры (Instagram, Telegram, VK), системы записи (YClients, Altegio), CRM и другие сервисы. Способ интеграции проверяем до подключения."],
-  ["Как начать?", "Начинаем с одной ниши или процесса, где эффект виден быстро. Первый живой сегмент — салоны красоты; дальше — смежные сферы с записью."],
+  ["Сколько стоит Mary?", "Зависит от числа процессов и каналов — состав тарифов на странице «Стоимость». Точную цифру называем после короткого разбора вашей задачи."],
+  ["Где хранятся мои данные?", "Доступы к вашим системам выдаёте вы и можете отозвать в любой момент. Для компаний с чувствительными данными есть закрытый контур."],
 ];
 
 function Brand() {
@@ -38,15 +51,6 @@ function Brand() {
       <img src={maryMark} alt="" />
       <span>mary</span>
     </a>
-  );
-}
-
-function SectionIntro({ title, text }) {
-  return (
-    <div className="custom-section-intro">
-      <h2>{title}</h2>
-      {text && <p>{text}</p>}
-    </div>
   );
 }
 
@@ -59,19 +63,19 @@ export function PlatformLanding() {
 
   return (
     <main className="custom-site beauty-light" id="top" onClick={() => dd && setDd(null)}>
-      <section className="custom-hero beauty-hero" aria-labelledby="pf-hero-title">
+      <section className="custom-hero beauty-hero hero-2026" aria-labelledby="pf-hero-title">
         <HeroField className="pf-hero-field" dotAlpha={0.16} mode="halftone" speed={1.6} tone="light" />
         <div className="custom-hero-shade" aria-hidden="true" />
 
         <header className="custom-header pf-header">
           <nav className="pf-nav" aria-label="Навигация" onClick={(e) => e.stopPropagation()}>
-            <a href="/?page=blog"><img alt="" src={navDot} />Блог</a>
-            <a href="/?page=jobs"><img alt="" src={navDot} />Вакансии</a>
-            <a href="/?page=pricing"><img alt="" src={navDot} />Тарифы</a>
-            <a href="/?page=contacts"><img alt="" src={navDot} />Контакты</a>
+            <a href="/?page=blog">Блог</a>
+            <a href="/?page=cases">Кейсы</a>
+          <a href="/?page=pricing">Стоимость</a>
+            <a href="/?page=contacts">Контакты</a>
             <div className="mary-dd">
               <button type="button" onClick={() => toggle("companies")} aria-expanded={dd === "companies"}>
-                <img alt="" src={navDot} />
+                
                 Для компаний
                 <ChevronDown size={16} />
               </button>
@@ -90,7 +94,8 @@ export function PlatformLanding() {
           <Brand />
 
           <div className="custom-header-actions">
-            <a className="pf-link" href="#investors">
+            {/* открывает инвест-презентацию в новой вкладке */}
+            <a className="pf-link" href="/media/docs/mary-deck.pdf" rel="noopener" target="_blank">
               Для инвесторов
               <img alt="" src={arrowUpRight} />
             </a>
@@ -129,6 +134,7 @@ export function PlatformLanding() {
             </a>
           </div>
           <div className="pf-hero-logos" aria-label="С нами работают">
+            <span className="pf-hero-logos-label">С Mary уже работают</span>
             <img alt="Фабрика Фотокниги" src="/media/clients/fabrika.png" />
             <img alt="МТБанк" src="/media/clients/mtbank.png" />
             <img alt="ПВТ Беларусь" src="/media/clients/htp.png" />
@@ -141,25 +147,40 @@ export function PlatformLanding() {
 
       <ChatReveal />
 
+      <PainTriggers />
+
       <section className="custom-section" id="platform">
-        <SectionIntro title="Одна платформа собирает вашу компанию" />
+        {/* заголовок внутри PlatformGather: папки сбегаются в сетку под ним */}
+        <PlatformGather />
         <PlatformPanels />
       </section>
 
-      <ProductTabs />
+      <HowItWorks />
+
+      {/* Кульминация «как это работает»: живая сборка процесса.
+          Соус: одно сообщение — дальше работает Mary. */}
+      <section className="custom-section pf-assembly-section" id="assembly">
+        <div className="asm-head">
+          <span className="asm-eyebrow">Живая сборка</span>
+          <h2>Одно сообщение — и процесс собран</h2>
+          <p>Блоки, связи и агенты расставляются сами. Без схем, конструкторов и разработчиков.</p>
+        </div>
+        <div className="asm-msg" aria-hidden="true">
+          <p>Хочу, чтобы запись клиентов шла без администратора</p>
+        </div>
+        <div className="asm-stage">
+          <WorkflowAnim />
+        </div>
+      </section>
 
       <section className="custom-section pf-cases" id="cases">
         <h2 className="pf-cases-title">Когда нужна Mary</h2>
 
-        {/* Анимация из Figma Make (экспорт Вики): камера идёт по процессу,
-            узлы и связи проявляются по хореографии макета */}
-        <article className="pf-case is-wide" id="workflow">
-          <h3>Собрать процесс с нуля</h3>
-          <p>Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков, подключит каналы и запустит его в работу. Без ТЗ и без разработчиков.</p>
-          <WorkflowAnim />
-        </article>
-
-        <div className="pf-case-pair">
+        <div className="pf-case-trio">
+          <article className="pf-case">
+            <h3>Собрать процесс с нуля</h3>
+            <p>Опишите задачу обычными словами — Mary поднимет процесс из готовых блоков, подключит каналы и запустит его в работу. Без ТЗ и без разработчиков.</p>
+          </article>
           <article className="pf-case">
             <h3>Завал в переписке</h3>
             <p>Клиенты пишут в разные каналы, часть теряется в пиковые часы и по ночам. Mary встречает каждое обращение и доводит его до записи.</p>
@@ -173,13 +194,23 @@ export function PlatformLanding() {
 
       <NicheStack />
 
+      <MaryVs />
+
+      <MaryControl />
+
+      <TrustBlock />
+
+      {/* заголовок этой секции теперь живёт внутри KeyScreens (макет 10591:26400) */}
+      <KeyScreens />
+
       <section className="custom-section beauty-ints-section" id="integrations">
-        <h2 className="int-title">Встраивается в то, чем вы уже пользуетесь</h2>
         <IntegrationsMarquee />
       </section>
 
       <section className="custom-section pf-faq" id="faq">
-        <SectionIntro title="Коротко о платформе" />
+        <div className="custom-section-intro">
+          <h2>Отвечаем на вопросы</h2>
+        </div>
         <div className="pf-faq-list">
           {faqs.map(([question, answer], i) => (
             <div className={`pf-faq-item ${activeFaq === i ? "is-open" : ""}`} key={question}>
@@ -188,8 +219,8 @@ export function PlatformLanding() {
                 onClick={() => setActiveFaq(activeFaq === i ? null : i)}
                 type="button"
               >
+                <span className="pf-faq-plus" aria-hidden="true"><Plus size={15} /></span>
                 {question}
-                <ChevronDown size={20} aria-hidden="true" />
               </button>
               {activeFaq === i && <p>{answer}</p>}
             </div>
@@ -197,57 +228,54 @@ export function PlatformLanding() {
         </div>
       </section>
 
-      <section className="custom-contact" id="contact">
-        <div className="custom-contact-copy">
-          <span>С чего начать</span>
+      {/* Форма заявки в стиле чата платформы: реплика Mary + два поля-пилюли */}
+      <section className="pf-contact" id="contact">
+        <div className="pf-contact-copy">
+          <span className="pf-contact-eyebrow">С чего начать</span>
           <h2>Покажем Mary на вашей задаче</h2>
           <p>Короткий разбор: посмотрим ваш процесс, покажем, что Mary возьмёт на себя, и предложим план запуска.</p>
-          <div><Sparkles size={20} /><span>Начинаем с одной ниши или процесса, где эффект виден быстро</span></div>
+          <div className="pf-contact-note"><Sparkles size={16} aria-hidden="true" /><span>Начинаем с одной ниши или процесса, где эффект виден быстро</span></div>
         </div>
-        <div className="custom-contact-panel">
+        <div className="pf-contact-panel">
           {submitted ? (
-            <div className="custom-success" role="status">
-              <span><Check size={28} /></span>
+            <div className="pf-contact-success" role="status">
+              <span><Check size={26} /></span>
               <h3>Заявка принята</h3>
               <p>Контакт у нас. Вернёмся с разбором в течение рабочего дня.</p>
-              <button className="custom-button custom-button-light" type="button" onClick={() => setSubmitted(false)}>Отправить ещё одну</button>
+              <button className="pf-btn is-dark" type="button" onClick={() => setSubmitted(false)}>Отправить ещё одну</button>
             </div>
           ) : (
-            <form className="custom-estimator-start" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
-              <div className="custom-chat-message is-mary is-dark"><small>Mary</small><p>Что хотите упростить или автоматизировать?</p></div>
-              <label className="beauty-field">Задача<input required placeholder="Например: запись клиентов из Instagram" /></label>
-              <label className="beauty-field">Контакт<input required placeholder="@telegram или телефон" /></label>
-              <label className="custom-consent"><input type="checkbox" required /><span>Согласен на обработку данных и принимаю политику конфиденциальности</span></label>
-              <button className="custom-button custom-button-light custom-submit" type="submit">Оставить заявку <ArrowRight size={18} /></button>
+            <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+              <div className="pf-contact-bubble">
+                <img alt="" src={maryMark} />
+                <div>
+                  <small>Mary</small>
+                  <p>Что хотите упростить или автоматизировать?</p>
+                </div>
+              </div>
+              <label className="pf-contact-field">
+                <span>Задача</span>
+                <input required placeholder="Например: запись клиентов из Instagram" />
+              </label>
+              <label className="pf-contact-field">
+                <span>Контакт</span>
+                <input required placeholder="@telegram или телефон" />
+              </label>
+              <label className="pf-contact-consent">
+                <input type="checkbox" required />
+                <span>Согласен на обработку данных и принимаю политику конфиденциальности</span>
+              </label>
+              <button className="pf-contact-submit" type="submit">Оставить заявку <ArrowRight size={17} /></button>
             </form>
           )}
         </div>
       </section>
 
-      <footer className="custom-footer">
-        <div className="custom-footer-main">
-          <div className="custom-footer-brand">
-            <Brand />
-            <p>Chat-first платформа автоматизации бизнеса. Опишите задачу — Mary соберёт рабочую систему.</p>
-          </div>
-          <div className="custom-footer-links">
-            <nav aria-label="Платформа">
-              <a href="#platform">Платформа</a>
-              <a href="#how">Как работает</a>
-              <a href="/?page=platform">Демо</a>
-            </nav>
-            <nav aria-label="Ещё">
-              <a href="/?page=beauty">Салоны</a>
-              <a href="/?page=custom">Заказать разработку</a>
-              <a href="#contact">Обсудить</a>
-            </nav>
-          </div>
-        </div>
-        <div className="custom-footer-bottom">
-          <span>© Mary 2026</span>
-          <div><span>Политика конфиденциальности</span><span>Условия использования</span></div>
-        </div>
-      </footer>
+      <BlogTeaser />
+
+      <FooterFinal />
+
+      <FloatingCta />
     </main>
   );
 }

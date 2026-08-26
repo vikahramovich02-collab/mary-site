@@ -2,9 +2,8 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
 import arrowUpRight from "./assets/arrow-up-right.svg";
-import navDot from "./assets/nav-dot.svg";
 
-// Общая шапка внутренних страниц (блог, вакансии) — чтобы они не разъезжались
+// Общая шапка внутренних страниц (блог, тарифы, контакты) — чтобы они не разъезжались
 // между собой при правках.
 export function SiteHeader() {
   const [companies, setCompanies] = useState(false);
@@ -12,13 +11,13 @@ export function SiteHeader() {
   return (
     <header className="custom-header pf-header">
       <nav className="pf-nav" aria-label="Навигация">
-        <a href="/?page=blog"><img alt="" src={navDot} />Блог</a>
-        <a href="/?page=jobs"><img alt="" src={navDot} />Вакансии</a>
-        <a href="/?page=pricing"><img alt="" src={navDot} />Тарифы</a>
-        <a href="/?page=contacts"><img alt="" src={navDot} />Контакты</a>
+        <a href="/?page=blog">Блог</a>
+        <a href="/?page=cases">Кейсы</a>
+          <a href="/?page=pricing">Стоимость</a>
+        <a href="/?page=contacts">Контакты</a>
         <div className="mary-dd">
           <button type="button" onClick={() => setCompanies((v) => !v)} aria-expanded={companies}>
-            <img alt="" src={navDot} />
+            
             Для компаний
             <ChevronDown size={16} />
           </button>
@@ -40,7 +39,7 @@ export function SiteHeader() {
       </a>
 
       <div className="custom-header-actions">
-        <a className="pf-link" href="#investors">Для инвесторов<img alt="" src={arrowUpRight} /></a>
+        <a className="pf-link" href="/media/docs/mary-deck.pdf" rel="noopener" target="_blank">Для инвесторов<img alt="" src={arrowUpRight} /></a>
         <a className="pf-link" href="/?page=custom">Заказать разработку<img alt="" src={arrowUpRight} /></a>
         <a className="pf-btn is-soft" href="/?page=platform">Войти в Mary<img alt="" src={arrowUpRight} /></a>
       </div>

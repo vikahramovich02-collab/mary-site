@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
+  ArrowUpRight,
   Check,
   Menu,
   Sparkles,
@@ -238,24 +239,29 @@ export function CustomLanding() {
       <div className="custom-stage">
         <div className="custom-stage-media" aria-hidden="true">
           <div className="custom-stage-sticky">
-            <HeroField className="custom-hero-video" />
+            {/* Точечная «подушка» из ролика mary-hero.mp4, но живая и без петли:
+                точки мельче и прозрачнее — так просила Вика. */}
+            <HeroField className="custom-hero-video" dotAlpha={1} dotScale={1} mode="ring" speed={0.45} />
           </div>
         </div>
         <div className="custom-hero-shade" aria-hidden="true" />
 
       <section className="custom-hero" aria-labelledby="custom-hero-title">
         <header className="custom-header">
-          <Brand dark />
-          <nav className="custom-nav" aria-label="Навигация по странице">
-            <a href="#services">Услуги</a>
-            <a href="/?page=beauty">Салоны</a>
-            <a href="#process">Как работаем</a>
-            <a href="#formats">Форматы</a>
-            <a href="#team">Команда</a>
+          <nav className="custom-nav" aria-label="Основная навигация">
+            <a href="/?page=blog">Блог</a>
+            <a href="/?page=cases">Кейсы</a>
+            <a href="/?page=contacts">Контакты</a>
+            <a href="/?page=clients">Для компаний</a>
           </nav>
+          <Brand dark />
           <div className="custom-header-actions">
-            <a className="custom-language" href="#top" aria-label="Текущий язык: русский">RU</a>
-            <a className="custom-button custom-button-light custom-button-small" href="#contact">Обсудить</a>
+            <a className="custom-header-link" href="#contact">Для инвесторов</a>
+            <a className="custom-header-link" href="#services">Заказать разработку</a>
+            <a className="custom-button custom-button-glass custom-button-small" href="#contact">
+              Заказать
+              <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
             <button className="custom-menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню">
               <Menu size={21} />
             </button>
@@ -280,18 +286,18 @@ export function CustomLanding() {
         )}
 
         <div className="custom-hero-content">
-          <h1 id="custom-hero-title">
-            Разрабатываем продукты <span>и автоматизируем бизнес</span>
-          </h1>
+          <h1 id="custom-hero-title">IT-решения для бизнеса</h1>
           <div className="custom-hero-cta">
-            <a className="custom-button custom-button-light" href="#contact">Заказать</a>
-            <a className="custom-button custom-button-ghost" href="#services">Обсудить задачу</a>
+            <a className="custom-button custom-button-light" href="#contact">
+              Попробовать
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
           </div>
         </div>
 
         <div className="custom-hero-logos" aria-label="С нами работают">
-          <img className="is-mtbank" src="/media/mtbank-logo-mask.png" alt="МТБанк" />
-          <img className="is-htp" src="/media/ntr-logo-mask.png" alt="ПВТ Беларусь" />
+          <img src="/media/hero-logo-mtbank.png" alt="МТБанк" />
+          <img src="/media/hero-logo-htp.png" alt="ПВТ Беларусь" />
         </div>
 
         <div className="custom-hero-bottom" id="team">
@@ -301,7 +307,7 @@ export function CustomLanding() {
           </h2>
           <article className="custom-founder-card">
             <span className="custom-founder-photo">
-              <img src="/media/alexander-lukashevich.png" alt="Александр Лукашевич на презентации" />
+              <img src="/media/alexander-lukashevich.jpg" alt="Александр Лукашевич" />
             </span>
             <div>
               <p>Разберу задачу лично и скажу, где автоматизация окупится, а где нет</p>

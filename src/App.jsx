@@ -59,9 +59,10 @@ import {
 } from "lucide-react";
 import { CustomLanding } from "./CustomLanding.jsx";
 import { BlogPage } from "./BlogPage.jsx";
-import { JobsPage } from "./JobsPage.jsx";
 import { ContactsPage } from "./ContactsPage.jsx";
 import { PricingPage } from "./PricingPage.jsx";
+import { ClientsPage } from "./ClientsPage.jsx";
+import { CasesPage } from "./CasesPage.jsx";
 import { ArticlePage } from "./ArticlePage.jsx";
 import { BeautyLanding } from "./BeautyLanding.jsx";
 import { PlatformLanding } from "./PlatformLanding.jsx";
@@ -1024,9 +1025,10 @@ export function App() {
   const isCustom = path === "/custom" || path === "/custom/" || requestedPage === "custom";
   const isOnboarding = path === "/onboarding" || requestedPage === "onboarding";
   const isBlog = path === "/blog" || path === "/blog/" || requestedPage === "blog";
-  const isJobs = path === "/jobs" || path === "/jobs/" || requestedPage === "jobs";
   const isContacts = path === "/contacts" || path === "/contacts/" || requestedPage === "contacts";
   const isPricing = path === "/pricing" || path === "/pricing/" || requestedPage === "pricing";
+  const isClients = path === "/clients" || path === "/clients/" || requestedPage === "clients";
+  const isCases = path === "/cases" || path === "/cases/" || requestedPage === "cases";
   if (isOnboarding) return <Onboarding />;
   const articleSlug = path.startsWith("/blog/")
     ? path.replace("/blog/", "").replace(/\/$/, "")
@@ -1035,9 +1037,10 @@ export function App() {
       : "";
   if (articleSlug) return <ArticlePage slug={articleSlug} />;
   if (isBlog) return <BlogPage />;
-  if (isJobs) return <JobsPage />;
   if (isContacts) return <ContactsPage />;
   if (isPricing) return <PricingPage />;
+  if (isClients) return <ClientsPage />;
+  if (isCases) return <CasesPage />;
   if (isPlatform) return <PlatformApp />;
   if (isBeauty) return <BeautyLanding />;
   if (isCustom) return <CustomLanding />;

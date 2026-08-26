@@ -320,7 +320,8 @@ const TRIM = 3.7; /* первые 3.7с обрезаны */
 const SPEED = 6.2; /* authored 31s compressed to 5s playback */
 function Piece({ opts }) {
   const o = opts || {};
-  const grid = o.dotGrid !== false, labels = o.branchLabels !== false, glow = o.cardGlow !== false;
+  /* cardGlow выключен по просьбе Вики — без цветной подсветки под карточками */
+  const grid = o.dotGrid !== false, labels = o.branchLabels !== false, glow = o.cardGlow === true;
   const comp = useComposition();
   /* Правка при переносе на сайт: время хореографии приходит из нашего клока
      как есть (в экспорте оно пересчитывалось из секунд плеера через SPEED —

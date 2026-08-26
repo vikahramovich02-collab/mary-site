@@ -1,0 +1,93 @@
+/* ============================================================
+   Mary · дизайн-токены
+   Выгружено из Figma, коллекция «Mary DS» + текстовые стили.
+   Единственный источник значений. Не хардкодить цвета и отступы
+   в компонентах — только через переменные отсюда.
+   ============================================================ */
+
+:root {
+  /* ---- поверхности ---- */
+  --surface-page:        #F6F6F7;
+  --surface-card:        #FFFFFF;
+  --surface-sunken:      #F5F5F5;
+
+  /* ---- текст ---- */
+  --text-heading:        #323538;   /* заголовки */
+  --text-primary:        #262633;   /* основной текст */
+  --text-secondary:      #494F5C;
+  --text-muted:          #59595B;
+  --text-disabled:       rgba(27, 28, 32, .4);
+  --text-inverse:        #FFFFFF;
+
+  /* ---- линии ---- */
+  --border-subtle:       #F0F0F1;   /* разделители в списках */
+  --border-default:      #DEDEDF;   /* поля, карточки */
+  --border-strong:       #C9C9CC;
+
+  /* ---- акценты · семантика воркфлоу ---- */
+  --accent-blue:         #0064FF;   /* агент работает сам */
+  --accent-blue-mid:     #589AFF;
+  --accent-blue-soft:    #B1CFFF;
+
+  --accent-violet:       #3300FF;   /* Mary говорит от лица бизнеса */
+  --accent-violet-mid:   #5863FF;
+  --accent-violet-soft:  #B1B7FF;
+
+  --accent-orange:       #FF5200;   /* нужен человек */
+  --accent-orange-mid:   #FF8A4D;
+  --accent-orange-soft:  #FFD3C0;
+
+  --node-entry:          #161618;   /* вход в процесс */
+  --node-branch:         #8B8B93;   /* развилка */
+
+  /* ---- градиенты узлов ---- */
+  --grad-blue:   linear-gradient(135deg, #0064FF, #589AFF, #B1CFFF);
+  --grad-violet: linear-gradient(135deg, #3300FF, #5863FF, #B1B7FF);
+  --grad-orange: linear-gradient(135deg, #FF5200, #FF8A4D, #FFD3C0);
+
+  /* ---- отступы ---- */
+  --space-2: 2px;   --space-4: 4px;   --space-6: 6px;   --space-8: 8px;
+  --space-10: 10px; --space-12: 12px; --space-16: 16px; --space-20: 20px;
+  --space-24: 24px; --space-32: 32px; --space-40: 40px; --space-48: 48px;
+  --space-64: 64px; --space-96: 96px;
+
+  /* ---- радиусы ---- */
+  --radius-sm: 10px;  --radius-md: 14px;  --radius-lg: 16px;
+  --radius-xl: 18px;  --radius-2xl: 40px; --radius-3xl: 50px;
+  --radius-pill: 999px;
+
+  /* ---- типографика ---- */
+  --font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-8: 8px;   --font-10: 10px; --font-11: 11px; --font-12: 12px;
+  --font-14: 14px; --font-16: 16px; --font-20: 20px; --font-24: 24px;
+  --font-28: 28px; --font-40: 40px; --font-56: 56px; --font-60: 60px;
+
+  /* ---- кнопки (из макета первого экрана) ---- */
+  --button-dark:      #151617;   /* главный CTA */
+  --button-dark-hover:#000000;
+  --button-soft:      #F0F0F0;   /* кнопка в шапке */
+}
+
+/* ============================================================
+   Текстовые стили — один в один с Figma.
+   Одиночные строки (кнопки, лейблы, табы) всегда line-height: 1.
+   ============================================================ */
+
+.t-display      { font: 500 var(--font-56)/1.05 var(--font-family); font-weight: 600; letter-spacing: -.02em; }
+.t-h1           { font: 600 var(--font-40)/1.08 var(--font-family); letter-spacing: -.02em; }
+.t-h2           { font: 500 var(--font-28)/1.10 var(--font-family); font-size: 36px; letter-spacing: -.02em; }
+.t-h3           { font: 500 var(--font-20)/1.20 var(--font-family); letter-spacing: -.01em; }
+
+.t-body-l       { font: 500 var(--font-16)/1.50 var(--font-family); }
+.t-body         { font: 500 var(--font-14)/1.45 var(--font-family); }
+.t-body-regular { font: 400 var(--font-14)/1.45 var(--font-family); }
+.t-caption      { font: 500 var(--font-12)/1.40 var(--font-family); }
+.t-micro        { font: 500 var(--font-11)/1.40 var(--font-family); }
+.t-tiny         { font: 500 var(--font-10)/1.40 var(--font-family); letter-spacing: .01em; }
+
+.t-ui-button    { font: 500 var(--font-14)/1 var(--font-family); }
+.t-ui-label     { font: 500 var(--font-12)/1 var(--font-family); }
+.t-ui-tab       { font: 500 var(--font-14)/1 var(--font-family); }
+.t-ui-chip      { font: 500 var(--font-11)/1 var(--font-family); }
+.t-ui-value     { font: 600 var(--font-16)/1 var(--font-family); letter-spacing: -.01em; }

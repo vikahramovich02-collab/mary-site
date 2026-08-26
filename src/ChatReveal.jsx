@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+
 import {
   ArrowDown,
   ArrowRight,
@@ -17,10 +17,12 @@ import {
   Workflow,
 } from "lucide-react";
 import maryMark from "./assets/mary-mark.svg";
+import { HeroField } from "./HeroField.jsx";
 
-// Второй слайд по Figma 3:95958 → 3:96009: окно платформы (сайдбар + первый
-// вход в чат) выплывает снизу над точками героя и встаёт во весь экран.
-// Экран собран живой вёрсткой — масштаб макета 0.935 приведён к целым.
+// Второй экран: кадр 16:10 с медиа, без скролл-анимации.
+// VIDEO — путь к ролику; пока пусто, показываем живой экран платформы
+// (Figma 3:95958 → 3:96009, собран вёрсткой).
+const VIDEO = "";
 const menu = [
   [LayoutGrid, "Главная"],
   [Workflow, "Бизнес-процессы"],
@@ -37,44 +39,15 @@ const suggestions = [
 ];
 
 export function ChatReveal() {
-  const sceneRef = useRef(null);
-
-  useEffect(() => {
-    const scene = sceneRef.current;
-    if (!scene) return undefined;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      scene.style.setProperty("--p", "1");
-      return undefined;
-    }
-
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const rect = scene.getBoundingClientRect();
-      // 0 — кадр только показался снизу, 1 — развернулся на весь экран
-      const travel = Math.max(rect.height - window.innerHeight, 1);
-      const p = Math.min(Math.max(-rect.top / travel, 0), 1);
-      scene.style.setProperty("--p", p.toFixed(4));
-    };
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
   return (
-    <section className="pf-chat-scene" ref={sceneRef} aria-label="Первый вход в чат Mary">
+    <section className="pf-chat-scene" aria-label="Первый вход в чат Mary">
+      {/* точки продолжаются за кадром, как в макете 10517:17004 */}
+      <HeroField className="pf-chat-field" dotAlpha={0.16} mode="halftone" speed={1.6} tone="light" />
       <div className="pf-chat-sticky">
         <figure className="pf-chat-frame">
+          {VIDEO ? (
+            <video autoPlay loop muted playsInline src={VIDEO} />
+          ) : (
           <div className="mchat" aria-hidden="true">
             <aside className="mchat-menu">
               <div className="mchat-brand">
@@ -133,6 +106,7 @@ export function ChatReveal() {
               <span className="mchat-down"><ArrowDown size={18} /></span>
             </div>
           </div>
+          )}
         </figure>
       </div>
     </section>

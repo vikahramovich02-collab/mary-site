@@ -9,6 +9,7 @@ import { useEffect, useRef } from "react";
 //   "waves"    — поле точек, уходящее в перспективу
 //   "object"   — приплюснутая точечная «подушка»
 //   "petals"   — халфтон-вертушка из четырёх лепестков
+//   "ring"     — точечное кольцо: видна только кромка шара, середина пустая
 const DEFAULT_MODE = "object";
 
 const DESKTOP = typeof window === "undefined" || window.innerWidth >= 760;
@@ -36,6 +37,7 @@ function timePhases(waves, t) {
 /* ── режим «халфтон»: ровная сетка, волну рисует размер точки ──────────── */
 
 const CELL = 15; // шаг сетки в CSS-пикселях
+const RING_CELL = 13; // у кольца сетка мельче: точки должны читаться крупой
 const DOT_MAX = 0.46; // максимальный радиус в долях шага
 const HALFTONE = [
   // k — направление и частота волны в долях ширины экрана, speed — скорость бега
@@ -100,8 +102,8 @@ function buildField() {
 
 // Точки лежат ровной сеткой: ряды по широте, в каждом ряду число точек
 // пропорционально его длине — поэтому шаг везде одинаковый, без сгущения у полюса.
-const OBJ_ROWS = DESKTOP ? 190 : 110;
-const OBJ_COLS = DESKTOP ? 330 : 190;
+const OBJ_ROWS = DESKTOP ? 240 : 130;
+const OBJ_COLS = DESKTOP ? 430 : 220;
 const OBJ_DOT = 2.05; // максимальный радиус точки в CSS-пикселях
 const SQUIRCLE = 3.2; // 2 — шар, больше — ближе к скруглённому кубу
 
@@ -205,10 +207,14 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
     const paper = light ? "#fff" : "#000";
     const ink = inkColor || (light ? "38,38,51" : "255,255,255");
     // на светлом точки должны только подсвечивать фон, иначе забивают текст
-    const alphaFloor = light ? 0.05 : 0.5;
-    const alphaSpan = light ? 0.09 : 0.5;
+    // dotAlpha задаёт, насколько плотно точки лежат на чёрном: floor — самые
+    // тусклые точки на краю объекта, span — добор яркости к центру
+    const baseAlpha = dotAlpha ?? (light ? 0.05 : 0.5);
+    const alphaFloor = light ? baseAlpha : baseAlpha * 0.62;
+    const alphaSpan = light ? 0.09 : baseAlpha * 0.9;
     // халфтону предсобранная геометрия не нужна — сетка считается прямо в кадре
-    const geo = mode === "halftone" || mode === "petals" ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
+    const flat = mode === "halftone" || mode === "petals" || mode === "ring";
+    const geo = flat ? { count: 0 } : mode === "waves" ? buildField() : buildObject();
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const bucketX = Array.from({ length: LEVELS }, () => new Float32Array(geo.count));
@@ -279,6 +285,91 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       ctx.fill();
     };
 
+    // КОЛЬЦО (макет Вики): плоский халфтон, обрезанный кольцом. Сетка ровная,
+    // круг честный — форму держит маска, а не проекция шара. Размер точки задаёт
+    // бегущая волна, случайная величина на клетку добавляет разнобой: где-то
+    // крупная точка, рядом крошка, а часть клеток пустует.
+    const RING_NOISE = new Float32Array(4096);
+    for (let i = 0; i < RING_NOISE.length; i += 1) RING_NOISE[i] = Math.random();
+
+    const paintRing = (t) => {
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const cell = RING_CELL * dpr;
+      const cols = Math.ceil(width / RING_CELL) + 1;
+      const rows = Math.ceil(height / RING_CELL) + 1;
+      const maxR = cell * 0.56 * dotScale;
+
+      const cx = (width * dpr) / 2;
+      const cy = height * dpr * 0.52; // кольцо стоит по центру, заголовок ложится на него
+      const outer = Math.min(width, height) * dpr * 0.3;
+      const inner = outer * 0.56; // дырка крупнее — кольцо читается тоньше
+
+      // кольцо проворачивается очень медленно — движение должно читаться
+      // краем глаза, а не тянуть внимание на себя
+      const spin = t * 0.07 * speed;
+      const cosS = Math.cos(spin);
+      const sinS = Math.sin(spin);
+      const scale = 1 / outer;
+      const wt = HALFTONE.map((w) => t * w.speed * speed * Math.PI * 2);
+
+      ctx.fillStyle = `rgba(${ink},${dotAlpha ?? 0.92})`;
+      ctx.beginPath();
+
+      for (let row = 0; row < rows; row += 1) {
+        const y = row * cell;
+        const dy = y - cy;
+        for (let col = 0; col < cols; col += 1) {
+          const x = col * cell;
+          const dx = x - cx;
+
+          const rr = Math.sqrt(dx * dx + dy * dy);
+          if (rr < inner) continue; // середина остаётся пустой
+
+          // Внутри кольца точки в полную силу, а наружу они разбегаются по всему
+          // экрану, мельчая: чем дальше от кромки, тем меньше радиус.
+          const band = Math.min((rr - inner) / (outer - inner), 1);
+          // распыление: точки долетают почти до краёв экрана, но быстро мельчают,
+          // поэтому вдали от кольца остаётся только пыль
+          const edge =
+            rr <= outer
+              ? Math.min(band / 0.16, 1)
+              : Math.pow(Math.exp(-Math.pow((rr - outer) / (outer * 0.42), 1.3)), 2.2);
+
+          const rx = (dx * cosS + dy * sinS) * scale;
+          const ry = (-dx * sinS + dy * cosS) * scale;
+
+          let v = 0;
+          for (let w = 0; w < HALFTONE.length; w += 1) {
+            const k = HALFTONE[w].k;
+            v += HALFTONE[w].amp * Math.sin((k[0] * rx + k[1] * ry) * Math.PI - wt[w]);
+          }
+
+          // зерно привязано к клетке экрана, а не к волне: точка не исчезает
+          // и не выпрыгивает на месте — двигается только её размер
+          const noise = RING_NOISE[(col * 71 + row * 131) & 4095];
+          if (noise < 0.6) continue; // большая часть клеток пустует — кольцо разрежённое
+
+          const fill = Math.min(Math.max(v * 0.24 + 0.72, 0), 1);
+          // разнобой размеров держит не волна, а случайное число: почти везде
+          // крошка, изредка — крупная точка. Волна только гоняет плотность.
+          const grain = 0.2 + noise * noise * 1.35;
+          // потолок радиуса: соседние точки не должны слипаться в пятна
+          const raw = Math.min(maxR * Math.pow(fill, 1.3) * edge * grain, cell * 0.4);
+          // всё, что мельче полупикселя, рисуется серой кашей — такие точки
+          // выбрасываем, а оставшиеся дотягиваем до чёткого белого зерна
+          if (raw < 0.5) continue;
+          const r = Math.max(raw, 0.85);
+
+          ctx.moveTo(x + r, y);
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+        }
+      }
+
+      ctx.fill();
+    };
+
     const paintHalftone = (t) => {
       ctx.fillStyle = paper;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -334,6 +425,10 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
           // на светлом купол должен быть заполнен целиком, волна лишь играет размером
           // размах волны по размеру точки: на светлом он был почти нулевой,
           // из-за этого купол выглядел неподвижным
+          // на светлом сетка почти ровная (в макете купол однородный),
+          // волна лишь слегка дышит размером точки
+          // волна снова играет размером точки в полную силу — купол «дышит»,
+          // как было до правки геометрии (Вика: «анимацию ту верни»)
           const fill = light
             ? Math.min(Math.max(v * 0.34 + 0.6, 0), 1)
             : Math.min(Math.max(v * 0.46 + 0.34, 0), 1);
@@ -388,11 +483,12 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
       const cosSpin = Math.cos(spin);
       const sinSpin = Math.sin(spin);
 
+      // кадр как в исходном ролике: «подушка» почти во весь экран и срезана снизу
       const cx = width / 2;
-      const cy = height * 0.56;
-      const radiusX = Math.min(width * 0.46, height * 0.78);
-      const radiusY = radiusX * 0.58;
-      const maxDot = OBJ_DOT * dpr;
+      const cy = height * 0.63;
+      const radiusX = Math.min(width * 0.52, height * 1.02);
+      const radiusY = radiusX * 0.79;
+      const maxDot = OBJ_DOT * dpr * dotScale;
 
       bucketN.fill(0);
 
@@ -434,6 +530,11 @@ export function HeroField({ className = "", tone = "dark", mode = DEFAULT_MODE, 
 
       if (mode === "petals") {
         paintPetals(t);
+        return;
+      }
+
+      if (mode === "ring") {
+        paintRing(t);
         return;
       }
 
