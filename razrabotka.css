@@ -2516,7 +2516,7 @@
   .foot__row {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
     gap: 24px;
     padding-top: clamp(40px, 7vh, 90px);
