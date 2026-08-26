@@ -2404,9 +2404,17 @@
   .foot__grid {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) repeat(2, calc(min(62%, 760px) / 2));
+    /* правая пара колонок вместе = min(62%, 760px), как линия FAQ */
+    grid-template-columns: minmax(0, 1fr) min(62%, 760px);
     align-items: start;
     column-gap: 0;
+  }
+
+  /* правая половина делится на реквизиты и связь */
+  .foot__right {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 64px);
   }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(36px, 6vh, 72px); }
