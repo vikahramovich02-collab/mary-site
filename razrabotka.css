@@ -2106,7 +2106,10 @@
     cursor: none;
   }
 
-  .case__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* Картинка квадратная, рамка 4:3 — cover обрезал её и знак выходил
+     огромным. Показываем целиком, чуть уменьшив, на тёмной подложке. */
+  .case__visual { background: var(--panel); }
+  .case__visual img { display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(.82); }
 
   .case__visual figcaption {
     position: absolute;
