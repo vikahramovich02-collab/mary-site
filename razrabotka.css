@@ -2097,15 +2097,9 @@
     overflow: hidden;
     border-radius: 4px;
     aspect-ratio: 4 / 3;
-    /* Лого клиента прозрачное и тёмное — на панели того же цвета, что и
-       страница, его не видно. Кладём на светлую подложку, как на самом лого. */
-    display: grid;
-    place-items: center;
-    padding: 12%;
-    background: #F2F2F0;
   }
 
-  .case__visual img { display: block; width: 100%; height: auto; object-fit: contain; }
+  .case__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   .case__visual figcaption {
     position: absolute;
@@ -2121,18 +2115,21 @@
     /* заголовок встаёт над картинкой слева, текст — над цифрами справа */
     #case .sec__head {
       display: grid;
-      grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
-      column-gap: clamp(28px, 4vw, 64px);
+      /* та же линия, по которой идут карточки «Результата», FAQ и цитата */
+      grid-template-columns: minmax(0, 1fr) min(62%, 760px);
+      column-gap: 0;
       align-items: start;
     }
 
     #case .sec__mark { grid-column: 1; grid-row: 1; margin: 0; }
-    #case .sec__head h2 { grid-column: 1; grid-row: 2; margin: 14px 0 0; }
+    #case .sec__head h2 { grid-column: 1; grid-row: 2; margin: 14px 0 0; padding-right: clamp(16px, 2vw, 28px); }
     #case .case__tag { grid-column: 2; grid-row: 1; }
     #case .case__lead { grid-column: 2; grid-row: 2; }
 
     /* визуал слева, цифры справа */
-    .case { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); }
+    .case { grid-template-columns: minmax(0, 1fr) min(62%, 760px); gap: 0; }
+    /* картинка в левой колонке, отступ от линии контента как у номеров карточек */
+    .case__visual { max-width: 460px; margin-right: clamp(16px, 2vw, 28px); }
     .case__visual { grid-column: 1; grid-row: 1; }
     .case__stats { grid-column: 2; grid-row: 1; align-self: center; }
   }
