@@ -2074,8 +2074,9 @@
 
   /* Подпись-метка моноширинным в скобках, как в референсе. */
   /* Подписи-метки в скобках: над описанием и над цифрами — одна пара. */
-  .case__tag,
-  .case__stats-label {
+  /* #case — чтобы перебить общее .sec__head p (16px) у верхней подписи. */
+  #case .case__tag,
+  #case .case__stats-label {
     margin: 26px 0 0;
     color: var(--soft);
     font: 600 9px/1 var(--font);
