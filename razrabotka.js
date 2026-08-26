@@ -410,7 +410,10 @@
   // Подписи в шапке собираем из букв — иначе прокрутка лесенкой
   // потребовала бы вручную размечать каждый пункт.
   (function () {
-    var links = document.querySelectorAll(".nav__links a, .nav__actions a, .flow__cta");
+    var links = document.querySelectorAll(
+      ".nav__links a, .nav__actions a, .flow__cta, " +
+      ".foot__nav a, .foot__mail, .foot__out, .foot__go, .foot__bar a, [data-scroll-top]"
+    );
     if (!links.length) return;
 
     links.forEach(function (a) {
