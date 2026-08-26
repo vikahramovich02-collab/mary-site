@@ -596,6 +596,53 @@
     });
   })();
 
+  // Панель заявки: выезжает справа по любой ссылке на #request.
+  // Закрывается крестиком, кликом мимо и Esc — как видео-обзор.
+  (function () {
+    var drawer = document.querySelector("[data-drawer]");
+    if (!drawer) return;
+
+    var panel = drawer.querySelector(".drawer__panel");
+    var close = drawer.querySelector(".drawer__close");
+    var form = drawer.querySelector("[data-dev-form]");
+    var done = drawer.querySelector(".drawer__done");
+    var first = form && form.querySelector("input");
+
+    function open(e) {
+      if (e) e.preventDefault();
+      drawer.hidden = false;
+      document.body.style.overflow = "hidden";
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          drawer.classList.add("is-open");
+          if (first) first.focus({ preventScroll: true });
+        });
+      });
+    }
+
+    function hide() {
+      drawer.classList.remove("is-open");
+      document.body.style.overflow = "";
+      window.setTimeout(function () { drawer.hidden = true; }, 440);
+    }
+
+    document.querySelectorAll('a[href="#request"]').forEach(function (a) {
+      a.addEventListener("click", open);
+    });
+    close.addEventListener("click", hide);
+    drawer.addEventListener("click", function (e) { if (e.target === drawer) hide(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !drawer.hidden) hide();
+    });
+
+    if (form) form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // TODO: адрес приёма заявок — Telegram через прокси, общий с нишами.
+      form.hidden = true;
+      done.hidden = false;
+    });
+  })();
+
   // Метки разделов: подпись выезжает из-под точки при заходе на блок.
   (function () {
     var marks = document.querySelectorAll(".sec__mark");
