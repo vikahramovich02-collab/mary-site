@@ -15,8 +15,10 @@ cd "$ROOT"
 
 npx vite build --base="$BASE"
 
-# В минифицированном бандле строки в бэктиках: `/media/x.png`, `/?page=blog`, `/`.
-perl -pi -e 's|`/|`'"$BASE"'|g' dist/client/assets/*.js
+# В минифицированном бандле пути лежат строками в бэктиках: `/media/x.png`,
+# `/?page=blog`, `/#contact`, `/`. Префикс дописываем только им — вслепую по
+# любому «`/» нельзя, под раздачу попадают куски регулярок вроде `/$`.
+perl -pi -e 's{`/(?=media/|\?page=|#|blog/|platform|beauty|custom|onboarding|contacts|pricing|clients|cases)}{`'"$BASE"'}g; s{`/`}{`'"$BASE"'`}g' dist/client/assets/*.js
 
 # Без .nojekyll Pages прячет всё, что начинается с подчёркивания.
 touch dist/client/.nojekyll
