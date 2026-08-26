@@ -2140,7 +2140,7 @@
 
   .case__stats { margin: 0; padding: 0; border: 0; background: none; }
 
-  .case__stats-label { margin: 0 0 26px; }
+  #case .case__stats-label { margin: 0 0 26px; }
   .case__stats > div + div { margin-top: clamp(26px, 3vh, 40px); }
 
   .case__stats dt {
