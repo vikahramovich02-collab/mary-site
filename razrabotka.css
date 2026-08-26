@@ -2022,6 +2022,10 @@
     background: none;
   }
 
+  /* Ссылка «Читать кейс» ушла из шапки блока к цифрам — колонка та же,
+     что у .case__stats, поэтому просто встаёт к ним же в столбец. */
+  .case .flow__cta { grid-column: 2; justify-self: end; }
+
   .case__story h3 {
     max-width: 20ch;
     margin: 0;

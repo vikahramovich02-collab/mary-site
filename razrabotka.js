@@ -547,49 +547,6 @@
     update();
   })();
 
-  // Меню ниш в шапке: наведение открывает, клик мимо и Esc закрывают.
-  (function () {
-    var drop = document.getElementById("nav-drop");
-    if (!drop) return;
-
-    var btn = drop.querySelector("[data-drop-btn]");
-    var menu = drop.querySelector(".nav__menu");
-
-    var set = function (on) {
-      menu.classList.toggle("is-open", on);
-      btn.setAttribute("aria-expanded", String(on));
-    };
-
-    // Меню закрывается с задержкой: увести мышь по диагонали к промо-карточке
-    // быстрее, чем срабатывает mouseleave, — и список исчезал под курсором.
-    var timer = 0;
-    var pinned = false;
-
-    var later = function () {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(function () { if (!pinned) set(false); }, 420);
-    };
-
-    drop.addEventListener("mouseenter", function () { window.clearTimeout(timer); set(true); });
-    drop.addEventListener("mouseleave", later);
-
-    // клик закрепляет меню открытым, пока не кликнут мимо или не нажмут Esc
-    btn.addEventListener("click", function () {
-      window.clearTimeout(timer);
-      pinned = !menu.classList.contains("is-open") || !pinned;
-      set(pinned || !menu.classList.contains("is-open"));
-      if (!menu.classList.contains("is-open")) pinned = false;
-    });
-
-    document.addEventListener("pointerdown", function (e) {
-      if (!drop.contains(e.target)) { pinned = false; set(false); }
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { pinned = false; set(false); }
-    });
-  })();
-
   // Проявление: наблюдатель не отключается, поэтому анимация играет
   // каждый раз, когда блок снова попадает в экран.
   (function () {
