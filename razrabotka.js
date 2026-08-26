@@ -147,8 +147,9 @@
     if (calm.matches) frame(0);
   })();
 
-  // Волна в полосе футера: полутоновая сетка, где размер точки задаёт
-  // мягкая волна — как растр в печати. Голубая на тёмном, плывёт медленно.
+  // Полоса футера: поле из мягких «лавовых» пятен, которые медленно
+  // переливаются. Рисуется полутоном — точка крупнее там, где поле
+  // плотнее. Голубое на тёмном. Всё на canvas, картинок не требует.
   (function () {
     var cv = document.getElementById("foot-wave");
     if (!cv || !cv.getContext) return;
@@ -167,14 +168,21 @@
       rows = Math.ceil(h / STEP) + 1;
     }
 
-    // Гребень волны: сумма двух синусоид, чтобы не читалось как «синус».
-    // Точка растёт, чем ближе к гребню, и гаснет, уходя в глубину.
-    function crest(x, t) {
-      var u = x / w;
-      return 0.72
-        + 0.16 * Math.sin(u * 4.2 + t * 0.35)
-        + 0.10 * Math.sin(u * 9.5 - t * 0.6)
-        + 0.06 * Math.sin(u * 1.7 + t * 0.2);
+    // Поле: сумма синусоид по двум осям с разными частотами и фазами.
+    // Ни одна не кратна другой — поэтому картинка не зацикливается на
+    // глаз и не читается как «волна». Возвращает 0…1.
+    function field(x, y, t) {
+      var u = x / w * 6.28, v = y / h * 6.28;
+      var n = 0;
+      n += Math.sin(u * 0.9 + t * 0.21 + Math.sin(v * 1.3 + t * 0.17) * 1.4);
+      n += Math.sin(v * 1.1 - t * 0.19 + Math.cos(u * 0.7 + t * 0.13) * 1.6);
+      n += Math.sin((u + v) * 0.6 + t * 0.11) * 0.8;
+      n += Math.sin(u * 1.7 - v * 0.8 - t * 0.23) * 0.5;
+      // 2.9 — сумма амплитуд; сжимаем к 0…1 и подрезаем края, чтобы
+      // тёмных провалов было больше, чем гребней
+      var k = (n / 2.9 + 1) / 2;
+      k = (k - 0.28) / 0.62;
+      return k < 0 ? 0 : (k > 1 ? 1 : k);
     }
 
     var raf = 0;
@@ -185,23 +193,18 @@
 
       for (var c = 0; c < cols; c++) {
         var x = c * STEP;
-        var cy = crest(x, t) * h;                    // где гребень в этой колонке
         for (var r = 0; r < rows; r++) {
           var y = r * STEP;
-          // толщина полосы ~ 42% высоты, гребень ниже середины — низ
-          // уходит за край полосы, как у референса
-          var d = Math.abs(y - cy) / (h * 0.42);
-          if (d > 1) continue;
-          var k = 1 - d * d;                         // 1 на гребне → 0 у края
-          var rad = half * k * 0.95;
+          var k = field(x, y, t);
+          var rad = half * k * 1.05;
           if (rad < 0.3) continue;
-          // примесь: у края глубокий синий, к гребню — голубой, на самом
-          // гребне подмешивается белый (как блик на референсе)
+          // примесь: глубокий синий на слабых, голубой на плотных,
+          // на самых плотных подмешан белый — как блик
           var g = 90 + k * 60;                      // 90 → 150 (--accent 140)
           var rr = 30 + k * 60;                     // 30 → 90  (--accent 78)
           var bb = 200 + k * 55;                    // 200 → 255
           ctx.fillStyle = "rgb(" + (rr | 0) + "," + (g | 0) + "," + (bb | 0) + ")";
-          ctx.globalAlpha = 0.45 + k * 0.55;
+          ctx.globalAlpha = 0.4 + k * 0.6;
           ctx.beginPath();
           ctx.arc(x, y, rad, 0, Math.PI * 2);
           ctx.fill();
@@ -224,18 +227,6 @@
     } else { run(true); }
 
     if (calm.matches) frame(0);                      // без анимации — один кадр
-  })();
-
-  // Шапка прячется, пока в экране футер: там она лишняя, и блендинг
-  // поверх волны выглядел бы грязно.
-  (function () {
-    var bars = document.querySelectorAll(".nav-bar, .topbar");
-    var foot = document.querySelector(".foot");
-    if (!bars.length || !foot || !window.IntersectionObserver) return;
-
-    new IntersectionObserver(function (e) {
-      bars.forEach(function (b) { b.classList.toggle("is-away", e[0].isIntersecting); });
-    }, { threshold: 0, rootMargin: "-10% 0px 0px 0px" }).observe(foot);
   })();
 
   // Кнопка «наверх» в нижней полоске футера.
