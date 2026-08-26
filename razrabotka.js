@@ -147,6 +147,80 @@
     if (calm.matches) frame(0);
   })();
 
+  // Волна в полосе футера: полутоновая сетка, где размер точки задаёт
+  // мягкая волна — как растр в печати. Голубая на тёмном, плывёт медленно.
+  (function () {
+    var cv = document.getElementById("foot-wave");
+    if (!cv || !cv.getContext) return;
+
+    var ctx = cv.getContext("2d");
+    var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var STEP = 7;                                   // шаг сетки точек, px
+    var w = 0, h = 0, dpr = 1, cols = 0, rows = 0;
+
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / STEP) + 1;
+      rows = Math.ceil(h / STEP) + 1;
+    }
+
+    // Гребень волны: сумма двух синусоид, чтобы не читалось как «синус».
+    // Точка растёт, чем ближе к гребню, и гаснет, уходя в глубину.
+    function crest(x, t) {
+      var u = x / w;
+      return 0.72
+        + 0.16 * Math.sin(u * 4.2 + t * 0.35)
+        + 0.10 * Math.sin(u * 9.5 - t * 0.6)
+        + 0.06 * Math.sin(u * 1.7 + t * 0.2);
+    }
+
+    var raf = 0;
+    function frame(now) {
+      var t = now * 0.001;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#4E8CFF";                     // --accent
+      var half = STEP / 2;
+
+      for (var c = 0; c < cols; c++) {
+        var x = c * STEP;
+        var cy = crest(x, t) * h;                    // где гребень в этой колонке
+        for (var r = 0; r < rows; r++) {
+          var y = r * STEP;
+          // толщина полосы ~ 42% высоты, гребень ниже середины — низ
+          // уходит за край полосы, как у референса
+          var d = Math.abs(y - cy) / (h * 0.42);
+          if (d > 1) continue;
+          var k = 1 - d * d;                         // 1 на гребне → 0 у края
+          var rad = half * k * 0.95;
+          if (rad < 0.3) continue;
+          ctx.globalAlpha = 0.35 + k * 0.65;
+          ctx.beginPath();
+          ctx.arc(x, y, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      raf = window.requestAnimationFrame(frame);
+    }
+
+    size();
+    window.addEventListener("resize", size);
+
+    var run = function (on) {
+      if (on && !raf && !calm.matches) raf = window.requestAnimationFrame(frame);
+      if (!on && raf) { window.cancelAnimationFrame(raf); raf = 0; }
+    };
+
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (e) { run(e[0].isIntersecting); }).observe(cv);
+    } else { run(true); }
+
+    if (calm.matches) frame(0);                      // без анимации — один кадр
+  })();
+
   // Бегущая строка: сдвигается по мере прокрутки секции, а не сама по себе —
   // движение привязано к жесту человека, поэтому не отвлекает.
   (function () {
