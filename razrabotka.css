@@ -2022,10 +2022,6 @@
     background: none;
   }
 
-  /* Ссылка «Читать кейс» ушла из шапки блока к цифрам — колонка та же,
-     что у .case__stats, поэтому просто встаёт к ним же в столбец. */
-  .case .flow__cta { grid-column: 2; justify-self: end; }
-
   .case__story h3 {
     max-width: 20ch;
     margin: 0;
@@ -2099,11 +2095,17 @@
     position: relative;
     margin: 0;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 4px;
     aspect-ratio: 4 / 3;
+    /* Лого клиента прозрачное и тёмное — на панели того же цвета, что и
+       страница, его не видно. Кладём на светлую подложку, как на самом лого. */
+    display: grid;
+    place-items: center;
+    padding: 12%;
+    background: #F2F2F0;
   }
 
-  .case__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .case__visual img { display: block; width: 100%; height: auto; object-fit: contain; }
 
   .case__visual figcaption {
     position: absolute;
