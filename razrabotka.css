@@ -2517,9 +2517,11 @@
   .foot__row {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    /* та же сетка, что у .foot__grid: «Наверх» встаёт на линию среднего
+       столбца, как «Back to top» в референсе */
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .6fr) minmax(0, .4fr);
     align-items: end;
-    gap: 24px;
+    gap: clamp(24px, 4vw, 64px);
     padding-top: clamp(40px, 7vh, 90px);
     padding-bottom: clamp(20px, 3.4vh, 32px);
   }
@@ -2531,7 +2533,7 @@
     letter-spacing: -.01em;
   }
 
-  .foot__row-cell.is-end { text-align: right; }
+  .foot__row-cell.is-end { text-align: left; }
 
   .foot__row-cell button {
     padding: 0;
