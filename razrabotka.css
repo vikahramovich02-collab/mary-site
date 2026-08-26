@@ -1824,18 +1824,19 @@
     stroke-linejoin: round;
   }
 
+  /* Текстовые ссылки со стрелкой: серые в покое, белые под курсором. */
   .flow__cta {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     margin-top: clamp(56px, 9vh, 110px);
-    color: var(--ink);
+    color: var(--faint);
     font: 500 16px/1 var(--font);
     text-decoration: none;
-    transition: gap .18s ease;
+    transition: gap .18s ease, color .18s ease;
   }
 
-  .flow__cta:hover { gap: 14px; }
+  .flow__cta:hover { gap: 14px; color: var(--ink); }
 
   /* Кнопка под этапами стоит по центру оси и ждёт, пока бегунок дойдёт
      до конца: до этого она приглушена, потом загорается белым. */
@@ -2180,12 +2181,8 @@
     top: 1px;
     right: 0;
     margin: 0;
-    color: #DEDEE2;
     font-size: 14px;
   }
-
-  #blog .sec__head .flow__cta:hover,
-  #case .sec__head .flow__cta:hover { color: #fff; }
 
   @media (max-width: 860px) {
     #blog .sec__head .flow__cta,
