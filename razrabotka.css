@@ -2073,12 +2073,13 @@
 
 
   /* Подпись-метка моноширинным в скобках, как в референсе. */
-  .case__tag {
+  /* Подписи-метки в скобках: над описанием и над цифрами — одна пара. */
+  .case__tag,
+  .case__stats-label {
     margin: 26px 0 0;
     color: var(--soft);
-    /* тот же кегль, что на кнопке, но лёгкое начертание */
-    font: 400 13px/1 var(--font);
-    letter-spacing: -.02em;
+    font: 600 11px/1 var(--font);
+    letter-spacing: .02em;
     text-transform: uppercase;
   }
 
@@ -2136,7 +2137,7 @@
 
   .case__stats { margin: 0; padding: 0; border: 0; background: none; }
 
-  .case__stats-label { margin: 0 0 26px; color: var(--faint); font-size: 14px; }
+  .case__stats-label { margin: 0 0 26px; }
   .case__stats > div + div { margin-top: clamp(26px, 3vh, 40px); }
 
   .case__stats dt {
