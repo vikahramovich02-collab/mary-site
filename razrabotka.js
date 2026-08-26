@@ -221,6 +221,14 @@
     if (calm.matches) frame(0);                      // без анимации — один кадр
   })();
 
+  // Кнопка «наверх» в нижней полоске футера.
+  (function () {
+    var up = document.querySelector("[data-scroll-top]");
+    if (up) up.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  })();
+
   // Бегущая строка: сдвигается по мере прокрутки секции, а не сама по себе —
   // движение привязано к жесту человека, поэтому не отвлекает.
   (function () {
