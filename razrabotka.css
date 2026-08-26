@@ -2575,7 +2575,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: clamp(20px, 3.4vh, 32px) 0;
+    /* только вертикаль — боковые отступы даёт .wrap, как везде */
+    padding-top: clamp(20px, 3.4vh, 32px);
+    padding-bottom: clamp(20px, 3.4vh, 32px);
   }
 
   .foot__stripe-mark {
@@ -2613,9 +2615,10 @@
 
   .foot__bar-row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 8px 24px;
     padding-top: 8px;
     padding-bottom: 8px;
   }
