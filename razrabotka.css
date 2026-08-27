@@ -2804,6 +2804,16 @@
   }
 
   .foot__bar-links { display: flex; gap: 24px; }
+
+  /* Кнопка «Настройки cookie» стоит в ряду ссылок и выглядит так же. */
+  .foot__bar-links button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+  }
   .foot__bar a { transition: opacity .18s ease; }
 
   @media (max-width: 640px) {

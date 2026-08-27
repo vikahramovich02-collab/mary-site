@@ -269,11 +269,7 @@
     var box = document.querySelector("[data-cookie]");
     if (!box) return;
     var KEY = "mary-cookie-consent";
-    var saved = null;
-    try { saved = window.localStorage.getItem(KEY); } catch (e) {}
-    if (saved) return;
 
-    box.hidden = false;
     box.querySelectorAll("[data-cookie-decide]").forEach(function (b) {
       b.addEventListener("click", function () {
         try { window.localStorage.setItem(KEY, b.getAttribute("data-cookie-decide")); } catch (e) {}
@@ -283,6 +279,21 @@
         window.setTimeout(function () { box.hidden = true; }, 340);
       });
     });
+
+    // Отозвать согласие должно быть так же просто, как дать: ссылка в нижней
+    // полоске стирает выбор и перезагружает страницу — счётчик, если он уже
+    // стартовал, после перезагрузки не поднимется, и баннер спросит заново.
+    document.querySelectorAll("[data-cookie-open]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        try { window.localStorage.removeItem(KEY); } catch (err) {}
+        window.location.reload();
+      });
+    });
+
+    var saved = null;
+    try { saved = window.localStorage.getItem(KEY); } catch (e) {}
+    if (!saved) box.hidden = false;
   })();
 
   // Кнопка «наверх» в нижней полоске футера.
