@@ -2749,7 +2749,7 @@
   .cookie__text { flex: 1 1 auto; margin: 0; color: var(--ink); font: 400 14px/1.4 var(--font); }
   .cookie__text a { color: var(--ink); text-underline-offset: 3px; }
 
-  .cookie__actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+  .cookie__actions { display: flex; align-items: center; gap: 18px; flex: 0 0 auto; }
 
   .cookie__btn {
     padding: 11px 16px;
@@ -2763,8 +2763,21 @@
   }
 
   .cookie__btn:hover { background: rgba(255, 255, 255, .2); }
-  .cookie__btn.is-main { background: #fff; color: #0B0C0E; }
-  .cookie__btn.is-main:hover { background: #EDEEF0; }
+
+  .cookie__link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: 500 14px/1 var(--font);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(255, 255, 255, .35);
+    cursor: pointer;
+    transition: text-decoration-color .18s ease;
+  }
+
+  .cookie__link:hover { text-decoration-color: var(--ink); }
 
   .cookie__x {
     display: grid;
