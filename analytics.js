@@ -43,14 +43,14 @@
   function start() {
     if (started || !allowed()) return;
     started = true;
-    if (METRIKA) startMetrika(METRIKA);
+    if (METRIKA) startMetrika(Number(METRIKA));
     if (GA4) startGa4(GA4);
   }
 
   // Цель: заявка отправлена, кнопка нажата и т.п.
   window.track = function (name, params) {
     if (!allowed()) return;
-    if (window.ym && METRIKA) window.ym(METRIKA, "reachGoal", name, params || {});
+    if (window.ym && METRIKA) window.ym(Number(METRIKA), "reachGoal", name, params || {});
     if (window.gtag) window.gtag("event", name, params || {});
   };
 
