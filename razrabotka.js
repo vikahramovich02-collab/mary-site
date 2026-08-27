@@ -652,8 +652,37 @@
       if (e.key === "Escape" && !drawer.hidden) hide();
     });
 
+    // Проверка полей: имя — только буквы, контакт — телефон, телеграм или почта.
+    var RULES = {
+      name: function (v) { return /^[А-Яа-яЁёA-Za-z][А-Яа-яЁёA-Za-z\s'-]{1,}$/.test(v); },
+      contact: function (v) {
+        var digits = v.replace(/\D/g, "");
+        if (/^\+?[\d\s()-]+$/.test(v) && digits.length >= 7) return true;   // телефон
+        if (/^@[A-Za-z0-9_]{4,}$/.test(v)) return true;                      // телеграм
+        if (/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v)) return true;          // почта
+        return false;
+      }
+    };
+
+    var checks = form ? form.querySelectorAll("[data-check]") : [];
+    function validate(q) {
+      var input = q.querySelector("input");
+      var v = input.value.trim();
+      var ok = v ? RULES[q.getAttribute("data-check")](v) : false;
+      q.classList.toggle("is-error", !ok);
+      return ok;
+    }
+    checks.forEach(function (q) {
+      var input = q.querySelector("input");
+      input.addEventListener("blur", function () { if (input.value.trim()) validate(q); });
+      input.addEventListener("input", function () { q.classList.remove("is-error"); });
+    });
+
     if (form) form.addEventListener("submit", function (e) {
       e.preventDefault();
+      var bad = null;
+      checks.forEach(function (q) { if (!validate(q) && !bad) bad = q; });
+      if (bad) { bad.querySelector("input").focus(); return; }
       var btn = form.querySelector('[type="submit"]');
       btn.disabled = true;
       window.sendLead(form).then(function () {

@@ -580,12 +580,14 @@
 
     <form class="drawer__form" data-dev-form>
       <label class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-      <label class="drawer__q">Как вас зовут?<i>*</i>
+      <label class="drawer__q" data-check="name">Как вас зовут?<i>*</i>
         <input name="name" type="text" placeholder="Анна Иванова" required autocomplete="name" />
+        <p class="drawer__hint">Только буквы — как к вам обращаться.</p>
       </label>
 
-      <label class="drawer__q">Телефон, телеграм или почта<i>*</i>
+      <label class="drawer__q" data-check="contact">Телефон, телеграм или почта<i>*</i>
         <input name="contact" type="text" placeholder="+375 29 000-00-00, @telegram или anna@company.by" required />
+        <p class="drawer__hint">Похоже на опечатку: телефон от 7 цифр, телеграм через @, почта с точкой в домене.</p>
       </label>
 
       <label class="drawer__q">Как называется компания?
