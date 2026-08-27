@@ -22,10 +22,13 @@
     window.ym.l = Number(new Date());
     var s = document.createElement("script");
     s.async = true;
-    s.src = "https://mc.yandex.ru/metrika/tag.js";
+    // номер счётчика обязан быть в адресе: без ?id= новый tag.js
+    // загружается, но счётчик не инициализирует — визитов просто нет
+    s.src = "https://mc.yandex.ru/metrika/tag.js?id=" + id;
     document.head.appendChild(s);
     window.ym(id, "init", {
-      webvisor: true, clickmap: true, trackLinks: true, accurateTrackBounce: true
+      ssr: true, webvisor: true, clickmap: true,
+      trackLinks: true, accurateTrackBounce: true
     });
   }
 
