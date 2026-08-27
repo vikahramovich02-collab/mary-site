@@ -634,7 +634,7 @@
         form.reset();
         form.querySelectorAll("[data-check]").forEach(function (q) { q.classList.remove("is-error"); });
         var send = form.querySelector('[type="submit"]');
-        if (send) send.disabled = false;
+        if (send) { send.disabled = false; send.classList.remove("is-ready"); }
         form.hidden = false;
         done.hidden = true;
       }
@@ -657,6 +657,16 @@
 
     document.querySelectorAll('a[href="#request"]').forEach(function (a) {
       a.addEventListener("click", open);
+    });
+
+    // Карточки услуг: курсор обещает «связаться» — по клику открываем ту же панель.
+    document.querySelectorAll(".rows li").forEach(function (li) {
+      li.setAttribute("role", "button");
+      li.setAttribute("tabindex", "0");
+      li.addEventListener("click", open);
+      li.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") open(e);
+      });
     });
     close.addEventListener("click", hide);
     drawer.addEventListener("click", function (e) { if (e.target === drawer) hide(); });
@@ -698,11 +708,24 @@
       q.classList.toggle("is-error", !ok);
       return ok;
     }
+    // Пока поля не в порядке — кнопка серая; как только всё сходится, белеет.
+    var submit = form && form.querySelector('[type="submit"]');
+    function ready() {
+      if (!submit) return;
+      var ok = true;
+      checks.forEach(function (q) {
+        var v = q.querySelector("input").value.trim();
+        if (!v || !RULES[q.getAttribute("data-check")](v)) ok = false;
+      });
+      submit.classList.toggle("is-ready", ok);
+    }
+
     checks.forEach(function (q) {
       var input = q.querySelector("input");
       // проверяем прямо во время печати; пустое поле не ругаем, пока не отправили
       input.addEventListener("input", function () {
         if (input.value.trim()) validate(q); else q.classList.remove("is-error");
+        ready();
       });
       input.addEventListener("blur", function () { if (input.value.trim()) validate(q); });
     });
