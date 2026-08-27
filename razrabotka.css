@@ -1544,6 +1544,8 @@
   @media (max-width: 720px) {
     /* подпись кейса мельче — она вторична рядом с заголовком экрана */
     .hero__case em, .hero__case b { font-size: 13px; }
+    /* услуги: на телефоне список читается заголовками, описания лишние */
+    .rows p { display: none; }
     .br-mob { display: inline; }
     .hero__case img { width: 64px; height: 64px; }
     .hero__case { gap: 12px; }
