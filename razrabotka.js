@@ -30,6 +30,17 @@
       });
     }
 
+    // Корзины по яркости: 16 градаций серых точек и 16 белых. Внутри
+    // корзины цвет один, поэтому все её точки уходят одной заливкой.
+    var TIERS = 16, TAU = Math.PI * 2, SLOT = N;
+    var palette = [];
+    for (var t = 0; t < TIERS; t++) {
+      palette[t] = "rgba(194, 194, 198, " + (0.06 + (t / (TIERS - 1)) * 0.38).toFixed(3) + ")";
+      palette[TIERS + t] = "rgba(255, 255, 255, " + (0.2 + (t / (TIERS - 1)) * 0.7).toFixed(3) + ")";
+    }
+    var buf = new Float32Array(TIERS * 2 * SLOT * 3);
+    var counts = new Uint16Array(TIERS * 2);
+
     var w = 0, h = 0, R = 0, dpr = 1;
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -71,6 +82,9 @@
     var PULL = 130;
     var bx = 0, by = 0, bw = 0, bh = 0, hasCta = false;
 
+    // Раньше это считалось каждый кадр — два getBoundingClientRect на кадр
+    // заставляют браузер пересчитывать раскладку 120 раз в секунду. Кнопка
+    // и холст стоят на месте, поэтому меряем только когда что-то поехало.
     function measureCta() {
       if (!cta) { hasCta = false; return; }
       var r = cta.getBoundingClientRect();
@@ -83,9 +97,14 @@
       hasCta = true;
     }
 
+    var needMeasure = true;
+    function remeasure() { needMeasure = true; }
+    window.addEventListener("resize", remeasure);
+    window.addEventListener("scroll", remeasure, { passive: true });
+
     var raf = 0;
     function frame(now) {
-      measureCta();
+      if (needMeasure) { measureCta(); needMeasure = false; }
       var a = now * 0.00012;
       var sa = Math.sin(a), ca = Math.cos(a);
       var tilt = -0.35, st = Math.sin(tilt), ct = Math.cos(tilt);
@@ -133,13 +152,29 @@
           }
         }
 
+        // Точку не рисуем сразу: складываем в корзину по яркости.
+        // Раньше на каждую шёл свой beginPath + fill + новая строка цвета —
+        // почти две тысячи вызовов и строк на кадр. Теперь 32 заливки.
+        var bucket = (p.hot ? TIERS : 0) +
+          (depth * (TIERS - 1) + 0.5 | 0);
+        var n = counts[bucket]++;
+        var off = bucket * SLOT * 3 + n * 3;
+        buf[off] = px; buf[off + 1] = py; buf[off + 2] = size > 0.15 ? size : 0.15;
+      }
+
+      for (var b = 0; b < TIERS * 2; b++) {
+        var cnt = counts[b];
+        if (!cnt) continue;
+        ctx.fillStyle = palette[b];
         ctx.beginPath();
-        ctx.arc(px, py, Math.max(size, 0.15), 0, Math.PI * 2);
-        // крупные светятся белым, остальные держатся в сером
-        ctx.fillStyle = p.hot
-          ? "rgba(255, 255, 255, " + (0.2 + depth * 0.7) + ")"
-          : "rgba(194, 194, 198, " + (0.06 + depth * 0.38) + ")";
+        var base = b * SLOT * 3;
+        for (var j = 0; j < cnt; j++) {
+          var o = base + j * 3;
+          ctx.moveTo(buf[o] + buf[o + 2], buf[o + 1]);
+          ctx.arc(buf[o], buf[o + 1], buf[o + 2], 0, TAU);
+        }
         ctx.fill();
+        counts[b] = 0;
       }
 
       press += (want - press) * 0.12;               // вмятина набирается и отпускает плавно
@@ -178,6 +213,7 @@
     var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
     var STEP = 7;                                   // шаг сетки точек, px
     var w = 0, h = 0, dpr = 1, cols = 0, rows = 0;
+    var rowCache = new Float32Array(512), colCache = new Float32Array(2048);
 
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -186,52 +222,87 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cols = Math.ceil(w / STEP) + 1;
       rows = Math.ceil(h / STEP) + 1;
+      if (rowCache.length < rows) rowCache = new Float32Array(rows);
+      if (colCache.length < cols) colCache = new Float32Array(cols);
     }
 
-    // Поле: сумма синусоид по двум осям с разными частотами и фазами.
-    // Ни одна не кратна другой — поэтому картинка не зацикливается на
-    // глаз и не читается как «волна». Возвращает 0…1.
-    function field(x, y, t) {
-      var u = x / w * 6.28, v = y / h * 6.28;
-      var n = 0;
-      n += Math.sin(u * 0.9 + t * 0.42 + Math.sin(v * 1.3 + t * 0.34) * 1.4);
-      n += Math.sin(v * 1.1 - t * 0.38 + Math.cos(u * 0.7 + t * 0.26) * 1.6);
-      n += Math.sin((u + v) * 0.6 + t * 0.22) * 0.8;
-      n += Math.sin(u * 1.7 - v * 0.8 - t * 0.46) * 0.5;
-      // 2.9 — сумма амплитуд; сжимаем к 0…1 и подрезаем края, чтобы
-      // тёмных провалов было больше, чем гребней
-      var k = (n / 2.9 + 1) / 2;
-      k = (k - 0.28) / 0.62;
-      return k < 0 ? 0 : (k > 1 ? 1 : k);
+    // Поле медленное, глазом 30 кадров от 60 не отличить — а работы вдвое
+    // меньше. Точки складываем в корзины по плотности: внутри корзины цвет
+    // один, значит вся корзина уходит одной заливкой вместо тысяч.
+    var TIERS = 16, TAU = Math.PI * 2;
+    var palette = [];
+    for (var i = 0; i < TIERS; i++) {
+      var k0 = i / (TIERS - 1);
+      palette[i] = "rgba(" + (30 + k0 * 60 | 0) + "," + (90 + k0 * 60 | 0) + "," +
+        (200 + k0 * 55 | 0) + "," + (0.4 + k0 * 0.6).toFixed(3) + ")";
+    }
+    var buf = null, counts = new Uint16Array(TIERS), slot = 0;
+
+    function ensure() {
+      var need = cols * rows;
+      if (!buf || slot < need) { slot = need; buf = new Float32Array(TIERS * slot * 3); }
     }
 
-    var raf = 0;
+    var raf = 0, last = 0;
     function frame(now) {
+      raf = window.requestAnimationFrame(frame);
+      if (now - last < 32) return;                  // ~30 кадров в секунду
+      last = now;
+
       var t = now * 0.001;
       ctx.clearRect(0, 0, w, h);
       var half = STEP / 2;
+      ensure();
+
+      // Половина синусов зависит только от строки или только от столбца —
+      // считаем их один раз на ряд, а не на каждую точку.
+      var rowS = rowCache, colC = colCache;
+      for (var r0 = 0; r0 < rows; r0++) {
+        var v0 = (r0 * STEP) / h * 6.28;
+        rowS[r0] = Math.sin(v0 * 1.3 + t * 0.34) * 1.4;
+      }
+      for (var c0 = 0; c0 < cols; c0++) {
+        var u0 = (c0 * STEP) / w * 6.28;
+        colC[c0] = Math.cos(u0 * 0.7 + t * 0.26) * 1.6;
+      }
 
       for (var c = 0; c < cols; c++) {
         var x = c * STEP;
+        var u = x / w * 6.28;
+        var cu = colC[c];
         for (var r = 0; r < rows; r++) {
           var y = r * STEP;
-          var k = field(x, y, t);
+          var v = y / h * 6.28;
+          var n = Math.sin(u * 0.9 + t * 0.42 + rowS[r]);
+          n += Math.sin(v * 1.1 - t * 0.38 + cu);
+          n += Math.sin((u + v) * 0.6 + t * 0.22) * 0.8;
+          n += Math.sin(u * 1.7 - v * 0.8 - t * 0.46) * 0.5;
+          var k = (n / 2.9 + 1) / 2;
+          k = (k - 0.28) / 0.62;
+          if (k <= 0) continue;
+          if (k > 1) k = 1;
           var rad = half * k * 1.05;
           if (rad < 0.3) continue;
-          // примесь: глубокий синий на слабых, голубой на плотных,
-          // на самых плотных подмешан белый — как блик
-          var g = 90 + k * 60;                      // 90 → 150 (--accent 140)
-          var rr = 30 + k * 60;                     // 30 → 90  (--accent 78)
-          var bb = 200 + k * 55;                    // 200 → 255
-          ctx.fillStyle = "rgb(" + (rr | 0) + "," + (g | 0) + "," + (bb | 0) + ")";
-          ctx.globalAlpha = 0.4 + k * 0.6;
-          ctx.beginPath();
-          ctx.arc(x, y, rad, 0, Math.PI * 2);
-          ctx.fill();
+          var b = k * (TIERS - 1) + 0.5 | 0;
+          var off = b * slot * 3 + counts[b]++ * 3;
+          buf[off] = x; buf[off + 1] = y; buf[off + 2] = rad;
         }
       }
-      ctx.globalAlpha = 1;
-      raf = window.requestAnimationFrame(frame);
+
+      for (var bb = 0; bb < TIERS; bb++) {
+        var cnt = counts[bb];
+        if (!cnt) continue;
+        ctx.fillStyle = palette[bb];
+        ctx.beginPath();
+        var base = bb * slot * 3;
+        for (var j = 0; j < cnt; j++) {
+          var o = base + j * 3;
+          ctx.moveTo(buf[o] + buf[o + 2], buf[o + 1]);
+          ctx.arc(buf[o], buf[o + 1], buf[o + 2], 0, TAU);
+        }
+        ctx.fill();
+        counts[bb] = 0;
+      }
     }
 
     size();
