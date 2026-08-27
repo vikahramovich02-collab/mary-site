@@ -2431,7 +2431,7 @@
     grid-template-rows: auto 1fr auto;
     align-items: start;
     flex: 1 1 auto;
-    padding: 0 var(--pad) clamp(28px, 5vh, 56px);
+    padding: 0 var(--pad) 12px;
   }
 
   .foot__navcol { grid-column: 1; grid-row: 1; padding-right: 24px; }
@@ -2608,8 +2608,8 @@
     justify-content: space-between;
     gap: 24px;
     /* только вертикаль — боковые отступы даёт .wrap, как везде */
-    padding-top: clamp(20px, 3.4vh, 32px);
-    padding-bottom: clamp(20px, 3.4vh, 32px);
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
 
   .foot__stripe-mark {
