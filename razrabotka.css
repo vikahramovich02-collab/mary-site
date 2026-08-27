@@ -2257,9 +2257,11 @@
   }
 
   @media (max-width: 860px) {
-    #blog .sec__head .flow__cta,
-    #case .sec__head .flow__cta { position: static; margin-top: 18px; }
+    #blog .sec__head .flow__cta { position: static; margin-top: 18px; }
   }
+
+  /* «Читать кейс» стоит после карточки, а не в шапке блока. */
+  #case > .flow__cta { margin-top: clamp(24px, 4vh, 40px); }
 
   /* ── блог ───────────────────────────────────────────────── */
 
