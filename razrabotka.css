@@ -2815,16 +2815,6 @@
   .drawer__q input:focus-visible,
   .drawer__q textarea:focus-visible { outline: none; border-bottom-color: var(--ink); }
 
-  .drawer__hint {
-    display: none;
-    margin: 10px 0 0;
-    color: #FF3B30;
-    font: 400 13px/1.4 var(--font);
-  }
-
-  .drawer__q.is-error .drawer__hint { display: block; }
-  .drawer__q.is-error input { border-bottom-color: #FF3B30; }
-
   /* Варианты: квадрат и моноширинная подпись капсом. */
   .drawer__choice legend {
     padding: 0;
@@ -2887,7 +2877,7 @@
     backdrop-filter: blur(14px);
   }
 
-  .drawer__terms { margin: 0; max-width: 34ch; color: var(--faint); font-size: 13px; line-height: 1.4; }
+  .drawer__terms { margin: 0; color: var(--faint); font-size: 13px; line-height: 1.4; white-space: nowrap; }
   .drawer__terms a { color: var(--soft); }
 
   /* Кнопка — та же, что на первом экране (.hero__cta): заливка от точки

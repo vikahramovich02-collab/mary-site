@@ -635,26 +635,8 @@
       if (e.key === "Escape" && !drawer.hidden) hide();
     });
 
-    // Контакт: телефон/телеграм или почта — заполнено должно быть хотя бы одно.
-    var contacts = form ? form.querySelectorAll("[data-contact]") : [];
-    function contactOk() {
-      var ok = false;
-      contacts.forEach(function (q) {
-        var v = q.querySelector("input").value.trim();
-        if (v) ok = true;
-      });
-      contacts.forEach(function (q) { q.classList.toggle("is-error", !ok); });
-      return ok;
-    }
-    contacts.forEach(function (q) {
-      q.querySelector("input").addEventListener("input", function () {
-        contacts.forEach(function (o) { o.classList.remove("is-error"); });
-      });
-    });
-
     if (form) form.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (!contactOk()) { contacts[0].querySelector("input").focus(); return; }
       // TODO: адрес приёма заявок — Telegram через прокси, общий с нишами.
       form.hidden = true;
       done.hidden = false;
