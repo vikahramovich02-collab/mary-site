@@ -2575,9 +2575,19 @@
     padding-bottom: clamp(16px, 2.6vh, 24px);
   }
 
+  /* правая половина делится пополам, как реквизиты/связь выше:
+     адрес — под реквизитами, «наверх» — под связью, у края */
   .foot__row-cell:first-child { grid-column: 1; grid-row: 1; }
-  .foot__row-cell.is-mid { grid-column: 2; grid-row: 1; align-self: end; text-align: left; }
-  .foot__row-cell.is-end { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
+  .foot__row-right {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(24px, 4vw, 64px);
+    align-items: end;
+  }
+  .foot__row-cell.is-mid { margin: 0; text-align: left; }
+  .foot__row-cell.is-end { margin: 0; justify-self: end; text-align: right; }
 
   .foot__row-cell {
     margin: 0;
@@ -2610,7 +2620,7 @@
 
   .foot__stripe {
     position: relative;
-    min-height: clamp(200px, 28vh, 320px);
+    height: clamp(180px, 24vh, 260px);
     overflow: hidden;
     background: var(--bg);
   }
