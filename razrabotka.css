@@ -2816,9 +2816,18 @@
   .cookie__x svg { width: 16px; height: 16px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; }
 
   @media (max-width: 760px) {
-    .cookie { flex-wrap: wrap; padding: 16px; }
-    .cookie__text { flex-basis: 100%; }
-    .cookie__actions { flex-basis: 100%; justify-content: flex-end; }
+    /* Крестик уходит в правый верхний угол, кнопки — вправо под текстом. */
+    .cookie {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      padding: 16px 16px 18px;
+      row-gap: 14px;
+    }
+    .cookie__icon { order: 1; }
+    .cookie__x { order: 2; margin-left: auto; margin-top: -4px; }
+    .cookie__text { order: 3; flex-basis: 100%; }
+    .cookie__actions { order: 4; flex-basis: 100%; justify-content: flex-end; }
+    .cookie__actions .cookie__x { display: none; }
   }
 
   /* ── выдвижная панель заявки: чёрный прямоугольник выезжает справа ── */

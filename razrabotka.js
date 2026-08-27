@@ -257,6 +257,8 @@
     box.querySelectorAll("[data-cookie-decide]").forEach(function (b) {
       b.addEventListener("click", function () {
         try { window.localStorage.setItem(KEY, b.getAttribute("data-cookie-decide")); } catch (e) {}
+        // согласились на всё — счётчики стартуют тут же, без перезагрузки
+        if (window.startAnalytics) window.startAnalytics();
         box.classList.add("is-out");
         window.setTimeout(function () { box.hidden = true; }, 340);
       });
@@ -637,6 +639,7 @@
         done.hidden = true;
       }
       drawer.hidden = false;
+      if (window.track) window.track("request_open");
       document.body.style.overflow = "hidden";
       window.requestAnimationFrame(function () {
         window.requestAnimationFrame(function () {
@@ -712,6 +715,7 @@
       var btn = form.querySelector('[type="submit"]');
       btn.disabled = true;
       window.sendLead(form).then(function () {
+        if (window.track) window.track("request_sent");
         form.hidden = true;
         done.hidden = false;
       }).catch(function (err) {
