@@ -43,12 +43,26 @@
     var mx = -1e4, my = -1e4, press = 0, want = 0;
     var DENT = 150;                                  // радиус влияния, px
 
+    var stage = cv.parentNode;
+    function aim(x, y) {
+      var r = cv.getBoundingClientRect();
+      mx = x - r.left; my = y - r.top; want = 1;
+    }
+
     if (window.matchMedia("(hover: hover)").matches) {
-      cv.parentNode.addEventListener("pointermove", function (e) {
-        var r = cv.getBoundingClientRect();
-        mx = e.clientX - r.left; my = e.clientY - r.top; want = 1;
-      });
-      cv.parentNode.addEventListener("pointerleave", function () { want = 0; });
+      stage.addEventListener("pointermove", function (e) { aim(e.clientX, e.clientY); });
+      stage.addEventListener("pointerleave", function () { want = 0; });
+    } else {
+      // На телефоне то же самое делает палец: вмятина идёт за касанием
+      // и разглаживается, когда палец убрали. passive — чтобы не мешать прокрутке.
+      function touch(e) {
+        var t = e.touches[0];
+        if (t) aim(t.clientX, t.clientY);
+      }
+      stage.addEventListener("touchstart", touch, { passive: true });
+      stage.addEventListener("touchmove", touch, { passive: true });
+      stage.addEventListener("touchend", function () { want = 0; }, { passive: true });
+      stage.addEventListener("touchcancel", function () { want = 0; }, { passive: true });
     }
 
     // Кнопка работает магнитом: точки, проходящие рядом, подтягиваются
