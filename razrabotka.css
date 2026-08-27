@@ -3019,8 +3019,8 @@
   .done__who { display: flex; align-items: center; gap: 14px; margin: 0; }
   .done__who img { width: 52px; height: 52px; border-radius: 999px; object-fit: cover; }
   .done__who figcaption { display: flex; flex-direction: column; gap: 4px; }
-  .done__name { color: var(--ink); font: 500 15px/1 var(--font); }
-  .done__role { color: var(--faint); font: 400 14px/1 var(--font); }
+  .drawer__done .done__name { color: #fff; font: 500 16px/1 var(--font); }
+  .drawer__done .done__role { color: var(--faint); font: 400 14px/1 var(--font); }
 
   .done__lead { margin: 20px 0 0; color: var(--soft); font: 400 15px/1.5 var(--font); }
   .done__links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
