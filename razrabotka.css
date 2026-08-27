@@ -2579,6 +2579,8 @@
 
   /* Строка перед волной: реквизиты, «наверх», копирайт — три колонки,
      текст мелкий и белый, как в референсе. */
+  .foot__edge { padding-left: clamp(20px, 3.5vw, 50px); padding-right: clamp(20px, 3.5vw, 50px); }
+
   /* ── полоса внизу футера: тёмная, по ней плывёт голубая волна
         растровыми точками (как полутон в печати). Считается на canvas. ─ */
 
@@ -2625,10 +2627,10 @@
   .foot__stripe-mark:hover { opacity: .7; }
   .foot__stripe-mark img { width: 22px; height: 22px; }
 
-  .foot__stripe-line {
+  .foot__stripe-go {
     margin: 0;
-    color: var(--soft);
-    font-size: 14px;
+    color: #fff;
+    mix-blend-mode: difference;
   }
 
   @media (max-width: 640px) {
