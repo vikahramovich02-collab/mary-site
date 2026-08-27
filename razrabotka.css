@@ -3138,9 +3138,10 @@
   .menu__contacts { display: flex; flex-direction: column; gap: 10px; margin: 0; order: 1; }
 
   @media (max-width: 420px) {
-    .menu__foot { flex-direction: column; align-items: flex-end; }
+    /* Узкий экран: кнопка над контактами, оба по левому краю и чуть выше низа. */
+    .menu__foot { flex-direction: column; align-items: flex-start; margin-bottom: clamp(20px, 4vh, 44px); }
     .menu__cta { order: 1; }
-    .menu__contacts { order: 2; align-self: stretch; }
+    .menu__contacts { order: 2; }
   }
   .menu__contacts a { color: var(--soft); font: 500 15px/1.4 var(--font); text-decoration: none; }
 
