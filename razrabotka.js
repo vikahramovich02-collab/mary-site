@@ -665,12 +665,25 @@
     var RULES = {
       name: function (v) { return /^[А-Яа-яЁёA-Za-z][А-Яа-яЁёA-Za-z\s'-]{1,}$/.test(v); },
       contact: function (v) {
-        var digits = v.replace(/\D/g, "");
-        // телефон: 7–15 цифр (верхняя граница — стандарт E.164)
-        if (/^\+?[\d\s()-]+$/.test(v) && digits.length >= 7 && digits.length <= 15) return true;
-        if (/^@[A-Za-z0-9_]{4,}$/.test(v)) return true;                      // телеграм
+        if (/^@[A-Za-z0-9_]{4,31}$/.test(v)) return true;                    // телеграм
         if (/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v)) return true;          // почта
-        return false;
+
+        // телефон: только цифры, пробелы, скобки, дефисы и ведущий плюс
+        if (!/^\+?[\d\s()-]+$/.test(v)) return false;
+        var d = v.replace(/\D/g, "");
+
+        // длина по коду страны — иначе «+375…» с лишним хвостом проходил
+        var LEN = { "375": 12, "380": 12, "370": 11, "371": 11, "372": 11,
+                    "48": 11, "49": [12, 13], "7": 11, "1": 11 };
+        for (var code in LEN) {
+          if (d.indexOf(code) === 0) {
+            var need = LEN[code];
+            return need.length ? d.length >= need[0] && d.length <= need[1] : d.length === need;
+          }
+        }
+        // местный формат без кода страны (8 029…) или незнакомая страна
+        if (d.length === 11 && d.charAt(0) === "8") return true;
+        return d.length >= 9 && d.length <= 15;
       }
     };
 
