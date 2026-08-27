@@ -136,7 +136,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 70;
+    /* выше панели заявки и модалки (80) — иначе курсор под ними пропадает */
+    z-index: 100;
     display: grid;
     place-items: center;
     width: 6px;
@@ -2806,6 +2807,16 @@
 
   .drawer__q input:focus-visible,
   .drawer__q textarea:focus-visible { outline: none; border-bottom-color: var(--ink); }
+
+  .drawer__hint {
+    display: none;
+    margin: 10px 0 0;
+    color: #FF3B30;
+    font: 400 13px/1.4 var(--font);
+  }
+
+  .drawer__q.is-error .drawer__hint { display: block; }
+  .drawer__q.is-error input { border-bottom-color: #FF3B30; }
 
   /* Варианты: квадрат и моноширинная подпись капсом. */
   .drawer__choice legend {
