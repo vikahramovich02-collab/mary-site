@@ -241,6 +241,26 @@
     }, { threshold: 0, rootMargin: "-10% 0px 0px 0px" }).observe(foot);
   })();
 
+  // Cookie: тот же ключ и значения, что на главной (mary-cookie-consent:
+  // all / necessary) — аналитика потом включится по нему на обеих страницах.
+  (function () {
+    var box = document.querySelector("[data-cookie]");
+    if (!box) return;
+    var KEY = "mary-cookie-consent";
+    var saved = null;
+    try { saved = window.localStorage.getItem(KEY); } catch (e) {}
+    if (saved) return;
+
+    box.hidden = false;
+    box.querySelectorAll("[data-cookie-decide]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        try { window.localStorage.setItem(KEY, b.getAttribute("data-cookie-decide")); } catch (e) {}
+        box.classList.add("is-out");
+        window.setTimeout(function () { box.hidden = true; }, 340);
+      });
+    });
+  })();
+
   // Кнопка «наверх» в нижней полоске футера.
   (function () {
     var up = document.querySelector("[data-scroll-top]");
