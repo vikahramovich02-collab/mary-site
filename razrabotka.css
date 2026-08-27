@@ -2525,12 +2525,22 @@
   }
 
   @media (max-width: 600px) {
-    .foot__body { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 32px; }
-    .foot__navcol, .foot__col, .foot__legal, .foot__addr, .foot__up {
-      grid-column: 1; grid-row: auto; margin: 0; padding: 0; justify-self: start;
+    /* Одна колонка, но с ритмом: смысловые блоки разделены сильнее,
+       чем строки внутри блока. «Наверх» уходит вправо, к реквизитам. */
+    .foot__body {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto;
+      row-gap: 0;
+      padding-bottom: 20px;
     }
-    .foot__col { margin-top: 8px; }
-    .foot__legal { margin-top: 24px; }
+    .foot__navcol, .foot__col, .foot__legal, .foot__addr {
+      grid-column: 1 / -1; grid-row: auto; margin: 0; padding: 0; justify-self: start;
+    }
+    .foot__col   { margin-top: clamp(32px, 6vh, 48px); }
+    .foot__legal { margin-top: clamp(32px, 6vh, 48px); }
+    .foot__addr  { margin-top: 8px; }
+    .foot__up    { grid-column: 2; grid-row: auto; margin-top: 20px; justify-self: end; align-self: center; }
+    .foot__legal, .foot__addr { grid-column: 1; }
   }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(20px, 3.5vh, 36px); }
@@ -2717,7 +2727,9 @@
   }
 
   @media (max-width: 640px) {
-    .foot__stripe-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    /* лого и «Обсудить задачу» помещаются в строку — не разводим по вертикали */
+    .foot__stripe-row { gap: 12px; }
+    .foot__stripe-go { font-size: 13px; }
   }
 
   /* Самая нижняя полоска: копирайт, кто сделал, «наверх». Тонкая линия
@@ -2751,7 +2763,9 @@
   .foot__bar a { transition: opacity .18s ease; }
 
   @media (max-width: 640px) {
-    .foot__bar-row { flex-direction: column; align-items: flex-start; gap: 6px; height: auto; padding: 10px 0; white-space: normal; }
+    .foot__bar-row { flex-direction: column; align-items: flex-start; gap: 8px; height: auto; padding: 12px 0 14px; white-space: normal; }
+    .foot__bar-links { gap: 16px; }
+    .foot__bar, .foot__bar a { font-size: 12px; }
   }
 
   /* ── cookie: тёмная плашка с блюром внизу по центру ─────────────── */
