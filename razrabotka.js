@@ -666,7 +666,8 @@
       name: function (v) { return /^[А-Яа-яЁёA-Za-z][А-Яа-яЁёA-Za-z\s'-]{1,}$/.test(v); },
       contact: function (v) {
         var digits = v.replace(/\D/g, "");
-        if (/^\+?[\d\s()-]+$/.test(v) && digits.length >= 7) return true;   // телефон
+        // телефон: 7–15 цифр (верхняя граница — стандарт E.164)
+        if (/^\+?[\d\s()-]+$/.test(v) && digits.length >= 7 && digits.length <= 15) return true;
         if (/^@[A-Za-z0-9_]{4,}$/.test(v)) return true;                      // телеграм
         if (/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v)) return true;          // почта
         return false;
