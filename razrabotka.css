@@ -2426,12 +2426,7 @@
 
   .foot__navcol { grid-column: 1; }
 
-  .foot__right {
-    grid-column: 2;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: clamp(24px, 4vw, 64px);
-  }
+  .foot__right { grid-column: 2; }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(20px, 3.5vh, 36px); }
 
@@ -2459,32 +2454,21 @@
     text-transform: uppercase;
   }
 
-  .foot__mail {
-    color: var(--ink);
-    font: 500 15px/1.3 var(--font);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-color: rgba(255, 255, 255, .35);
-    transition: text-decoration-color .18s ease;
-  }
-
-  .foot__mail:hover { text-decoration-color: var(--ink); }
-
   .foot__out {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     color: var(--ink);
-    font: 500 clamp(18px, 1.6vw, 22px)/1.2 var(--font);
-    letter-spacing: -.02em;
+    font: 500 15px/1.3 var(--font);
+    letter-spacing: -.01em;
     text-decoration: none;
     transition: opacity .18s ease;
   }
 
 
   .foot__out svg {
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
