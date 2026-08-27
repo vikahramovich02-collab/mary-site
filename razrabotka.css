@@ -2417,32 +2417,46 @@
   /* Навигация слева у края; реквизиты и связь — на линии FAQ.
      Та же формула, что у шапки FAQ: 1fr | min(62%, 760px).
      Обе части — в одном гриде, поэтому высоту задаёт та, что выше. */
-  /* Сетка футера — в полосе .wrap: правая колонка ложится на линию FAQ
-     той же формулой (1fr | min(62%,760px)). Навигация вынесена из сетки
-     и стоит у края экрана абсолютом — поверх пустой левой колонки. */
-  .foot__grid {
-    position: relative;
+  /* Низ футера — один грид на всю ширину экрана.
+     Колонка 1: край экрана (навигация, реквизиты).
+     Колонка 2: линия заголовка FAQ (контакты, адрес, «наверх» у правого края).
+     Линия FAQ = левый край .wrap + 38% его ширины: считаем от экрана. */
+  .foot__body {
+    --pad: clamp(20px, 3.5vw, 50px);
+    --wrap: min(1440px, 100vw);
+    --inner: calc(var(--wrap) - 2 * var(--pad));
+    --line: calc((100vw - var(--wrap)) / 2 + var(--pad) + var(--inner) - min(760px, var(--inner) * .62));
     display: grid;
-    grid-template-columns: minmax(0, 1fr) min(62%, 760px);
+    grid-template-columns: var(--line) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
     align-items: start;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 3.5vw, 50px);
-    min-height: 240px;
+    flex: 1 1 auto;
+    padding: 0 var(--pad) clamp(28px, 5vh, 56px);
   }
 
-  @media (min-width: 901px) {
-    .foot__navcol { position: absolute; top: 0; left: calc(-1 * max(0px, (100vw - 1440px) / 2)); }
+  .foot__navcol { grid-column: 1; grid-row: 1; padding-right: 24px; }
+  .foot__col    { grid-column: 2; grid-row: 1; margin-left: calc(-1 * var(--pad)); }
+
+  .foot__legal  { grid-column: 1; grid-row: 3; align-self: end; margin: 0; }
+  .foot__addr   { grid-column: 2; grid-row: 3; align-self: end; margin: 0 0 0 calc(-1 * var(--pad)); }
+  .foot__up     { grid-column: 2; grid-row: 3; align-self: end; justify-self: end; }
+
+  .foot__legal, .foot__addr, .foot__up {
+    color: var(--ink);
+    font: 500 14px/1.4 var(--font);
+    letter-spacing: -.01em;
   }
 
-  /* на узких — навигация в потоке, контакты под ней, всё у левого края */
+  .foot__up { padding: 0; border: 0; background: none; cursor: pointer; }
+
   @media (max-width: 900px) {
-    .foot__grid { grid-template-columns: 1fr; padding: 0; min-height: 0; row-gap: 40px; }
-    .foot__navcol, .foot__right { grid-column: 1; }
-    .foot__right { padding-left: clamp(20px, 3.5vw, 50px); padding-right: clamp(20px, 3.5vw, 50px); }
+    .foot__body { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 32px; }
+    .foot__navcol, .foot__col, .foot__legal, .foot__addr, .foot__up {
+      grid-column: 1; grid-row: auto; margin: 0; padding: 0; justify-self: start;
+    }
+    .foot__col { margin-top: 8px; }
+    .foot__legal { margin-top: 24px; }
   }
-
-  .foot__right { grid-column: 2; }
 
   .foot__navcol .sec__mark { margin: 0 0 clamp(20px, 3.5vh, 36px); }
 
@@ -2551,11 +2565,6 @@
     stroke-linejoin: round;
   }
 
-  @media (max-width: 860px) {
-    .foot__grid { grid-template-columns: 1fr; gap: 40px; }
-    .foot__navcol .sec__mark,
-    .foot__label { margin-bottom: 20px; }
-  }
 
   /* Шапка и бегущая строка уезжают вверх, когда в экран входит футер
      (класс ставит js). */
@@ -2570,74 +2579,12 @@
 
   /* Строка перед волной: реквизиты, «наверх», копирайт — три колонки,
      текст мелкий и белый, как в референсе. */
-  /* Три нижние строки футера — реквизиты, лого в полосе, копирайт —
-     стоят на одном боковом отступе от края экрана, вне .wrap. */
-  .foot__edge { padding-left: clamp(20px, 3.5vw, 50px); padding-right: clamp(20px, 3.5vw, 50px); }
-
-  /* Строка над волной: реквизиты у края, адрес — на линии заголовка,
-     «наверх» — у правого края. */
-  .foot__row {
-    position: relative;
-    display: grid;
-    /* та же схема, что у сетки выше: реквизиты — у края (.foot__edge),
-       адрес и «наверх» — в .wrap на линии заголовка */
-    grid-template-columns: 1fr;
-    align-items: end;
-    padding-top: clamp(28px, 5vh, 56px);
-    padding-bottom: clamp(16px, 2.6vh, 24px);
-  }
-
-  /* правая половина делится пополам, как реквизиты/связь выше:
-     адрес — под реквизитами, «наверх» — под связью, у края */
-  .foot__row-cell:first-child { grid-column: 1; grid-row: 1; position: relative; z-index: 1; width: max-content; }
-  .foot__row-right {
-    grid-column: 1;
-    grid-row: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) min(62%, 760px);
-    align-items: end;
-  }
-  .foot__row-right > .foot__row-cell.is-mid {
-    grid-column: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 24px;
-  }
-  .foot__row-cell.is-end { margin: 0; text-align: right; }
-
-  .foot__row-cell {
-    margin: 0;
-    color: var(--ink);
-    font: 500 14px/1.4 var(--font);
-    letter-spacing: -.01em;
-  }
-
-  .foot__row-cell.is-end { text-align: right; }
-
-  .foot__row-cell button {
-    padding: 0;
-    border: 0;
-    background: none;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-    transition: opacity .18s ease;
-  }
-
-
-  @media (max-width: 860px) {
-    .foot__row { grid-template-columns: 1fr; align-items: start; }
-    .foot__row-cell.is-mid { text-align: left; }
-    .foot__row-cell.is-end { text-align: left; }
-  }
-
   /* ── полоса внизу футера: тёмная, по ней плывёт голубая волна
         растровыми точками (как полутон в печати). Считается на canvas. ─ */
 
   .foot__stripe {
     position: relative;
-    height: clamp(180px, 24vh, 260px);
+    height: clamp(200px, 26vh, 300px);
     overflow: hidden;
     background: var(--bg);
   }
