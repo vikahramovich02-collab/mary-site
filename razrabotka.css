@@ -379,14 +379,14 @@
   /* Пункты шапки перекручиваются лесенкой, как подпись на кнопке. */
   .nav-roll {
     display: inline-block;
-    /* высота — по строке, а не по 1em: иначе у ссылок с line-height > 1
-       режутся нижние выносные («у», «р», «щ») */
-    height: 1lh;
+    /* высота с запасом под выносные («у», «д», «Щ»): 1.3em, а не 1em/1lh —
+       lh зависит от контекста и в полосе футера резал буквы */
+    height: 1.3em;
     overflow: hidden;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
-  .nav-roll span { display: flex; height: 1lh; }
+  .nav-roll span { display: flex; align-items: center; height: 1.3em; }
 
   .nav-roll b {
     display: inline-block;
