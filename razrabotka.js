@@ -683,8 +683,11 @@
     }
     checks.forEach(function (q) {
       var input = q.querySelector("input");
+      // проверяем прямо во время печати; пустое поле не ругаем, пока не отправили
+      input.addEventListener("input", function () {
+        if (input.value.trim()) validate(q); else q.classList.remove("is-error");
+      });
       input.addEventListener("blur", function () { if (input.value.trim()) validate(q); });
-      input.addEventListener("input", function () { q.classList.remove("is-error"); });
     });
 
     if (form) form.addEventListener("submit", function (e) {
