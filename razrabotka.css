@@ -2803,6 +2803,35 @@
     text-decoration: none;
   }
 
+  /* Переключатель языка: в шапке — как ссылка навигации, но моноширинный,
+     чтобы не путался с разделами; в меню — строкой наравне с разделами. */
+  .nav__lang {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--soft);
+    font: 500 12px/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    letter-spacing: .06em;
+    cursor: pointer;
+    transition: color .18s ease;
+  }
+
+  .nav__lang:hover { color: var(--ink); }
+
+  .menu__lang {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--faint);
+    font: 500 clamp(24px, 6vw, 32px)/1.1 var(--font);
+    letter-spacing: -.03em;
+    text-align: left;
+    cursor: pointer;
+    transition: color .18s ease;
+  }
+
+  .menu__lang:hover { color: var(--ink); }
+
   .foot__bar-links { display: flex; gap: 24px; }
 
   /* Кнопка «Настройки cookie» стоит в ряду ссылок и выглядит так же. */
