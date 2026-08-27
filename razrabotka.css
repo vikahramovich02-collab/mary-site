@@ -626,6 +626,7 @@
 
   @media (max-width: 720px) {
     .hero h1 { max-width: 14ch; font-size: clamp(40px, 11vw, 60px); white-space: normal; }
+    .hero__globe { transform: translate(-50%, -58%); }
   }
 
   /* Узкая колонка в несколько строк, как в референсе: светлый текст
@@ -3133,9 +3134,9 @@
   .menu__contacts { display: flex; flex-direction: column; gap: 10px; margin: 0; order: 1; }
 
   @media (max-width: 420px) {
-    .menu__foot { flex-direction: column; align-items: stretch; }
-    .menu__cta { order: 1; justify-content: center; }
-    .menu__contacts { order: 2; }
+    .menu__foot { flex-direction: column; align-items: flex-end; }
+    .menu__cta { order: 1; }
+    .menu__contacts { order: 2; align-self: stretch; }
   }
   .menu__contacts a { color: var(--soft); font: 500 15px/1.4 var(--font); text-decoration: none; }
 
