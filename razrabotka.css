@@ -1352,6 +1352,11 @@
     .vmodal__box { transform: none; }
   }
 
+  /* На телефоне мелкие детали превью не читаются — блок ни о чём. */
+  @media (max-width: 640px) {
+    .demo { display: none; }
+  }
+
   /* ── цитата основателя ──────────────────────────────────── */
 
   /* До 860px цитата идёт во всю ширину: узкие max-width в ch рвали её
@@ -1442,11 +1447,11 @@
   /* Кегль как у метки раздела и подписи в плашке кейса — 15px. */
   .quote__name,
   .quote__role {
-    color: var(--soft);
     font: 500 15px/1.35 var(--font);
     letter-spacing: -.01em;
   }
 
+  .quote__name { color: #fff; }
   .quote__role { color: var(--faint); }
 
   @media (min-width: 861px) {
