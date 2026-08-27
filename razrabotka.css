@@ -2046,9 +2046,17 @@
   .after__card p { margin: 0; max-width: 46ch; color: var(--soft); font-size: 14px; line-height: 1.5; }
 
   @media (max-width: 860px) {
-    .after__card { grid-template-columns: 40px minmax(0, 1fr); row-gap: 14px; }
-    .after__body { grid-column: 2; grid-template-columns: minmax(0, 1fr); }
-    .after__shot { justify-self: end; }
+    /* Номер узкой колонкой слева, дальше иконка и текст в одну строку —
+       иначе иконка уезжала вправо и отрывалась от своей карточки. */
+    .after__card { grid-template-columns: 34px minmax(0, 1fr); column-gap: 12px; align-items: start; }
+    .after__body { grid-column: 2; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 14px; }
+    .after__shot img { width: 56px; height: 56px; border-radius: 14px; }
+    .after__card p { max-width: none; }
+  }
+
+  @media (max-width: 520px) {
+    /* На телефоне иконка над текстом: в строку они уже не помещаются. */
+    .after__body { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   }
 
   /* ── кейс ───────────────────────────────────────────────── */
