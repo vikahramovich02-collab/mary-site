@@ -657,9 +657,16 @@
 
     if (form) form.addEventListener("submit", function (e) {
       e.preventDefault();
-      // TODO: адрес приёма заявок — Telegram через прокси, общий с нишами.
-      form.hidden = true;
-      done.hidden = false;
+      var btn = form.querySelector('[type="submit"]');
+      btn.disabled = true;
+      window.sendLead(form).then(function () {
+        form.hidden = true;
+        done.hidden = false;
+      }).catch(function (err) {
+        btn.disabled = false;
+        console.error("[lead]", err);
+        alert("Не получилось отправить. Напишите нам в Telegram или на hello@mary.team.");
+      });
     });
   })();
 

@@ -140,9 +140,15 @@
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      // TODO: адрес приёма заявок — общий с формой на главной.
-      form.hidden = true;
-      form.parentNode.querySelector(".b-req__done").hidden = false;
+      send.disabled = true;
+      window.sendLead(form).then(function () {
+        form.hidden = true;
+        form.parentNode.querySelector(".b-req__done").hidden = false;
+      }).catch(function (err) {
+        send.disabled = false;
+        console.error("[lead]", err);
+        alert("Не получилось отправить. Напишите нам в Telegram или на hello@mary.team.");
+      });
     });
   });
 
