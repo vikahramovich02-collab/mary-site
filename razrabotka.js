@@ -391,44 +391,6 @@
     });
   })();
 
-  // Обновление страницы всегда открывает её сверху: браузер иначе
-  // возвращает прежнюю прокрутку, и человек попадает в середину.
-  // Перезагрузка оставляет человека на том же месте. Сами держим позицию:
-  // браузер восстанавливает её слишком рано — до того, как скрипты досчитают
-  // высоту секций, и страница уезжает на блок ниже.
-  (function () {
-    var KEY = "dev-scroll";
-    var saved = 0;
-    try { saved = parseFloat(sessionStorage.getItem(KEY)) || 0; } catch (e) {}
-
-    var store = function () {
-      try { sessionStorage.setItem(KEY, String(window.scrollY)); } catch (e) {}
-    };
-
-    var tick = 0;
-    window.addEventListener("scroll", function () {
-      if (tick) return;
-      tick = window.setTimeout(function () { tick = 0; store(); }, 150);
-    }, { passive: true });
-
-    window.addEventListener("pagehide", store);
-    window.addEventListener("beforeunload", store);
-
-    if (window.location.hash || !saved) return;
-
-    // высоту секций скрипты досчитывают уже после load — возвращаемся
-    // на место несколько раз, пока раскладка не устоялась
-    var back = function () { window.scrollTo(0, saved); };
-    back();
-    document.addEventListener("DOMContentLoaded", back);
-    window.addEventListener("load", function () {
-      back();
-      window.requestAnimationFrame(back);
-      window.setTimeout(back, 120);
-      window.setTimeout(back, 400);
-    });
-  })();
-
   // Подписи в шапке собираем из букв — иначе прокрутка лесенкой
   // потребовала бы вручную размечать каждый пункт.
   (function () {
