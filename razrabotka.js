@@ -216,6 +216,8 @@
 
     size();
     window.addEventListener("resize", size);
+    // полоса меняет высоту после загрузки шрифтов/раскладки — следим за ней
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv.parentNode);
 
     var run = function (on) {
       if (on && !raf && !calm.matches) raf = window.requestAnimationFrame(frame);
