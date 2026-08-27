@@ -551,7 +551,7 @@
   <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Заявка на проект">
     <div class="drawer__head">
       <p class="drawer__label">(заявка на проект)</p>
-      <button class="drawer__close" type="button">Закрыть</button>
+      <button class="drawer__close nav__button" type="button">Закрыть<i aria-hidden="true"></i></button>
     </div>
 
     <form class="drawer__form" data-dev-form>
@@ -568,7 +568,7 @@
       </label>
 
       <fieldset class="drawer__q drawer__choice">
-        <legend>Что нужно сделать?<i>*</i><span>Можно выбрать несколько.</span></legend>
+        <legend>Что нужно сделать?<i>*</i></legend>
         <label><input type="checkbox" name="service" value="Сайт или веб-сервис" /><span>Сайт или веб-сервис</span></label>
         <label><input type="checkbox" name="service" value="Автоматизация процессов" /><span>Автоматизация процессов</span></label>
         <label><input type="checkbox" name="service" value="ИИ-агент или чат-бот" /><span>ИИ-агент или чат-бот</span></label>
@@ -578,7 +578,7 @@
       </fieldset>
 
       <fieldset class="drawer__q drawer__choice">
-        <legend>Какой бюджет?<span>Чтобы сразу понимать, в одной ли мы лиге.</span></legend>
+        <legend>Какой бюджет?</legend>
         <label><input type="radio" name="budget" value="до 3 000 $" /><span>до 3 000 $</span></label>
         <label><input type="radio" name="budget" value="3 000 – 7 000 $" /><span>3 000 – 7 000 $</span></label>
         <label><input type="radio" name="budget" value="7 000 – 15 000 $" /><span>7 000 – 15 000 $</span></label>
@@ -592,7 +592,13 @@
 
       <div class="drawer__foot">
         <p class="drawer__terms">Нажимая кнопку, вы соглашаетесь с <a href="/mary-site/privacy.html">политикой обработки данных</a></p>
-        <button class="drawer__submit" type="submit">Отправить →</button>
+        <button class="hero__cta drawer__submit" type="submit">
+          <span class="hero__cta-roll">
+            <span aria-label="Отправить"><b style="--i:0">О</b><b style="--i:1">т</b><b style="--i:2">п</b><b style="--i:3">р</b><b style="--i:4">а</b><b style="--i:5">в</b><b style="--i:6">и</b><b style="--i:7">т</b><b style="--i:8">ь</b></span>
+            <span aria-hidden="true"><b style="--i:0">О</b><b style="--i:1">т</b><b style="--i:2">п</b><b style="--i:3">р</b><b style="--i:4">а</b><b style="--i:5">в</b><b style="--i:6">и</b><b style="--i:7">т</b><b style="--i:8">ь</b></span>
+          </span>
+          <i class="hero__cta-dot" aria-hidden="true"></i>
+        </button>
       </div>
     </form>
 

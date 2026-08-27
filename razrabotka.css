@@ -2746,12 +2746,16 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--ink);
+    color: #DEDEE2;
+    font: 500 14px/1 var(--font);
+    letter-spacing: 0;
+    text-transform: none;
     cursor: pointer;
-    transition: opacity .18s ease;
+    transition: color .18s ease;
   }
 
-  .drawer__close:hover { opacity: .6; }
+  .drawer__close:hover { color: #fff; }
+  .drawer__close:hover .nav-roll b { transform: translateY(-100%); }
 
   .drawer__form { margin-top: clamp(32px, 6vh, 72px); }
 
@@ -2858,21 +2862,15 @@
   .drawer__terms { margin: 0; max-width: 34ch; color: var(--faint); font-size: 13px; line-height: 1.4; }
   .drawer__terms a { color: var(--soft); }
 
+  /* Кнопка — та же, что на первом экране (.hero__cta): заливка от точки
+     касания, буквы лесенкой, кольцо-точка. Здесь только сброс <button>. */
   .drawer__submit {
     flex: 0 0 auto;
-    padding: 22px 28px;
+    margin-top: 0;
     border: 0;
-    border-radius: 999px;
-    background: #fff;
-    color: #0B0C0E;
-    font: 600 15px/1 var(--font);
-    letter-spacing: .02em;
-    text-transform: uppercase;
     cursor: pointer;
-    transition: transform .18s ease, background .18s ease;
+    font-family: inherit;
   }
-
-  .drawer__submit:hover { background: #EDEEF0; transform: translateY(-2px); }
 
   .drawer__done { margin-top: clamp(40px, 8vh, 96px); }
   .drawer__done b { display: block; color: var(--ink); font: 500 24px/1.2 var(--font); }
