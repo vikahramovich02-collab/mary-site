@@ -862,7 +862,13 @@
   }
 
   @media (max-width: 1100px) {
-    .hero__scroll, .hero__case { display: none; }
+    .hero__scroll { display: none; }
+    /* Кейс из угла переезжает под подпись — иначе он налезал на сферу. */
+    .hero__case {
+      position: static;
+      max-width: none;
+      margin-top: 24px;
+    }
   }
 
   /* Плазма первого экрана: несколько световых пятен под сильным
@@ -1039,11 +1045,17 @@
   }
 
   @media (max-width: 1100px) {
-    .hero { padding-bottom: 300px; }
+    .hero { padding-bottom: clamp(40px, 7vh, 80px); }
     .hero__ceo { flex-direction: row; max-width: none; }
-    .hero__note { max-width: none; }
-    .hero__ceo { left: clamp(20px, 3.5vw, 50px); right: auto; bottom: clamp(20px, 3vh, 32px); }
-    .hero__note { bottom: 200px; }
+    /* подпись и кейс идут потоком под кнопкой, а не абсолютом у низа */
+    .hero__note {
+      position: static;
+      max-width: none;
+      margin: clamp(32px, 6vh, 64px) auto 0;
+      padding: 0 clamp(20px, 3.5vw, 50px);
+    }
+    .hero__ceo { position: static; margin: 24px clamp(20px, 3.5vw, 50px) 0; }
+    .hero__case { margin-left: clamp(20px, 3.5vw, 50px); margin-right: clamp(20px, 3.5vw, 50px); }
   }
 
 
@@ -2483,7 +2495,22 @@
 
   .foot__up { padding: 0; border: 0; background: none; cursor: pointer; }
 
-  @media (max-width: 900px) {
+  /* Планшет: навигация и контакты рядом, реквизиты строкой под ними. */
+  @media (min-width: 601px) and (max-width: 900px) {
+    .foot__body {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: clamp(24px, 4vw, 48px);
+      row-gap: 40px;
+    }
+    .foot__navcol { grid-column: 1; grid-row: 1; padding-right: 0; }
+    .foot__col    { grid-column: 2; grid-row: 1; margin-left: 0; }
+    .foot__legal  { grid-column: 1; grid-row: 2; align-self: start; }
+    .foot__addr   { grid-column: 2; grid-row: 2; align-self: start; margin-left: 0; }
+    .foot__up     { grid-column: 2; grid-row: 2; align-self: start; justify-self: end; }
+  }
+
+  @media (max-width: 600px) {
     .foot__body { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 32px; }
     .foot__navcol, .foot__col, .foot__legal, .foot__addr, .foot__up {
       grid-column: 1; grid-row: auto; margin: 0; padding: 0; justify-self: start;
