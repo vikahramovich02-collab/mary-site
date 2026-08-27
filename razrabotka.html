@@ -54,6 +54,7 @@
       <div class="nav__actions">
         <a class="nav__link" href="#foot">Контакты</a>
         <a class="nav__button" href="#request">Обсудить задачу<i aria-hidden="true"></i></a>
+        <button class="nav__burger" type="button" data-menu-open aria-label="Меню" aria-expanded="false"><i></i><i></i></button>
       </div>
     </header>
   </div>
@@ -535,6 +536,38 @@
   <div class="vmodal__box">
     <img class="vmodal__shot" src="/mary-site/media/video/mary-chat-preview.webp" alt="Экран платформы Mary" />
     <!-- сюда встанет <video>, когда будет ролик mary-overview.mp4 -->
+  </div>
+</div>
+
+<div class="drawer menu" data-menu hidden>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Меню">
+    <div class="drawer__head">
+      <p class="drawer__label">(меню)</p>
+      <button class="drawer__close nav__button" type="button" data-menu-close>Закрыть<i aria-hidden="true"></i></button>
+    </div>
+    <nav class="menu__nav" aria-label="Разделы">
+      <a href="#what">Услуги</a>
+      <a href="#flow">Процесс</a>
+      <a href="#case">Кейс</a>
+      <a href="#faq">Вопросы</a>
+      <a href="https://maryrose.by/blog.html">Блог</a>
+      <a href="https://maryrose.by/cases.html">Кейсы</a>
+      <a href="https://maryrose.by/">Платформа Mary</a>
+    </nav>
+    <div class="menu__foot">
+      <a class="hero__cta menu__cta" href="#request">
+        <span class="hero__cta-roll">
+          <span aria-label="Обсудить задачу"><b style="--i:0">О</b><b style="--i:1">б</b><b style="--i:2">с</b><b style="--i:3">у</b><b style="--i:4">д</b><b style="--i:5">и</b><b style="--i:6">т</b><b style="--i:7">ь</b><b style="--i:8">&nbsp;</b><b style="--i:9">з</b><b style="--i:10">а</b><b style="--i:11">д</b><b style="--i:12">а</b><b style="--i:13">ч</b><b style="--i:14">у</b></span>
+          <span aria-hidden="true"><b style="--i:0">О</b><b style="--i:1">б</b><b style="--i:2">с</b><b style="--i:3">у</b><b style="--i:4">д</b><b style="--i:5">и</b><b style="--i:6">т</b><b style="--i:7">ь</b><b style="--i:8">&nbsp;</b><b style="--i:9">з</b><b style="--i:10">а</b><b style="--i:11">д</b><b style="--i:12">а</b><b style="--i:13">ч</b><b style="--i:14">у</b></span>
+        </span>
+        <i class="hero__cta-dot" aria-hidden="true"></i>
+      </a>
+      <div class="menu__contacts">
+        <a href="https://t.me/l_aleksashka_l" target="_blank" rel="noopener">Telegram ↗</a>
+        <a href="mailto:lukashevich.ak@gmail.com">Почта ↗</a>
+        <a href="tel:+375291898501">+375 29 189-85-01</a>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -462,11 +462,28 @@
     stroke-linejoin: round;
   }
 
+  /* Бургер: две полоски, на десктопе спрятан */
+  .nav__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .nav__burger i { display: block; width: 22px; height: 1.5px; background: currentColor; margin: 0 auto; }
+
   @media (max-width: 1080px) {
     .nav { grid-template-columns: auto 1fr; }
     .nav__links,
-    .nav__actions a:not(.nav__btn) { display: none; }
+    .nav__actions a { display: none; }
     .nav__brand { justify-self: start; }
+    .nav__burger { display: flex; }
   }
 
   .btn {
@@ -2951,6 +2968,36 @@
   @media (prefers-reduced-motion: reduce) {
     .drawer, .drawer__panel { transition: none; }
     .drawer__panel { transform: none; }
+  }
+
+  /* ── мобильное меню: та же панель, что у заявки ───────────────── */
+
+  .menu .drawer__panel { width: min(420px, 100%); min-width: 0; }
+
+  .menu__nav { display: flex; flex-direction: column; margin-top: clamp(28px, 5vh, 48px); }
+
+  .menu__nav a {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    color: var(--ink);
+    font: 500 clamp(24px, 6vw, 32px)/1.1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+  }
+
+  .menu__foot { margin-top: auto; padding-top: clamp(28px, 5vh, 48px); }
+  .menu__cta { margin-top: 0; }
+
+  .menu__contacts { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+  .menu__contacts a { color: var(--soft); font: 500 15px/1.4 var(--font); text-decoration: none; }
+
+  /* ── мобильные правки по блокам ─────────────────────────────────── */
+
+  @media (max-width: 860px) {
+    /* фото основателя в hero — меньше */
+    .hero__photo { width: 96px; padding: 8px; border-radius: 16px; }
+    /* панель заявки — во всю ширину */
+    .drawer__panel { width: 100%; min-width: 0; }
   }
 
   /* ── форма заявки ───────────────────────────────────────── */

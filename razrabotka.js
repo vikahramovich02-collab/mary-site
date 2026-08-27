@@ -580,6 +580,39 @@
     });
   })();
 
+  // Мобильное меню: та же механика, что у панели заявки.
+  (function () {
+    var menu = document.querySelector("[data-menu]");
+    var burger = document.querySelector("[data-menu-open]");
+    if (!menu || !burger) return;
+
+    function open() {
+      menu.hidden = false;
+      burger.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () { menu.classList.add("is-open"); });
+      });
+    }
+    function hide() {
+      menu.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+      window.setTimeout(function () { menu.hidden = true; }, 440);
+    }
+
+    burger.addEventListener("click", open);
+    menu.querySelector("[data-menu-close]").addEventListener("click", hide);
+    menu.addEventListener("click", function (e) { if (e.target === menu) hide(); });
+    // по ссылке внутри — закрываем, якорь сработает сам
+    menu.querySelectorAll(".menu__nav a, .menu__cta").forEach(function (a) {
+      a.addEventListener("click", hide);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !menu.hidden) hide();
+    });
+  })();
+
   // Панель заявки: выезжает справа по любой ссылке на #request.
   // Закрывается крестиком, кликом мимо и Esc — как видео-обзор.
   (function () {
