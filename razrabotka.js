@@ -667,7 +667,7 @@
       }).catch(function (err) {
         btn.disabled = false;
         console.error("[lead]", err);
-        alert("Не получилось отправить. Напишите нам в Telegram или на hello@mary.team.");
+        alert("Не получилось отправить. Напишите нам в Telegram или на lukashevich.ak@gmail.com.");
       });
     });
   })();
