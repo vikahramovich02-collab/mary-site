@@ -2422,9 +2422,18 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) min(62%, 760px);
     align-items: start;
+    /* та же полоса, что у .wrap — правая колонка ложится на линию заголовка */
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 3.5vw, 50px);
   }
 
-  .foot__navcol { grid-column: 1; }
+  /* навигация — к краю экрана: снимаем отступ .wrap отрицательным сдвигом */
+  .foot__navcol {
+    grid-column: 1;
+    margin-left: calc(-1 * max(0px, (100vw - 1440px) / 2));
+    padding-left: 0 !important;
+  }
 
   .foot__right { grid-column: 2; }
 
@@ -2583,9 +2592,10 @@
   }
   .foot__row-right > .foot__row-cell.is-mid {
     grid-column: 2;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: clamp(24px, 4vw, 64px);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
   }
   .foot__row-cell.is-end { margin: 0; grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
 
