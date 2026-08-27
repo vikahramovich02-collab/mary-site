@@ -132,6 +132,17 @@
     body, body * { cursor: none !important; }
     /* в полях ввода курсор нужен настоящий */
     input, textarea, select { cursor: auto !important; }
+
+    /* на обычных ссылках и кнопках возвращаем палец: точка остаётся,
+       но по клику видно, что элемент кликабельный */
+    a, button, label, summary, [role="button"] { cursor: pointer !important; }
+
+    /* кроме крупных плашек — там точка сама вырастает в кружок с подписью,
+       и системный курсор поверх неё лишний */
+    .hero__case, .flow__card, .b-case, .case__visual, .rows li, .post, .demo,
+    :is(.hero__case, .flow__card, .b-case, .case__visual, .rows li, .post, .demo) * {
+      cursor: none !important;
+    }
   }
 
   .dot-cursor {
@@ -1486,7 +1497,6 @@
      с синим квадратом в начале — метка новой строки. */
   .rows li {
     position: relative;
-    cursor: pointer;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
     align-items: start;
