@@ -627,6 +627,15 @@
 
     function open(e) {
       if (e) e.preventDefault();
+      // каждый раз чистый бланк: если в прошлый раз ошиблись — можно заново
+      if (form && form.hidden) {
+        form.reset();
+        form.querySelectorAll("[data-check]").forEach(function (q) { q.classList.remove("is-error"); });
+        var send = form.querySelector('[type="submit"]');
+        if (send) send.disabled = false;
+        form.hidden = false;
+        done.hidden = true;
+      }
       drawer.hidden = false;
       document.body.style.overflow = "hidden";
       window.requestAnimationFrame(function () {
