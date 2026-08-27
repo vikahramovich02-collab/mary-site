@@ -465,6 +465,8 @@
   /* Бургер: две полоски, на десктопе спрятан */
   .nav__burger {
     display: none;
+    /* у <button> свой цвет по умолчанию — полоски сливались с фоном */
+    color: var(--ink);
     flex-direction: column;
     justify-content: center;
     gap: 6px;
