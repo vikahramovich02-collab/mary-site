@@ -637,13 +637,6 @@
 
   @media (max-width: 720px) {
     .hero h1 { max-width: 14ch; font-size: clamp(40px, 11vw, 60px); white-space: normal; }
-    /* На телефоне точки гасли слишком высоко — низ сферы вытягивался
-       в хвост. Растушёвку опускаем, шар остаётся круглым. */
-    .hero__globe {
-      transform: translate(-50%, -54%);
-      -webkit-mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, .65) 92%, transparent 100%);
-      mask-image: linear-gradient(180deg, #000 82%, rgba(0, 0, 0, .65) 92%, transparent 100%);
-    }
   }
 
   /* Узкая колонка в несколько строк, как в референсе: светлый текст
