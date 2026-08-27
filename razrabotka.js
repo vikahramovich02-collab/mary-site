@@ -148,6 +148,12 @@
 
     size();
     window.addEventListener("resize", size);
+    // Наблюдатель за самим холстом: если коробка изменилась без resize окна
+    // (полоса прокрутки, смена высоты на телефоне), битмап пересчитается —
+    // иначе картинка растягивается и шар превращается в яйцо.
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv);
+    // шрифты и картинки могут сдвинуть раскладку уже после первой отрисовки
+    window.addEventListener("load", size);
 
     var run = function (on) {
       if (on && !raf && !calm.matches) raf = window.requestAnimationFrame(frame);
