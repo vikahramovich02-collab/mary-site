@@ -1062,6 +1062,10 @@
   }
 
 
+  @media (max-width: 860px) {
+    .tape__arcs { width: min(560px, 96vw); }
+  }
+
   /* ── общая шапка секции ─────────────────────────────────── */
 
   #main section { padding: clamp(64px, 11vh, 130px) 0; }
@@ -1546,7 +1550,8 @@
     will-change: transform;
     top: 50%;
     left: 50%;
-    width: min(880px, 74vw);
+    /* кольцо во всю высоту полосы — до краёв, а не третью экрана */
+    width: min(880px, 92vw);
     height: auto;
     transform: translate(-50%, -50%);
     opacity: .95;
