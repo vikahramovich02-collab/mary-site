@@ -2587,7 +2587,8 @@
 
   .foot__stripe {
     position: relative;
-    height: clamp(200px, 26vh, 300px);
+    height: 30vh;
+    min-height: 220px;
     overflow: hidden;
     background: var(--bg);
   }
