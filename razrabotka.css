@@ -1333,11 +1333,12 @@
 
   /* ── цитата основателя ──────────────────────────────────── */
 
-  .quote { margin: 0; max-width: 20ch; }
+  /* До 860px цитата идёт во всю ширину: узкие max-width в ch рвали её
+     по два слова на планшете и телефоне. */
+  .quote { margin: 0; }
 
   .quote p {
     margin: 0 0 clamp(24px, 4vh, 44px);
-    max-width: 26ch;
     font-weight: 500;
     font-size: clamp(26px, 3.4vw, 46px);
     line-height: 1.16;
@@ -1430,11 +1431,14 @@
   @media (min-width: 861px) {
     /* Цитата поднимается к метке: первая строка встаёт с ней на один уровень. */
     .quote {
-      max-width: none;
+      max-width: 20ch;
       margin-left: auto;
       margin-top: calc(-1 * (15px + 16px + clamp(40px, 6vh, 72px)) + 4px);
       width: min(62%, 760px);
     }
+
+    .quote { max-width: none; }
+    .quote p { max-width: 26ch; }
   }
 
   /* ── список услуг строками ──────────────────────────────── */
