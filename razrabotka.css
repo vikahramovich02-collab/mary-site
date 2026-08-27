@@ -2444,7 +2444,7 @@
 
   .foot__legal, .foot__addr, .foot__up {
     color: var(--ink);
-    font: 500 14px/1.4 var(--font);
+    font: 500 14px/1.6 var(--font);
     letter-spacing: -.01em;
   }
 
@@ -2632,7 +2632,8 @@
   .foot__stripe-go {
     margin: 0;
     color: #fff;
-    font: 500 14px/1.4 var(--font);
+    /* line-height повыше — у прокрутки букв высота 1lh, иначе режет «у», «д» */
+    font: 500 14px/1.6 var(--font);
     letter-spacing: -.01em;
     text-decoration: none;
     mix-blend-mode: difference;
