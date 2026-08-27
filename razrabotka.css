@@ -2828,7 +2828,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: var(--ink);
+    color: var(--faint);
     font: 500 14px/1 var(--font);
     text-decoration: underline;
     text-underline-offset: 4px;
@@ -2837,7 +2837,7 @@
     transition: text-decoration-color .18s ease;
   }
 
-  .cookie__link:hover { text-decoration-color: var(--ink); }
+  .cookie__link:hover { color: var(--ink); text-decoration-color: var(--ink); }
 
   .cookie__x {
     display: grid;
@@ -2856,18 +2856,17 @@
   .cookie__x svg { width: 16px; height: 16px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; }
 
   @media (max-width: 760px) {
-    /* Крестик уходит в правый верхний угол, кнопки — вправо под текстом. */
+    /* Иконка встаёт к первой строке абзаца, кнопки — вправо под текстом. */
     .cookie {
       flex-wrap: wrap;
       align-items: flex-start;
       padding: 16px 16px 18px;
       row-gap: 14px;
     }
-    .cookie__icon { order: 1; }
-    .cookie__x { order: 2; margin-left: auto; margin-top: -4px; }
-    .cookie__text { order: 3; flex-basis: 100%; }
-    .cookie__actions { order: 4; flex-basis: 100%; justify-content: flex-end; }
-    .cookie__actions .cookie__x { display: none; }
+    .cookie__icon { order: 1; margin-top: 1px; }
+    .cookie__x { display: none; }
+    .cookie__text { order: 2; flex: 1 1 0; }
+    .cookie__actions { order: 3; flex-basis: 100%; justify-content: flex-end; }
   }
 
   /* ── выдвижная панель заявки: чёрный прямоугольник выезжает справа ── */
