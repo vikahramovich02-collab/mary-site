@@ -2677,3 +2677,6 @@
     .foot__columns { grid-template-columns: 1fr; }
     .foot__bottom { flex-direction: column; align-items: flex-start; }
   }
+
+  /* ловушка для ботов: человеку не видна, бот заполняет — заявка отбрасывается */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }

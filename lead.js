@@ -18,9 +18,23 @@
     return data;
   }
 
+  // Защита от ботов, невидимая для человека:
+  //  — honeypot: поле «website» спрятано; если заполнено — это бот;
+  //  — таймер: отправка раньше 3 с после загрузки страницы — тоже бот.
+  // В обоих случаях делаем вид, что всё ушло, — бот не должен понять.
+  var loadedAt = Date.now();
+  function looksLikeBot(form) {
+    var hp = form.querySelector('[name="website"]');
+    if (hp && hp.value) return true;
+    if (Date.now() - loadedAt < 3000) return true;
+    return false;
+  }
+
   // Возвращает промис; при пустом адресе — резолвится сразу (заглушка).
   window.sendLead = function (form) {
+    if (looksLikeBot(form)) return Promise.resolve({ ok: true, bot: true });
     var data = collect(form);
+    delete data.website;
     if (!LEAD_URL) {
       console.warn("[lead] LEAD_URL не задан — заявка не отправлена:", data);
       return Promise.resolve({ ok: true, stub: true });

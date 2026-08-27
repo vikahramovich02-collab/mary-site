@@ -3049,3 +3049,6 @@
   @media (prefers-reduced-motion: reduce) {
     .has-reveal [data-reveal] { opacity: 1; transform: none; }
   }
+
+  /* ловушка для ботов: человеку не видна, бот заполняет — заявка отбрасывается */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
