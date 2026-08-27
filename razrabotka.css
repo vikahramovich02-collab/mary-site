@@ -2314,49 +2314,56 @@
   .faq__item::before { top: 0; }
   .faq__item:last-child::after { bottom: 0; }
 
+  /* Вопрос: при наведении и в открытом виде — светлая плашка, текст
+     темнеет и чуть сдвигается вправо. Справа кольцо, которое заливается. */
   .faq__q {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
     width: 100%;
-    padding: 22px 0;
+    padding: 22px 16px;
+    margin: 0 -16px;
     border: 0;
+    border-radius: 6px;
     background: none;
     color: var(--ink);
     font: 500 18px/1.35 var(--font);
     letter-spacing: -.01em;
     text-align: left;
     cursor: pointer;
-    transition: color .2s ease;
+    transition: background .22s ease, color .22s ease;
   }
 
-  .faq__q:hover { color: #fff; }
-
-  /* плюс поворачивается в крестик */
-  .faq__q i {
-    position: relative;
-    flex: 0 0 auto;
-    width: 15px;
-    height: 15px;
+  .faq__q span {
+    display: block;
     transition: transform .3s cubic-bezier(.2, .9, .25, 1);
   }
 
-  .faq__q i::before,
-  .faq__q i::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 15px;
-    height: 1.5px;
-    background: var(--soft);
-    transform: translateY(-50%);
+  .faq__q:hover,
+  .faq__item.is-open .faq__q { background: #E6E6E2; color: #0B0C0E; }
+
+  .faq__q:hover span,
+  .faq__item.is-open .faq__q span { transform: translateX(8px); }
+
+  /* кольцо: контур в покое, заливается изнутри при наведении и открытии */
+  .faq__q i {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px currentColor;
+    transition: box-shadow .28s ease;
   }
 
-  .faq__q i::after { transform: translateY(-50%) rotate(90deg); }
+  .faq__q:hover i,
+  .faq__item.is-open .faq__q i { box-shadow: inset 0 0 0 5px currentColor; }
 
-  .faq__item.is-open .faq__q i { transform: rotate(135deg); }
+  @media (max-width: 640px) {
+    .faq__q { padding: 18px 12px; margin: 0 -12px; }
+  }
+
 
   /* ответ раскрывается плавно */
   .faq__wrap {
