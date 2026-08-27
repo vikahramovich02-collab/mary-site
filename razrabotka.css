@@ -2922,8 +2922,13 @@
   .drawer__q input:focus-visible,
   .drawer__q textarea:focus-visible { outline: none; border-bottom-color: var(--ink); }
 
-  /* Ошибка — красным подчёркиванием поля, без текста под ним. */
-  .drawer__q.is-error input { border-bottom-color: #FF6B60; }
+  /* Ошибка: красная линия потолще и красный текст — тонкую полоску
+     на тёмном фоне почти не видно. */
+  .drawer__q.is-error input {
+    border-bottom-color: #FF6B60;
+    border-bottom-width: 2px;
+    color: #FF6B60;
+  }
 
   /* Варианты: квадрат и моноширинная подпись капсом. */
   .drawer__choice legend {
