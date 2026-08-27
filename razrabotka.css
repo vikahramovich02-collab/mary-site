@@ -2736,7 +2736,7 @@
   .drawer__label,
   .drawer__close {
     margin: 0;
-    color: var(--ink);
+    color: var(--faint);
     font: 600 12px/1 var(--font);
     letter-spacing: .03em;
     text-transform: uppercase;
@@ -2746,6 +2746,7 @@
     padding: 0;
     border: 0;
     background: none;
+    color: var(--ink);
     cursor: pointer;
     transition: opacity .18s ease;
   }
