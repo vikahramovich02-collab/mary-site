@@ -2350,6 +2350,7 @@
   /* кольцо: контур в покое, заливается изнутри при наведении и открытии */
   .faq__q i {
     flex: 0 0 auto;
+    margin-right: 16px;
     width: 9px;
     height: 9px;
     border-radius: 999px;
@@ -2381,7 +2382,7 @@
   .faq__item.is-open .faq__wrap p { opacity: 1; transform: none; transition-delay: .06s; }
 
   .faq__wrap p {
-    margin: 0 0 22px;
+    margin: 22px 0 26px;
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity .22s ease, transform .28s cubic-bezier(.2, .9, .25, 1);
