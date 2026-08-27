@@ -403,7 +403,8 @@
   .foot__out:hover .nav-roll b,
   .foot__go:hover .nav-roll b,
   .foot__bar a:hover .nav-roll b,
-  [data-scroll-top]:hover .nav-roll b { transform: translateY(-100%); }
+  [data-scroll-top]:hover .nav-roll b,
+  .foot__stripe-go:hover .nav-roll b { transform: translateY(-100%); }
 
   @media (prefers-reduced-motion: reduce) {
     .nav-roll b { transition: none; }
@@ -2627,9 +2628,13 @@
   .foot__stripe-mark:hover { opacity: .7; }
   .foot__stripe-mark img { width: 22px; height: 22px; }
 
+  /* как «Наверх ↑» строкой выше: текст со стрелкой, без подчёркивания */
   .foot__stripe-go {
     margin: 0;
     color: #fff;
+    font: 500 14px/1.4 var(--font);
+    letter-spacing: -.01em;
+    text-decoration: none;
     mix-blend-mode: difference;
   }
 

@@ -174,10 +174,10 @@
     function field(x, y, t) {
       var u = x / w * 6.28, v = y / h * 6.28;
       var n = 0;
-      n += Math.sin(u * 0.9 + t * 0.21 + Math.sin(v * 1.3 + t * 0.17) * 1.4);
-      n += Math.sin(v * 1.1 - t * 0.19 + Math.cos(u * 0.7 + t * 0.13) * 1.6);
-      n += Math.sin((u + v) * 0.6 + t * 0.11) * 0.8;
-      n += Math.sin(u * 1.7 - v * 0.8 - t * 0.23) * 0.5;
+      n += Math.sin(u * 0.9 + t * 0.42 + Math.sin(v * 1.3 + t * 0.34) * 1.4);
+      n += Math.sin(v * 1.1 - t * 0.38 + Math.cos(u * 0.7 + t * 0.26) * 1.6);
+      n += Math.sin((u + v) * 0.6 + t * 0.22) * 0.8;
+      n += Math.sin(u * 1.7 - v * 0.8 - t * 0.46) * 0.5;
       // 2.9 — сумма амплитуд; сжимаем к 0…1 и подрезаем края, чтобы
       // тёмных провалов было больше, чем гребней
       var k = (n / 2.9 + 1) / 2;
@@ -434,7 +434,7 @@
   (function () {
     var links = document.querySelectorAll(
       ".nav__links a, .nav__actions a, .flow__cta, " +
-      ".foot__nav a, .foot__mail, .foot__out, .foot__go, .foot__bar a, [data-scroll-top], .drawer__close"
+      ".foot__nav a, .foot__mail, .foot__out, .foot__go, .foot__bar a, [data-scroll-top], .drawer__close, .foot__stripe-go"
     );
     if (!links.length) return;
 
