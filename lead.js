@@ -5,7 +5,7 @@
 // Адрес — ниже, одной строкой. Пока он пустой, форма показывает «спасибо»
 // без отправки: чтобы не ломать сайт до того, как скрипт опубликован.
 (function () {
-  var LEAD_URL = "";   // ← сюда URL веб-приложения Apps Script (…/exec)
+  var LEAD_URL = "https://script.google.com/macros/s/AKfycbyTOVOovkTySwERTn3WR3TWvvDSgqTYFHfv8kS5jhftkFxreb5R5pAgnigXsSwC-MzUXA/exec";
 
   function collect(form) {
     var data = { page: location.href, sent: new Date().toISOString() };
