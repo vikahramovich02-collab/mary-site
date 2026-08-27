@@ -1047,12 +1047,13 @@
   @media (max-width: 1100px) {
     .hero { padding-bottom: clamp(40px, 7vh, 80px); }
     .hero__ceo { flex-direction: row; max-width: none; }
-    /* подпись и кейс идут потоком под кнопкой, а не абсолютом у низа */
+    /* подпись и кейс идут потоком под кнопкой, у левого края */
     .hero__note {
       position: static;
       max-width: none;
-      margin: clamp(32px, 6vh, 64px) auto 0;
+      margin: clamp(32px, 6vh, 64px) 0 0;
       padding: 0 clamp(20px, 3.5vw, 50px);
+      text-align: left;
     }
     .hero__ceo { position: static; margin: 24px clamp(20px, 3.5vw, 50px) 0; }
     .hero__case { margin-left: clamp(20px, 3.5vw, 50px); margin-right: clamp(20px, 3.5vw, 50px); }
