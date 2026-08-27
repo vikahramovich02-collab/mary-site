@@ -1025,8 +1025,6 @@
   /* ── общая шапка секции ─────────────────────────────────── */
 
   #main section { padding: clamp(64px, 11vh, 130px) 0; }
-  /* «Расскажите задачу» должен идти прямо под FAQ */
-  #main section:last-of-type { padding-bottom: clamp(40px, 7vh, 72px); }
 
   .sec__head {
     display: grid;
@@ -2395,7 +2393,7 @@
     justify-content: space-between;
     isolation: isolate;
     min-height: 100svh;
-    padding-top: 0;
+    padding-top: clamp(64px, 11vh, 130px);
     overflow: hidden;
   }
 
@@ -2489,18 +2487,17 @@
     padding: clamp(36px, 6vh, 64px) 0 clamp(48px, 8vh, 96px);
   }
 
-  /* Метка «Оставить заявку» — у края экрана, как «Навигация» ниже.
-     Заголовок — в .wrap, на той же правой линии, что вопросы FAQ. */
-  .foot__top { position: relative; }
-  .foot__top-mark { margin: 0 0 20px; }
+  /* Секция «Оставить заявку» — последняя перед футером. Метка слева
+     у края, заголовок на той же правой линии, что вопросы FAQ. */
+  .cta { position: relative; }
+  .cta__mark { margin: 0 0 20px; }
 
   @media (min-width: 901px) {
-    /* та же высота, что верхний отступ блока, + 14px до линии заголовка */
-    .foot__top-mark { position: absolute; top: calc(clamp(36px, 6vh, 64px) + 14px); left: 0; margin: 0; }
-    .foot__head { width: min(62%, 760px); margin-left: auto; }
+    .cta__mark { position: absolute; top: calc(clamp(64px, 11vh, 130px) + 14px); left: 0; margin: 0; }
+    .cta__head { width: min(62%, 760px); margin-left: auto; }
   }
 
-  .foot__head h2 {
+  .cta__head h2 {
     margin: 0;
     color: var(--ink);
     font-weight: 500;
