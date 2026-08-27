@@ -2325,7 +2325,7 @@
     padding: 22px 16px;
     margin: 0 -16px;
     border: 0;
-    border-radius: 6px;
+    border-radius: 0;
     background: none;
     color: var(--ink);
     font: 500 18px/1.35 var(--font);
@@ -2341,7 +2341,7 @@
   }
 
   .faq__q:hover,
-  .faq__item.is-open .faq__q { background: #E6E6E2; color: #0B0C0E; }
+  .faq__item.is-open .faq__q { background: #fff; color: #0B0C0E; }
 
   .faq__q:hover span,
   .faq__item.is-open .faq__q span { transform: translateX(8px); }
