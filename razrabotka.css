@@ -780,6 +780,8 @@
 
   .hero__case {
     position: absolute;
+    /* выше <main>, который идёт следом и ложится на нижний край hero */
+    z-index: 2;
     right: var(--edge);
     bottom: clamp(28px, 5vh, 56px);
     display: flex;
