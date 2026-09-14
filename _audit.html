@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><title>audit</title>
+<style>body{margin:0;background:#333;display:grid;gap:6px;padding:6px}iframe{border:0;background:#fff;display:block}</style></head>
+<body><script>
+var q=new URLSearchParams(location.search),W=+q.get('w'),H=+q.get('h'),N=+q.get('n'),C=+q.get('c'),P=q.get('p')||'/mary-site/';
+document.body.style.gridTemplateColumns='repeat('+C+','+W+'px)';
+for(var i=0;i<N;i++){(function(i){var f=document.createElement('iframe');f.width=W;f.height=H;f.src=P+'?audit='+i;
+f.onload=function(){var go=function(){try{f.contentWindow.scrollTo(0,i*(H-60));}catch(e){}};setTimeout(go,300);setTimeout(go,1500);};
+document.body.appendChild(f);})(i);}
+</script></body></html>
