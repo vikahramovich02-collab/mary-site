@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/mary-site/apple-touch-icon.png" />
 <title>Кейсы Mary — как это работает на живом бизнесе</title>
 <meta name="description" content="Кейсы внедрения Mary: что происходило до автоматизации, что сняли с людей и какие цифры получились после запуска." />
-<link rel="stylesheet" href="/mary-site/site.css?v=202608280026" />
+<link rel="stylesheet" href="/mary-site/site.css?v=202609150059" />
 <style>
   :root {
     /* ── акцент ниши ────────────────────────────────────────
@@ -148,8 +148,9 @@
     letter-spacing: -.02em;
     text-align: center;
   }
-  :is(.niche, .cases-hero) .b-case__card {
+  .cases-hero .b-case__card {
     position: relative;
+    text-align: left;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 504px);
     align-items: center;
@@ -163,8 +164,10 @@
     isolation: isolate;
     transition: transform .25s cubic-bezier(.32, .72, .3, 1);
   }
-  :is(.niche, .cases-hero) .b-case__card:hover { transform: translateY(-3px); }
-  :is(.niche, .cases-hero) .b-case__deco {
+
+  .cases-hero .b-case__card:hover { transform: translateY(-3px); }
+
+  .cases-hero .b-case__deco {
     position: absolute;
     z-index: -1;
     top: 0;
@@ -175,8 +178,10 @@
     object-position: left center;
     pointer-events: none;
   }
-  :is(.niche, .cases-hero) .b-case__story { display: flex; flex-direction: column; min-width: 0; }
-  :is(.niche, .cases-hero) .b-case__lead {
+
+  .cases-hero .b-case__story { display: flex; flex-direction: column; min-width: 0; }
+
+  .cases-hero .b-case__lead {
     max-width: 420px;
     margin: 0;
     color: var(--heading);
@@ -185,9 +190,9 @@
     line-height: 1.05;
     letter-spacing: -.02em;
   }
-  /* Кликабельна вся карточка: невидимая область самой ссылки растянута
-     по карточке — оборачивать её в <a> нельзя, внутри цитата и подпись. */
-  :is(.niche, .cases-hero) .b-case__more {
+
+  /* Кликабельна вся карточка: невидимая область ссылки растянута по ней. */
+  .cases-hero .b-case__more {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -199,22 +204,12 @@
     text-decoration: none;
     transition: gap .18s ease;
   }
-  :is(.niche, .cases-hero) .b-case__more::after { content: ""; position: absolute; z-index: 2; inset: 0; border-radius: inherit; }
-  :is(.niche, .cases-hero) .b-case__card:hover .b-case__more { gap: 12px; }
-  :is(.niche, .cases-hero) .b-case__more svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  :is(.niche, .cases-hero) .b-case__quote {
-    max-width: 451px;
-    margin: clamp(28px, 5vh, 51px) 0 0;
-    color: var(--heading);
-    font: 500 16px/1.2 var(--font);
-    letter-spacing: -.01em;
-  }
-  :is(.niche, .cases-hero) .b-case__author { display: flex; align-items: center; gap: 18px; margin: clamp(24px, 4vh, 40px) 0 0; }
-  :is(.niche, .cases-hero) .b-case__author img { flex: 0 0 auto; width: 58px; height: 58px; border-radius: 40px; object-fit: cover; }
-  :is(.niche, .cases-hero) .b-case__author figcaption { display: flex; flex-direction: column; gap: 8px; }
-  :is(.niche, .cases-hero) .b-case__name { color: #494F5C; font: 500 16px/1 var(--font); }
-  :is(.niche, .cases-hero) .b-case__role { color: color-mix(in srgb, #494F5C 30%, transparent); font: 500 14px/1 var(--font); }
-  :is(.niche, .cases-hero) .b-case__stats {
+
+  .cases-hero .b-case__more::after { content: ""; position: absolute; z-index: 2; inset: 0; border-radius: inherit; }
+  .cases-hero .b-case__card:hover .b-case__more { gap: 12px; }
+  .cases-hero .b-case__more svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  .cases-hero .b-case__stats {
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -224,30 +219,38 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
-  :is(.niche, .cases-hero) .b-case__stats-label { margin: 0 0 22px; color: var(--accent-ink); font: 500 14px/1 var(--font); letter-spacing: -.01em; }
-  :is(.niche, .cases-hero) .b-case__stat + .b-case__stat {
+
+  .cases-hero .b-case__stats-label { margin: 0 0 22px; color: var(--accent-ink); font: 500 14px/1 var(--font); letter-spacing: -.01em; }
+
+  .cases-hero .b-case__stat + .b-case__stat {
     margin-top: clamp(20px, 2.6vh, 28px);
     padding-top: clamp(20px, 2.6vh, 28px);
     border-top: 1px solid var(--accent-line);
   }
-  :is(.niche, .cases-hero) .b-case__stat dt { display: flex; align-items: baseline; gap: 8px; }
-  :is(.niche, .cases-hero) .b-case__value {
+
+  .cases-hero .b-case__stat dt { display: flex; align-items: baseline; gap: 8px; }
+
+  .cases-hero .b-case__value {
     color: var(--ink);
     font: 400 clamp(36px, 3.8vw, 54px)/1 var(--font);
     letter-spacing: -.03em;
     font-variant-numeric: tabular-nums;
   }
-  :is(.niche, .cases-hero) .b-case__unit { color: var(--ink); font: 400 clamp(16px, 1.6vw, 22px)/1 var(--font); letter-spacing: -.01em; }
-  :is(.niche, .cases-hero) .b-case__stats dd { margin: 10px 0 0; color: var(--accent-ink); font: 400 15px/1.4 var(--font); }
+
+  .cases-hero .b-case__unit { color: var(--ink); font: 400 clamp(16px, 1.6vw, 22px)/1 var(--font); letter-spacing: -.01em; }
+
+  .cases-hero .b-case__stats dd { margin: 10px 0 0; color: var(--accent-ink); font: 400 15px/1.4 var(--font); }
+
   @media (max-width: 900px) {
-  :is(.niche, .cases-hero) .b-case__card { grid-template-columns: 1fr; border-radius: 32px; }
-  :is(.niche, .cases-hero) .b-case__deco { width: 100%; opacity: .35; }
-  :is(.niche, .cases-hero) .b-case__quote { max-width: none; }
+    .cases-hero .b-case__card { grid-template-columns: 1fr; border-radius: 32px; }
+    .cases-hero .b-case__deco { width: 100%; opacity: .35; }
   }
+
   @media (prefers-reduced-motion: reduce) {
-  :is(.niche, .cases-hero) .b-case__card,
-  :is(.niche, .cases-hero) .b-case__card:hover { transition: none; transform: none; }
+    .cases-hero .b-case__card,
+    .cases-hero .b-case__card:hover { transition: none; transform: none; }
   }
+
   .cases-hero { margin-bottom: clamp(40px, 6vh, 72px); }
   .cases-hero .b-case__card { margin-top: 0; }
 
@@ -279,18 +282,7 @@
           <span class="nav__menu">
             <span class="nav__cols">
               <span class="nav__col">
-            <a class="nav__menu-item" href="/mary-site/niches/proizvodstvo.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/hourglass.webp" alt="" width="128" height="128" loading="lazy" /></span>Производство</a>
             <a class="nav__menu-item" href="/mary-site/niches/beauty.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/chat-heart.webp" alt="" width="128" height="128" loading="lazy" /></span>Бьюти</a>
-            <a class="nav__menu-item" href="/mary-site/niches/retail.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/shopping-bag.webp" alt="" width="128" height="128" loading="lazy" /></span>Ритейл</a>
-            <a class="nav__menu-item" href="/mary-site/niches/services.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/wrench.webp" alt="" width="128" height="128" loading="lazy" /></span>Услуги</a>
-            <a class="nav__menu-item" href="/mary-site/niches/clinics.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/calendar-clock.webp" alt="" width="128" height="128" loading="lazy" /></span>Клиники</a>
-            <a class="nav__menu-item" href="/mary-site/niches/sales.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/growth.webp" alt="" width="128" height="128" loading="lazy" /></span>Продажи</a>
-            <a class="nav__menu-item" href="/mary-site/niches/support.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/headset.webp" alt="" width="128" height="128" loading="lazy" /></span>Поддержка</a>
-            <a class="nav__menu-item" href="/mary-site/niches/accounting.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/document-check.webp" alt="" width="128" height="128" loading="lazy" /></span>Бухгалтерия</a>
-            <a class="nav__menu-item" href="/mary-site/niches/legal.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/scales.webp" alt="" width="128" height="128" loading="lazy" /></span>Юридический отдел</a>
-            <a class="nav__menu-item" href="/mary-site/niches/hr.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/people.webp" alt="" width="128" height="128" loading="lazy" /></span>HR и найм</a>
-            <a class="nav__menu-item" href="/mary-site/niches/logistics.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/truck.webp" alt="" width="128" height="128" loading="lazy" /></span>Логистика</a>
-            <a class="nav__menu-item" href="/mary-site/niches/documents.html"><span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/folder.webp" alt="" width="128" height="128" loading="lazy" /></span>Документооборот</a>
               </span>
 
               <span class="nav__promo">
@@ -325,7 +317,7 @@
       <div class="nav__actions">
         <a class="nav__link" href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noopener">Для инвесторов</a>
         <a class="nav__link" href="/mary-site/#custom">Заказать разработку</a>
-        <a class="nav__button" href="/mary-site/#app">Войти в Mary<img src="/mary-site/arrow-up-right.svg" alt="" /></a>
+        <a class="nav__button" href="/mary-site/demo.html">Войти в Mary<img src="/mary-site/arrow-up-right.svg" alt="" /></a>
       </div>
     </header>
   </div>
@@ -341,32 +333,19 @@
     <img class="b-case__deco" src="/mary-site/media/case/deco.webp" alt="" loading="lazy" />
 
     <div class="b-case__story">
-      <h3 class="b-case__lead">ФФ<br />автоматизировала поддержку<br />клиентов и SMM</h3>
+      <h3 class="b-case__lead">ФФ<br />автоматизировала поддержку<br />клиентов и SMM</h3>
 
       <a class="b-case__more" href="/mary-site/case-photoprint.html">
         Читать кейс
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" /></svg>
       </a>
-
-      <blockquote class="b-case__quote">«Мы не думали, что начнётся с аудита. Mary просто
-      посмотрела нашу CRM и показала цифры, которые мы сами не видели: сколько сделок
-      висит без движения и сколько раз менеджеры вручную ставят себе задачу «связаться
-      с клиентом». После этого стало понятно, с чего начинать.»</blockquote>
-
-      <figure class="b-case__author">
-        <img src="/mary-site/media/case/avatar.webp" alt="" loading="lazy" />
-        <figcaption>
-          <span class="b-case__name">Максим Ляпкин</span>
-          <span class="b-case__role">Директор «Фотопринт»</span>
-        </figcaption>
-      </figure>
     </div>
 
     <dl class="b-case__stats">
-      <p class="b-case__stats-label">Что изменилось после запуска</p>
+      <p class="b-case__stats-label">Что изменилось после запуска</p>
       <div class="b-case__stat">
         <dt><span class="b-case__value">52</span><span class="b-case__unit">%</span></dt>
-        <dd>обращений закрывается без менеджера</dd>
+        <dd>обращений закрывается без менеджера</dd>
       </div>
       <div class="b-case__stat">
         <dt><span class="b-case__value">1</span><span class="b-case__unit">мин</span></dt>
@@ -374,7 +353,7 @@
       </div>
       <div class="b-case__stat">
         <dt><span class="b-case__value">~600</span></dt>
-        <dd>обращений в неделю в одном процессе</dd>
+        <dd>обращений в неделю в одном процессе</dd>
       </div>
     </dl>
   </article>
@@ -416,11 +395,7 @@
       <div class="foot__col">
         <h3 class="foot__label">Решения</h3>
         <ul>
-          <li><a href="/mary-site/#niches">Ниши</a></li>
-          <li><a href="/mary-site/#niches">Салоны красоты</a></li>
-          <li><a href="/mary-site/#niches">Клиники</a></li>
-          <li><a href="/mary-site/#niches">Ритейл</a></li>
-          <li><a href="/mary-site/#niches">Услуги</a></li>
+          <li><a href="/mary-site/niches/beauty.html">Салоны красоты</a></li>
         </ul>
       </div>
       <div class="foot__col">
@@ -437,7 +412,7 @@
         <ul>
           <li><a href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noreferrer">Для инвесторов</a></li>
           <li><a href="/mary-site/razrabotka.html">Разработка на заказ</a></li>
-          <li><a href="/mary-site/#app">Стать партнёром</a></li>
+          <li><a href="/mary-site/demo.html">Стать партнёром</a></li>
         </ul>
       </div>
     </nav>
@@ -464,8 +439,8 @@
   </button>
 </footer>
 
-<script src="/mary-site/lead.js?v=202608280026" defer></script>
-<script src="/mary-site/site.js?v=202608280026" defer></script>
+<script src="/mary-site/lead.js?v=202609150059" defer></script>
+<script src="/mary-site/site.js?v=202609150059" defer></script>
 
 </body>
 </html>

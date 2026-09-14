@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Запись на демо — Mary</title>
+<meta name="description" content="Запишитесь на демо Mary: покажем платформу на задачах вашего бизнеса и ответим на вопросы." />
+<link rel="canonical" href="https://maryrose.by/demo.html" />
+<meta property="og:title" content="Запись на демо — Mary" />
+<meta property="og:description" content="Покажем платформу на задачах вашего бизнеса и ответим на вопросы." />
+<meta property="og:site_name" content="Mary" />
+<meta property="og:locale" content="ru_RU" />
+<link rel="icon" href="/mary-site/favicon.ico" sizes="any" />
+<link rel="icon" href="/mary-site/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/mary-site/apple-touch-icon.png" />
+<style>
+  /* Страница записи на демо. Макет — страница «Book an intro» у Sana:
+     чёрное полотно, заголовок слева, форма справа, поля-пилюли с тонкой
+     обводкой, белая кнопка. Отдельная статика: ни site.css, ни React
+     ей не нужны. Отправка — через общий /lead.js, как у форм на нишах. */
+
+  /* светлая версия: полотно белое, как на главной */
+  :root {
+    --bg: #FFF;
+    --ink: #151617;
+    --muted: rgba(21, 22, 23, .5);
+    --line: rgba(21, 22, 23, .2);
+    --line-hover: rgba(21, 22, 23, .45);
+    --accent: #4E8CFF;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "SF Pro", "Inter Variable", "Inter", "Segoe UI", sans-serif;
+    --side: clamp(20px, 3.5vw, 50px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--bg); color-scheme: light; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    color: var(--ink);
+    background: var(--bg);
+    font: 400 16px/1.5 var(--font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; }
+
+  /* ── лента и шапка ────────────────────────────────────────
+     Та же шапка, что на главной (src/blocks/Topbar.css, Nav.css, lib/roll.css),
+     повторена разметкой: страница статическая. Правишь там — сверь здесь.
+     Полоса шапки в mix-blend-mode: difference, цвета внутри наизнанку —
+     на чёрном полотне она сама становится светлой. */
+
+  body { padding-top: 34px; }
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 var(--side);
+    background: rgba(245, 245, 245, .74);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    text-decoration: none;
+  }
+
+  .topbar__row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font: 500 12px/1 var(--font);
+    letter-spacing: -.03em;
+    white-space: nowrap;
+  }
+
+  .topbar__text { color: #494F5C; opacity: .5; transition: opacity .22s ease; }
+  .topbar:hover .topbar__text { opacity: .8; }
+  .topbar__cta { color: #0064FF; font-weight: 500; }
+
+  .nav-bar {
+    --nav-ink: #CDCAC7;
+    --nav-brand: #EAE9E8;
+    --nav-btn-bg: rgba(233, 233, 233, .09);
+    --nav-btn-bg-hover: rgba(233, 233, 233, .22);
+    --nav-btn-ink: #FEFEFE;
+
+    position: sticky;
+    top: 34px;
+    z-index: 40;
+    mix-blend-mode: difference;
+  }
+
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    max-width: 1440px;
+    min-height: 76px;
+    margin-inline: auto;
+    padding-inline: var(--side);
+  }
+
+  .nav__links { display: flex; gap: 28px; justify-self: start; }
+  .nav__actions { display: flex; align-items: center; gap: 28px; justify-self: end; }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    justify-self: center;
+    color: var(--nav-brand);
+    text-decoration: none;
+  }
+
+  .nav__brand span { font-weight: 600; font-size: 19.4px; line-height: 1; letter-spacing: -.09em; }
+  .nav__brand img { width: 20px; height: 20px; }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    color: var(--nav-ink);
+    background: none;
+    font: 500 14px/1 var(--font);
+    letter-spacing: -.03em;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .nav__link svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform .18s ease;
+  }
+
+  .nav__link[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+  .nav__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 16px;
+    border-radius: 999px;
+    color: var(--nav-btn-ink);
+    background: var(--nav-btn-bg);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font: 500 12px/1 var(--font);
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .18s ease;
+  }
+
+  .nav__button:hover { background: var(--nav-btn-bg-hover); }
+
+  .nav__button-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1.5px currentColor;
+    transition: box-shadow .28s ease;
+  }
+
+  .nav__button:hover .nav__button-dot { box-shadow: inset 0 0 0 4px currentColor; }
+
+  /* перекрутка подписи по буквам — lib/roll.css */
+  .nav-roll { --roll-h: 1.3em; display: inline-block; height: var(--roll-h); overflow: hidden; vertical-align: middle; }
+  .nav-roll > span { display: flex; align-items: center; height: var(--roll-h); }
+  .nav-roll b { display: inline-block; font-weight: inherit; white-space: pre; transition: transform .38s cubic-bezier(.32, .72, .3, 1); transition-delay: calc(var(--i) * 22ms); }
+  a:hover > .nav-roll b, button:hover > .nav-roll b { transform: translateY(calc(var(--roll-h) * -1)); }
+
+  /* мегаменю — вне полосы шапки, иначе инвертировалось бы вместе с ней */
+  .nav__menu {
+    position: fixed;
+    z-index: 50;
+    top: calc(34px + 76px + 12px);
+    left: max(var(--side), calc((100vw - 1440px) / 2 + var(--side)));
+    display: grid;
+    grid-template-columns: minmax(200px, 240px) minmax(300px, 340px);
+    gap: 32px;
+    padding: 26px;
+    border: 1px solid #F0F0F1;
+    border-radius: 24px;
+    color: #323538;
+    background: rgba(255, 255, 255, .92);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+
+  .nav__menu.is-open { opacity: 1; transform: none; pointer-events: auto; }
+
+  .nav__menu-item {
+    display: flex;
+    align-items: center;
+    align-self: start;
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    color: #323538;
+    font: 400 16px/1.2 var(--font);
+    text-decoration: none;
+    transition: background .16s ease;
+  }
+
+  .nav__menu-item:hover { background: #F6F6F7; }
+
+  .nav__ico { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: #F6F6F7; }
+  .nav__ico img { width: 19px; height: 19px; object-fit: contain; }
+
+  .nav__promo { display: flex; flex-direction: column; gap: 10px; }
+
+  .nav__promo-card {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(244, 244, 245, .85);
+    text-decoration: none;
+  }
+
+  .nav__promo-card img { width: 92px; height: 72px; border-radius: 10px; background: #FFF; object-fit: cover; }
+  .nav__promo-card em { display: block; margin-bottom: 5px; color: #6F6F6F; font: 500 11px/1 var(--font); font-style: normal; letter-spacing: .08em; text-transform: uppercase; }
+  .nav__promo-card b { display: block; color: #323538; font: 500 14px/1.3 var(--font); }
+  .nav__promo-card i { display: block; margin-top: 6px; color: #6F6F6F; font: 400 13px/1 var(--font); font-style: normal; }
+
+  @media (max-width: 1180px) {
+    .nav__menu { grid-template-columns: 1fr; }
+    .nav__promo { display: none; }
+  }
+
+  @media (max-width: 1080px) {
+    .nav { grid-template-columns: auto 1fr; }
+    .nav__links, .nav__actions .nav__link { display: none; }
+    .nav__brand { justify-self: start; }
+  }
+
+  @media (max-width: 560px) {
+    .topbar__text { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-roll b { transition: none; }
+    a:hover > .nav-roll b, button:hover > .nav-roll b { transform: none; }
+  }
+
+  /* ── раскладка ─────────────────────────────────────────── */
+
+  /* как у Sana: заголовок и первое поле на одной высоте, форма
+     занимает правую половину */
+  .book {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: clamp(40px, 8vh, 80px) var(--side) clamp(64px, 12vh, 120px);
+  }
+
+  .book__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: clamp(34px, 3.4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -.03em;
+  }
+
+  .book__lead {
+    max-width: 34ch;
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  .book__points {
+    max-width: 36ch;
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .book__points li {
+    position: relative;
+    padding: 14px 0 14px 20px;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .book__points li::before {
+    content: "";
+    position: absolute;
+    top: 23px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .book__points b { color: var(--ink); font-weight: 500; }
+
+  /* ── форма ─────────────────────────────────────────────── */
+
+  .form { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 20px) 12px; }
+
+  .field { display: flex; flex-direction: column; gap: clamp(6px, 1vh, 10px); min-width: 0; }
+
+  .field--wide { grid-column: 1 / -1; }
+
+  .field label { font-size: 16px; }
+
+  .field label i { font-style: normal; color: var(--muted); }
+
+  .input {
+    width: 100%;
+    height: clamp(40px, 5.2vh, 48px);
+    padding: 0 22px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    background: transparent;
+    font: inherit;
+    font-size: 16px;
+    outline: none;
+    transition: border-color .18s ease;
+    appearance: none;
+  }
+
+  .input::placeholder { color: rgba(21, 22, 23, .34); }
+
+  .input:hover { border-color: var(--line-hover); }
+
+  .input:focus { border-color: var(--ink); }
+
+  textarea.input {
+    height: auto;
+    min-height: clamp(40px, 5.2vh, 48px);
+    padding: clamp(9px, 1.3vh, 12px) 22px;
+    border-radius: 25px;
+    resize: none;
+    line-height: 1.5;
+  }
+
+  .select { position: relative; }
+
+  .select svg {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 2;
+    pointer-events: none;
+  }
+
+  .select .input { padding-right: 46px; cursor: pointer; }
+
+  .select .input:invalid { color: rgba(21, 22, 23, .34); }
+
+  .select option { color: #000; }
+
+  .agree {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 2px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  /* галочка как у Sana: белый скруглённый квадрат, внутри чёрная отметка */
+  .agree input {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+  }
+
+  .agree input::after {
+    content: "";
+    width: 5px;
+    height: 9px;
+    margin-top: -2px;
+    border: solid #FFF;
+    border-width: 0 1.8px 1.8px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform .15s ease;
+  }
+
+  .agree input:checked { border-color: var(--ink); background: var(--ink); }
+  .agree input:checked::after { transform: rotate(45deg) scale(1); }
+
+  .agree a { text-underline-offset: 3px; }
+
+  .submit {
+    justify-self: start;
+    grid-column: 1 / -1;
+    padding: clamp(10px, 1.5vh, 13px) 22px;
+    border: 0;
+    border-radius: 999px;
+    color: #FFF;
+    background: var(--ink);
+    font: 500 17px/1.2 var(--font);
+    cursor: pointer;
+    transition: opacity .18s ease;
+  }
+
+  .submit:hover { opacity: .88; }
+
+  .submit[disabled] { opacity: .5; cursor: default; }
+
+  .error { grid-column: 1 / -1; margin: 0; color: #D6452F; font-size: 15px; }
+
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .done h2 { margin: 0; font-weight: 500; font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -.02em; }
+
+  .done p { max-width: 40ch; margin: 14px 0 0; color: var(--muted); font-size: 17px; }
+
+  .done a { display: inline-block; margin-top: 28px; }
+
+  /* страница ровно в экран: лента 34 + шапка 76, остальное — форма.
+     Только там, где форма влезает; на узком и низком экране прокрутка
+     возвращается, иначе нижние поля были бы недоступны */
+  @media (min-width: 901px) and (min-height: 620px) {
+    html, body { height: 100%; overflow: hidden; }
+    /* страница не прокручивается — липкость шапке не нужна: с overflow
+       у body отступ top: 34px считался от его полей и давал щель под лентой */
+    .nav-bar { position: relative; top: 0; }
+    /* заголовок и первое поле встают сверху с отступом от шапки;
+       по центру экрана форма на низком окне прилипала к шапке */
+    .book {
+      height: calc(100svh - 34px - 76px);
+      align-content: start;
+      padding-block: clamp(16px, 5vh, 64px) 0;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .book { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .form { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a class="topbar" href="/mary-site/demo.html" aria-label="Запросить демо платформы Mary">
+  <span class="topbar__row">
+    <span class="topbar__text">ИИ чат-платформа для автоматизации бизнеса</span>
+    <b class="topbar__cta">Демо</b>
+  </span>
+</a>
+
+<div class="nav-bar">
+  <header class="nav">
+    <nav class="nav__links" aria-label="Основная навигация">
+      <a class="nav__link" href="/mary-site/blog.html" data-roll>Блог</a>
+      <a class="nav__link" href="/mary-site/cases.html" data-roll>Кейсы</a>
+      <a class="nav__link" href="/mary-site/#contacts" data-roll>Контакты</a>
+      <button class="nav__link" id="nav-drop" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-menu">
+        <span data-roll>Для компаний</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6" /></svg>
+      </button>
+    </nav>
+
+    <a class="nav__brand" href="/mary-site/" aria-label="Mary — на главную">
+      <img src="/mary-site/mary-mark-white.svg" alt="" />
+      <span>mary</span>
+    </a>
+
+    <div class="nav__actions">
+      <a class="nav__link" href="/mary-site/media/docs/mary-deck.pdf" target="_blank" rel="noopener" data-roll>Для инвесторов</a>
+      <a class="nav__link" href="https://sales.maryrose.by/" data-roll>Заказать разработку</a>
+      <a class="nav__button" href="/mary-site/demo.html"><span data-roll>Демо</span><i class="nav__button-dot" aria-hidden="true"></i></a>
+    </div>
+  </header>
+</div>
+
+<div class="nav__menu" id="nav-menu">
+  <a class="nav__menu-item" href="/mary-site/niches/beauty.html">
+    <span class="nav__ico" aria-hidden="true"><img src="/mary-site/media/icons-3d/chat-heart.webp" alt="" /></span>Бьюти
+  </a>
+  <span class="nav__promo">
+    <a class="nav__promo-card" href="/mary-site/case-photoprint.html">
+      <img src="/mary-site/media/case/deco.webp" alt="" loading="lazy" />
+      <span><em>Кейс</em><b>Фабрика Фотокниги: 52% обращений без менеджера</b><i>Смотреть кейс →</i></span>
+    </a>
+    <a class="nav__promo-card" href="/mary-site/blog/salon-avtomatizacia.html">
+      <img src="/mary-site/media/blog/10-salon.webp" alt="" loading="lazy" />
+      <span><em>Блог</em><b>Автоматизация салона: что снять с администратора</b><i>Читать статью →</i></span>
+    </a>
+  </span>
+</div>
+
+<main class="book">
+  <section>
+    <h1 class="book__title">Запись на демо</h1>
+  </section>
+
+  <section>
+    <form class="form" id="book-form" novalidate>
+      <label class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      <input type="hidden" name="mode" value="Демо платформы" />
+
+      <div class="field field--wide">
+        <label for="f-contact">Телефон или Telegram*</label>
+        <input class="input" id="f-contact" name="contact" type="text" autocomplete="tel" required />
+      </div>
+
+      <div class="field">
+        <label for="f-name">Имя*</label>
+        <input class="input" id="f-name" name="name" type="text" autocomplete="given-name" required />
+      </div>
+      <div class="field">
+        <label for="f-surname">Фамилия</label>
+        <input class="input" id="f-surname" name="surname" type="text" autocomplete="family-name" />
+      </div>
+
+      <div class="field">
+        <label for="f-company">Компания*</label>
+        <input class="input" id="f-company" name="company" type="text" autocomplete="organization" required />
+      </div>
+      <div class="field">
+        <label for="f-email">Рабочая почта</label>
+        <input class="input" id="f-email" name="email" type="email" autocomplete="email" />
+      </div>
+
+      <div class="field">
+        <label for="f-staff">Сколько сотрудников*</label>
+        <span class="select">
+          <select class="input" id="f-staff" name="staff" required>
+            <option value="" disabled selected>Выберите</option>
+            <option>1–5</option><option>6–20</option><option>21–50</option><option>больше 50</option>
+          </select>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6" /></svg>
+        </span>
+      </div>
+      <div class="field">
+        <label for="f-industry">Сфера бизнеса*</label>
+        <input class="input" id="f-industry" name="industry" type="text" placeholder="Салон, клиника…" required />
+      </div>
+
+      <div class="field field--wide">
+        <label for="f-task">Что хотите отдать Mary*</label>
+        <textarea class="input" id="f-task" name="task" rows="1" required></textarea>
+      </div>
+
+      <label class="agree">
+        <input type="checkbox" name="agree" value="да" required />
+        <span>Я соглашаюсь с <a href="/mary-site/privacy.html">политикой обработки данных</a>*</span>
+      </label>
+
+      <p class="error" id="book-error" role="alert" hidden></p>
+
+      <button class="submit" type="submit">Записаться на демо</button>
+    </form>
+
+    <div class="done" id="book-done" role="status" hidden>
+      <h2>Заявка отправлена</h2>
+      <p>Свяжемся в течение рабочего дня — по тому контакту, который вы оставили.</p>
+      <a href="/mary-site/">Вернуться на главную</a>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Шапка: перекрутка подписей и меню «Для компаний» — как в Nav.jsx / Roll.jsx
+  (function () {
+    document.querySelectorAll("[data-roll]").forEach(function (el) {
+      var text = el.textContent.trim();
+      var roll = document.createElement("span");
+      roll.className = "nav-roll";
+      [false, true].forEach(function (hidden) {
+        var line = document.createElement("span");
+        if (hidden) line.setAttribute("aria-hidden", "true"); else line.setAttribute("aria-label", text);
+        Array.from(text).forEach(function (ch, i) {
+          var b = document.createElement("b");
+          b.style.setProperty("--i", i);
+          b.textContent = ch;
+          line.appendChild(b);
+        });
+        roll.appendChild(line);
+      });
+      if (el.tagName === "SPAN") el.replaceWith(roll);
+      else { el.textContent = ""; el.appendChild(roll); }
+    });
+
+    var btn = document.getElementById("nav-drop");
+    var menu = document.getElementById("nav-menu");
+    var timer = 0, pinned = false;
+    var set = function (on) {
+      menu.classList.toggle("is-open", on);
+      btn.setAttribute("aria-expanded", on ? "true" : "false");
+      if (!on) pinned = false;
+    };
+    var hold = function () { clearTimeout(timer); set(true); };
+    var later = function () { clearTimeout(timer); timer = setTimeout(function () { if (!pinned) set(false); }, 420); };
+    [btn, menu].forEach(function (el) { el.addEventListener("mouseenter", hold); el.addEventListener("mouseleave", later); });
+    btn.addEventListener("click", function () {
+      if (menu.classList.contains("is-open") && pinned) set(false); else { pinned = true; set(true); }
+    });
+    document.addEventListener("pointerdown", function (e) { if (!btn.contains(e.target) && !menu.contains(e.target)) set(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+  })();
+</script>
+<script src="/mary-site/lead.js?v=202609150059" defer></script>
+<script>
+  (function () {
+    var form = document.getElementById("book-form");
+    var done = document.getElementById("book-done");
+    var error = document.getElementById("book-error");
+    var button = form.querySelector(".submit");
+
+    // поле «что хотите отдать» растёт по тексту, а не прокручивается внутри
+    var task = document.getElementById("f-task");
+    task.addEventListener("input", function () {
+      task.style.height = "auto";
+      task.style.height = task.scrollHeight + 2 + "px";
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      error.hidden = true;
+
+      if (!form.checkValidity()) {
+        var bad = form.querySelector(":invalid");
+        error.textContent = bad && bad.name === "agree"
+          ? "Отметьте согласие с политикой обработки данных."
+          : "Заполните поля со звёздочкой.";
+        error.hidden = false;
+        if (bad) bad.focus();
+        return;
+      }
+
+      button.disabled = true;
+      window.sendLead(form).then(function () {
+        form.hidden = true;
+        done.hidden = false;
+      }).catch(function () {
+        button.disabled = false;
+        error.textContent = "Не получилось отправить. Попробуйте ещё раз или напишите нам в Telegram.";
+        error.hidden = false;
+      });
+    });
+  })();
+</script>
+</body>
+</html>
