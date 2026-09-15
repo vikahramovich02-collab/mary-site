@@ -23,169 +23,12 @@
 <link rel="apple-touch-icon" href="/mary-site/apple-touch-icon.png" />
 <title>Как мы наняли CTO за неделю: найм на агентах | Блог Mary</title>
 <meta name="description" content="30 кандидатов, два дня созвонов и один найм. Разбор HR-процесса по шагам: что делает агент, что остаётся человеку и почему отсев стоит переносить в конец." />
-<link rel="stylesheet" href="/mary-site/article.css?v=202609150304" />
-<style>
-
-  /* Второй экран-цитата в статье светлый: два синих подряд перебивали бы
-     друг друга и спорили с иллюстрациями. */
-  .hero.is-quote {
-    min-height: 0;
-    background: var(--soft-bg);
-    color: var(--ink);
-  }
-
-  .hero.is-quote span {
-    font-size: clamp(22px, 2.8vw, 34px);
-    color: var(--heading);
-  }
-
-  /* Врезка с оговоркой: не совет, а честное «здесь я бы сделал иначе». */
-  .note {
-    margin: 28px 0;
-    padding: 22px 24px;
-    border: 1px solid var(--soft);
-    border-radius: 18px;
-    background: var(--soft-bg);
-  }
-
-  /* ── макеты экранов ─────────────────────────────────────
-     Собраны вёрсткой, а не скриншотами: настоящие карточки кандидатов
-     содержат имена, компании и зарплатные ожидания живых людей —
-     публиковать их нельзя. Здесь та же структура на выдуманных данных. */
-
-  /* Макет — серая панель с белыми карточками, как сцены на страницах
-     ниш. Подпись живёт под панелью, а не внутри неё. */
-  .shot { margin: 30px 0; }
-
-  .shot__chat,
-  .shot__panel {
-    padding: 22px;
-    border-radius: 20px;
-    background: var(--soft-bg);
-  }
-
-  /* таблица шире колонки статьи — прокручиваем её внутри панели */
-  .shot__panel { overflow-x: auto; }
-  .shot__table { min-width: 560px; }
-
-  .shot figcaption {
-    margin-top: 14px;
-    color: var(--tertiary);
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .shot__chat { display: flex; flex-direction: column; gap: 10px; }
-
-  .shot__msg {
-    max-width: 82%;
-    padding: 11px 15px;
-    border-radius: 16px 16px 16px 4px;
-    background: #fff;
-    color: var(--secondary);
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
-  .shot__msg.is-out {
-    align-self: flex-end;
-    border-radius: 16px 16px 4px 16px;
-    background: #EAF0FB;
-    color: var(--ink);
-  }
-
-  .shot__slots { display: flex; flex-wrap: wrap; gap: 8px; align-self: flex-end; }
-
-  .shot__slot {
-    padding: 8px 13px;
-    border-radius: 40px;
-    background: #fff;
-    color: #0064FF;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .shot__card { padding: 22px; border-radius: 16px; background: #fff; }
-  .shot__panel > .shot__table { min-width: 560px; }
-
-  .shot__head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--soft);
-  }
-
-  .shot__who { color: var(--ink); font-weight: 500; font-size: 16px; }
-  .shot__time { margin-left: auto; color: var(--tertiary); font-size: 14px; }
-
-  .shot__grade {
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: var(--page);
-    color: var(--secondary);
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-  .shot__sum { margin: 14px 0 0; color: var(--secondary); font-size: 15px; line-height: 1.5; }
-
-  .shot__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 18px; }
-  .shot__cols h4 { margin: 0 0 10px; font-size: 13px; font-weight: 500; letter-spacing: 0; }
-  .shot__cols ul { margin: 0; padding: 0; list-style: none; font-size: 14px; line-height: 1.5; }
-  .shot__cols li { position: relative; padding-left: 16px; }
-  .shot__cols li + li { margin-top: 7px; }
-  .shot__cols li::before {
-    content: "";
-    position: absolute;
-    top: .62em;
-    left: 2px;
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: var(--line);
-  }
-  .shot__cols .is-good h4 { color: #1F7A45; }
-  .shot__cols .is-risk h4 { color: #B45309; }
-
-  .shot__plan { margin-top: 20px; }
-  .shot__row:first-child { border-top: 0; }
-
-  .shot__row {
-    display: grid;
-    grid-template-columns: 58px minmax(0, 1fr);
-    gap: 14px;
-    padding: 10px 0;
-    border-top: 1px solid var(--soft);
-    color: var(--secondary);
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .shot__row b { color: var(--tertiary); font-weight: 400; font-variant-numeric: tabular-nums; }
-
-  .shot__table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .shot__table th { padding: 0 10px 10px; color: var(--tertiary); font-weight: 400; font-size: 13px; text-align: left; }
-  .shot__table td { padding: 11px 10px; border-top: 1px solid var(--soft); color: var(--secondary); }
-  .shot__table td:first-child { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
-
-  .shot__verdict { padding: 4px 10px; border-radius: 40px; font-size: 13px; white-space: nowrap; }
-  .shot__verdict.is-yes { background: #E4F5EA; color: #1F7A45; }
-  .shot__verdict.is-maybe { background: #FDF3DC; color: #8A6100; }
-  .shot__verdict.is-no { background: #FBE9E7; color: #B23B2B; }
-
-  @media (max-width: 620px) {
-    .shot { padding: 14px; }
-    .shot__table th:nth-child(n+4), .shot__table td:nth-child(n+4) { display: none; }
-  }
-
-  .note b { display: block; margin-bottom: 8px; color: var(--ink); font-weight: 500; }
-  .note p { margin: 0; }
-</style>
+<link rel="stylesheet" href="/mary-site/css/article.css?v=202609150307" />
   <script type="module" crossorigin src="/mary-site/assets/Footer-DH7ChopX.js"></script>
   <script type="module" crossorigin src="/mary-site/assets/chrome-Dg-swdqT.js"></script>
   <link rel="stylesheet" crossorigin href="/mary-site/assets/Footer-C8tYvDnG.css">
   <link rel="stylesheet" crossorigin href="/mary-site/assets/chrome-B7MwnkZT.css">
+  <link rel="stylesheet" crossorigin href="/mary-site/assets/post-hr-nayom-avtomatizacia-xbHDyXcP.css">
 </head>
 <body>
 <!-- лента и шапка с главной (src/pages/chrome.jsx) -->
@@ -584,7 +427,7 @@
 
 </div>
 
-<script src="/mary-site/article.js?v=202609150304" defer></script>
+<script src="/mary-site/js/article.js?v=202609150307" defer></script>
 
   </main>
 </div>
