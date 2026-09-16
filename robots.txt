@@ -3,5 +3,9 @@ Allow: /
 
 # служебное в индекс не пускаем
 Disallow: /media/docs/
+Disallow: /404.html
+
+# метки рекламы не создают отдельных страниц
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid&fbclid
 
 Sitemap: https://maryrose.by/sitemap.xml

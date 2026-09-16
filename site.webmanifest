@@ -1,0 +1,28 @@
+{
+ "name": "Mary — платформа автоматизации бизнеса",
+ "short_name": "Mary",
+ "lang": "ru",
+ "start_url": "/mary-site/",
+ "scope": "/mary-site/",
+ "display": "standalone",
+ "background_color": "#FFFFFF",
+ "theme_color": "#FFFFFF",
+ "icons": [
+  {
+   "src": "/mary-site/favicon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/mary-site/favicon-32.png",
+   "sizes": "32x32",
+   "type": "image/png"
+  },
+  {
+   "src": "/mary-site/apple-touch-icon.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  }
+ ]
+}
