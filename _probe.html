@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><title>probe</title></head><body>
+<div id="log" style="font:14px/1.6 -apple-system,sans-serif;padding:12px;white-space:pre-wrap"></div>
+<script>
+var out=[];function say(s){out.push(s);document.getElementById('log').textContent=out.join('\n');}
+var page=new URLSearchParams(location.search).get('p')||'/mary-site/demo.html';
+var f=document.createElement('iframe');f.width=1200;f.height=800;f.src=page;
+f.onload=function(){
+  var w=f.contentWindow;
+  // согласие ставим ВНУТРИ самой страницы и поднимаем счётчик её же кодом
+  try{ w.localStorage.setItem('mary-cookie-consent','all'); say('согласие записано внутри '+page); }catch(e){ say('нет доступа к хранилищу: '+e.message); }
+  var accept=[].slice.call(f.contentDocument.querySelectorAll('.cookie__btn')).filter(function(b){return /Принять/.test(b.textContent)})[0];
+  if(accept){ accept.click(); say('нажата «Принять все»'); } else say('баннера нет');
+  setTimeout(function(){
+    say('ym: '+(typeof w.ym));
+    var hits=w.performance.getEntriesByType('resource').filter(function(r){return /mc\.yandex\.ru/.test(r.name)});
+    say('обращений к Метрике: '+hits.length);
+    hits.slice(0,3).forEach(function(r){say('  '+r.name.slice(0,100))});
+    say('ГОТОВО');
+  },5000);
+};
+document.body.appendChild(f);
+</script></body></html>
