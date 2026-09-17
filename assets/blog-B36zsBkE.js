@@ -1,0 +1,1 @@
+import"./Footer-k0Y2lAsi.js";import"./chrome-D1EeG6go.js";(function(){var e=document.querySelectorAll(`.list-tab`),t=document.querySelectorAll(`.list-card`);e.length&&e.forEach(function(n){n.addEventListener(`click`,function(){var r=n.dataset.filter;e.forEach(function(e){e.classList.toggle(`is-active`,e===n)}),t.forEach(function(e){e.hidden=r!==`all`&&e.dataset.tag!==r})})})})();
