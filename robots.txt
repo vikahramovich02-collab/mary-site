@@ -8,4 +8,19 @@ Disallow: /404.html
 # метки рекламы не создают отдельных страниц
 Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid&fbclid
 
+# ИИ-ассистенты: пускаем читать сайт — так Mary попадает в их ответы
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: YandexBot
+User-agent: Bingbot
+Allow: /
+Disallow: /media/docs/
+
 Sitemap: https://maryrose.by/sitemap.xml
