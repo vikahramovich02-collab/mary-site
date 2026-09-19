@@ -1,1 +1,115 @@
-(function(){var e=`mary-lang`,t=window.I18N&&window.I18N.en||null;function n(){var t=(location.search.match(/[?&]lang=(ru|en)/)||[])[1];if(t){try{window.localStorage.setItem(e,t)}catch{}return t}try{return window.localStorage.getItem(e)===`en`?`en`:`ru`}catch{return`ru`}}function r(e){return e.split(``).map(function(e,t){return`<b style="--i:`+t+`">`+(e===` `?`&nbsp;`:e)+`</b>`}).join(``)}function i(e,t){e.innerHTML=`<span aria-label="`+t.replace(/"/g,`&quot;`)+`">`+r(t)+`</span><span aria-hidden="true">`+r(t)+`</span>`}function a(e,t){e.innerHTML=t.split(` `).map(function(e){return`<span>`+e+`</span>`}).join(` `)}function o(e){document.documentElement.setAttribute(`lang`,`en`),e.title&&(document.title=e.title);var t=document.querySelector(`meta[name="description"]`);t&&e.desc&&t.setAttribute(`content`,e.desc),document.querySelectorAll(`[data-i18n-roll]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-roll`)];n&&i(t,n)}),document.querySelectorAll(`[data-i18n-quote]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-quote`)];n&&a(t,n)}),document.querySelectorAll(`[data-i18n-html]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-html`)];n&&(t.innerHTML=n)}),document.querySelectorAll(`[data-i18n]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n`)];n&&(t.textContent=n)}),document.querySelectorAll(`[data-i18n-ph]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-ph`)];n&&t.setAttribute(`placeholder`,n)}),document.querySelectorAll(`[data-i18n-aria]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-aria`)];n&&t.setAttribute(`aria-label`,n)}),document.querySelectorAll(`[data-i18n-cursor]`).forEach(function(t){var n=e[t.getAttribute(`data-i18n-cursor`)];n&&t.setAttribute(`data-cursor`,n)})}n()===`en`&&t&&o(t),document.querySelectorAll(`[data-lang-toggle]`).forEach(function(t){var r=n()===`en`?`ru`:`en`;t.textContent=r.toUpperCase(),t.setAttribute(`aria-label`,r===`en`?`Switch to English`:`Перейти на русский`),t.addEventListener(`click`,function(t){t.preventDefault();try{window.localStorage.setItem(e,r)}catch{}var n=new URL(window.location.href);n.searchParams.delete(`lang`),r===`en`&&n.searchParams.set(`lang`,`en`),window.location.href=n.toString()})})})();
+// Переключение языка страницы. Русский лежит прямо в разметке, английский —
+// в словаре i18n-en.js; при выборе EN тексты подменяются на месте.
+//
+// Почему так, а не отдельные /en/ страницы: правки вносятся в одном файле,
+// и вёрстка не расходится. Если понадобится английский в поиске — из того же
+// словаря сборка сгенерирует статические страницы, разметка уже размечена.
+//
+// Ключи проставлены скриптом scripts/i18n-mark.py:
+//   data-i18n        — текст элемента
+//   data-i18n-html   — элемент, внутри которого есть <br>, <i> или <svg>
+//   data-i18n-ph     — placeholder поля
+//   data-i18n-aria   — aria-label
+//   data-i18n-cursor — подпись в кружке курсора
+//   data-i18n-roll   — кнопка, где буквы разложены по <b> для анимации
+//   data-i18n-quote  — цитата, разложенная по словам для подсветки
+(function () {
+  var KEY = "mary-lang";
+  var dict = (window.I18N && window.I18N.en) || null;
+
+  // ?lang=en в адресе перебивает сохранённый выбор и запоминается:
+  // так можно отправить ссылку сразу на английскую версию.
+  function lang() {
+    var q = (location.search.match(/[?&]lang=(ru|en)/) || [])[1];
+    if (q) {
+      try { window.localStorage.setItem(KEY, q); } catch (e) {}
+      return q;
+    }
+    try { return window.localStorage.getItem(KEY) === "en" ? "en" : "ru"; }
+    catch (e) { return "ru"; }
+  }
+
+  // Буквы кнопки: у каждой своя задержка, поэтому строка перекручивается
+  // волной. Две копии — верхняя уезжает, нижняя приходит снизу.
+  function letters(text) {
+    return text.split("").map(function (ch, i) {
+      return '<b style="--i:' + i + '">' + (ch === " " ? "&nbsp;" : ch) + "</b>";
+    }).join("");
+  }
+
+  function applyRoll(el, text) {
+    el.innerHTML = '<span aria-label="' + text.replace(/"/g, "&quot;") + '">' +
+      letters(text) + "</span><span aria-hidden=\"true\">" + letters(text) + "</span>";
+  }
+
+  // Цитата гаснет и загорается по словам — значит слова должны быть
+  // отдельными элементами, иначе подсвечивать нечего.
+  function applyQuote(el, text) {
+    el.innerHTML = text.split(" ").map(function (w) {
+      return "<span>" + w + "</span>";
+    }).join(" ");
+  }
+
+  function apply(d) {
+    document.documentElement.setAttribute("lang", "en");
+    if (d.title) document.title = d.title;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta && d.desc) meta.setAttribute("content", d.desc);
+
+    document.querySelectorAll("[data-i18n-roll]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-roll")];
+      if (t) applyRoll(el, t);
+    });
+
+    document.querySelectorAll("[data-i18n-quote]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-quote")];
+      if (t) applyQuote(el, t);
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-html")];
+      if (t) el.innerHTML = t;
+    });
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n")];
+      if (t) el.textContent = t;
+    });
+
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-ph")];
+      if (t) el.setAttribute("placeholder", t);
+    });
+
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-aria")];
+      if (t) el.setAttribute("aria-label", t);
+    });
+
+    document.querySelectorAll("[data-i18n-cursor]").forEach(function (el) {
+      var t = d[el.getAttribute("data-i18n-cursor")];
+      if (t) el.setAttribute("data-cursor", t);
+    });
+  }
+
+  if (lang() === "en" && dict) apply(dict);
+
+  // Переключатель: сохраняем выбор и перезагружаем. Перезагрузка нужна
+  // потому, что анимации и курсор собираются из текста при старте —
+  // подменять их на лету значило бы дублировать всю эту логику.
+  document.querySelectorAll("[data-lang-toggle]").forEach(function (btn) {
+    var next = lang() === "en" ? "ru" : "en";
+    btn.textContent = next.toUpperCase();
+    btn.setAttribute("aria-label", next === "en" ? "Switch to English" : "Перейти на русский");
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      try { window.localStorage.setItem(KEY, next); } catch (err) {}
+      // адрес правим тоже: иначе ?lang=en в ссылке перебьёт новый выбор.
+      // Остальные параметры (utm-метки) остаются на месте.
+      var url = new URL(window.location.href);
+      url.searchParams.delete("lang");
+      if (next === "en") url.searchParams.set("lang", "en");
+      window.location.href = url.toString();
+    });
+  });
+})();
